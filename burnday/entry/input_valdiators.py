@@ -9,12 +9,21 @@ def validate_str_input(str_input, max_len):
         str_input: str
             input that needs to be confirmed as a str
 
+        max_len: int
+            maximum number of characters in str_input
+
         Returns
         -------
         str_validation_error: None
             str if str_input did not pass validation
     """
-    pass
+    if type(str_input) != str:
+        return("validate_str_input - incorrect data type")
+
+    if len(str_input) > max_len:
+        return("validate_str_input - string exceeds max length")
+
+    return(None)
 
 
 def validate_iso_8601_date(iso_formatted_str):
