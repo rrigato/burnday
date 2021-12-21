@@ -1,3 +1,9 @@
+from burnday.entry.input_valdiators import validate_str_input
+from burnday.entry.request_objects import InvalidRequest
+from burnday.entry.request_objects import ValidRequest
+
+import logging
+
 
 def county_burn_status(county_burn_status_request):
     """Get the daily burn status for every county
@@ -52,9 +58,11 @@ def validate_county_burn_status(county_name):
             InvalidRequest is returned if the input does not pass validation
             
     """
-    '''
-        TODO -
-        validate county_name is a str
-        return(ValidRequest(request_filters={"county_name": county_name}))
-    '''
-    pass
+    county_name_validation = validate_str_input(str_input=county_name, max_len=150)
+
+    if county_name_validation is not None:
+        logging.info("validate_county_burn_status - county_name did not pass input validation")
+        return(InvalidRequest(error_message=county_name_validation))
+
+    logging.info("validate_county_burn_status - returning a ValidRequest")
+    return(ValidRequest(request_filters={"county_name": county_name}))
