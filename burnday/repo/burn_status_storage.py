@@ -1,8 +1,16 @@
+from burnday.repo.entity_serialization import create_burn_status
+
 def burn_status_for_county(county_name):
     """Retrieves all BurnStatus entities from persistant storage for county_name
 
         Parameters
         ----------
+        burn_day: datetime.date
+            day the burn_status applies to
+
+        burn_status: str
+            description of whether fuel burning is allowed for the location
+
         county_name: str
             name of the county to return burn status of
 
@@ -33,5 +41,13 @@ def burn_status_for_county(county_name):
                 conditions.Key("PK").eq("burnday#" + county_name)
             )
         )
+
+        if existing_items["Count"] == 0:
+            return(None, None)
+
+        for burn_status_item in existing_items["Items"]:
+            create_burn_status()
+
+        
     '''
     pass

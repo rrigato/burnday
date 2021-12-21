@@ -9,10 +9,10 @@ def create_burn_status(burn_day, burn_status, county_name):
         Parameters
         ----------
         burn_day: datetime.date
-            date the burn status applies to
+            day the burn_status applies to
 
         burn_status: str
-            description of whether burning is allowed for the location
+            description of whether fuel burning is allowed for the location
 
         county_name: str
             name of the county to return burn status of
