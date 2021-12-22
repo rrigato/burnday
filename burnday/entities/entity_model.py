@@ -41,6 +41,33 @@ class BurnStatus:
 
     @air_quality_index.setter
     def air_quality_index(self, air_quality_index):
-        if type(air_quality_index) not in (int, type(None)):
-            raise TypeError("BurnStatus - air_quality_index datatype must be a int")
+        if type(air_quality_index) not in (int, float, type(None)):
+            raise TypeError("BurnStatus - air_quality_index datatype must be a int/float")
         self._air_quality_index = air_quality_index
+
+
+
+    @property
+    def fine_particulate_matter_2_5(self):
+        return(self._fine_particulate_matter_2_5)
+
+    @fine_particulate_matter_2_5.setter
+    def fine_particulate_matter_2_5(self, fine_particulate_matter_2_5):
+        if type(fine_particulate_matter_2_5) not in (int, float, type(None)):
+            raise TypeError(
+                "BurnStatus - fine_particulate_matter_2_5 datatype must be a int/float"
+            )
+        self._fine_particulate_matter_2_5 = fine_particulate_matter_2_5
+
+
+    @property
+    def coarse_particulate_matter_10(self):
+        return(self._coarse_particulate_matter_10)
+
+    @coarse_particulate_matter_10.setter
+    def coarse_particulate_matter_10(self, coarse_particulate_matter_10):
+        if type(coarse_particulate_matter_10) not in (int, float, type(None)):
+            raise TypeError(
+                "BurnStatus - coarse_particulate_matter_10 datatype must be a int/float"
+                )
+        self._coarse_particulate_matter_10 = coarse_particulate_matter_10
