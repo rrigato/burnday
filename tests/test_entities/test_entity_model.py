@@ -10,6 +10,7 @@ class TestEntityModel(unittest.TestCase):
         mock_burn_day = "3005-11-29"
         mock_burn_status = "Burning Discouraged"
         mock_county_name = "Mock County"
+        mock_air_quality_index = 75
 
 
         burn_status_entity = BurnStatus()
@@ -18,10 +19,12 @@ class TestEntityModel(unittest.TestCase):
         burn_status_entity.burn_day = date.fromisoformat(mock_burn_day)
         burn_status_entity.burn_status = mock_burn_status
         burn_status_entity.county_name = mock_county_name
+        burn_status_entity.air_quality_index = mock_air_quality_index
 
         self.assertEqual(burn_status_entity.burn_day.isoformat(), mock_burn_day)
         self.assertEqual(burn_status_entity.burn_status, mock_burn_status)
         self.assertEqual(burn_status_entity.county_name, mock_county_name)
+        self.assertEqual(burn_status_entity.air_quality_index, mock_air_quality_index)
 
 
 
@@ -31,7 +34,6 @@ class TestEntityModel(unittest.TestCase):
 
         mock_invalid_types = [
             set(["a", "b"]),
-            1, 
             2.0,
             (1, 2, 3),
             {},
@@ -51,3 +53,9 @@ class TestEntityModel(unittest.TestCase):
 
                 with self.assertRaises(TypeError):
                     mock_burn_status.county_name = mock_invalid_type
+
+                with self.assertRaises(TypeError):
+                    mock_burn_status.air_quality_index = mock_invalid_type
+
+                # with self.assertRaises(TypeError):
+                #     mock_burn_status.fine_particulate_matter_25 = mock_invalid_type

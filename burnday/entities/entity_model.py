@@ -33,3 +33,14 @@ class BurnStatus:
         if type(county_name) not in (str, type(None)):
             raise TypeError("BurnStatus - county_name datatype must be a str")
         self._county_name = county_name
+
+
+    @property
+    def air_quality_index(self):
+        return(self._air_quality_index)
+
+    @air_quality_index.setter
+    def air_quality_index(self, air_quality_index):
+        if type(air_quality_index) not in (int, type(None)):
+            raise TypeError("BurnStatus - air_quality_index datatype must be a int")
+        self._air_quality_index = air_quality_index
