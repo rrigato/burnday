@@ -3,7 +3,7 @@ from burnday.entities.entity_model import BurnStatus
 import logging
 
 
-def create_burn_status(burn_day, burn_status, county_name):
+def create_burn_status(burn_day, burn_status, zip_code):
     """Creates a BurnStatus entity
     
         Parameters
@@ -14,8 +14,8 @@ def create_burn_status(burn_day, burn_status, county_name):
         burn_status: str
             description of whether fuel burning is allowed for the location
 
-        county_name: str
-            name of the county to return burn status of
+        zip_code: int
+            numeric postal code
 
         Returns
         -------
@@ -31,7 +31,7 @@ def create_burn_status(burn_day, burn_status, county_name):
     try:
         burn_status_entity.burn_day = burn_day
         burn_status_entity.burn_status = burn_status
-        burn_status_entity.county_name = county_name
+        burn_status_entity.zip_code = zip_code
         
         logging.info("create_burn_status - BurnStatus entity successfully created")
 

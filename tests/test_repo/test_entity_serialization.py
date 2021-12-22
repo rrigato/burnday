@@ -13,13 +13,13 @@ class TestEntitySerialization(unittest.TestCase):
 
         mock_burn_day = date.fromisoformat("3005-11-29")
         mock_burn_status = "No Burning Unless Registered"
-        mock_county_name = "Sequoia National Park and Forest"
+        mock_zip_code = 20002
 
 
         burn_status_entity, entity_creation_error = create_burn_status(
             burn_day=mock_burn_day,
             burn_status=mock_burn_status,
-            county_name=mock_county_name
+            zip_code=mock_zip_code
         )
 
 
@@ -33,13 +33,13 @@ class TestEntitySerialization(unittest.TestCase):
 
         mock_burn_day = "3005-11-29"
         mock_burn_status = "No Burning Unless Registered"
-        mock_county_name = "Sequoia National Park and Forest"
+        mock_zip_code = 20002
 
 
         burn_status_entity, entity_creation_error = create_burn_status(
             burn_day=mock_burn_day,
             burn_status=mock_burn_status,
-            county_name=mock_county_name
+            zip_code=mock_zip_code
         )
 
 

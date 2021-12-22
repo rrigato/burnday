@@ -1,7 +1,7 @@
 from burnday.repo.entity_serialization import create_burn_status
 
-def burn_status_for_county(county_name):
-    """Retrieves all BurnStatus entities from persistant storage for county_name
+def burn_status_for_zip(zip_code):
+    """Retrieves all BurnStatus entities from persistant storage for zip_code
 
         Parameters
         ----------
@@ -11,21 +11,22 @@ def burn_status_for_county(county_name):
         burn_status: str
             description of whether fuel burning is allowed for the location
 
-        county_name: str
-            name of the county to return burn status of
+        zip_code: int
+            numeric postal code
+            
 
         Returns
         -------
-        county_burn_status: list
+        location_burn_status: list
             list of BurnStatus entities or None if no BurnStatus entites were found
-            for the passed county_name
+            for the passed zip_code
 
         str_validation_error: None
             str if any unexpected error occurred when loading 
     """
     '''
         TODO - load dynamoDB table persistant storage
-        PK - county_name
+        PK - zip_code
         SK - Date
         burn_status - str
 
@@ -38,7 +39,7 @@ def burn_status_for_county(county_name):
 
         existing_items = dynamo_table.query(
             KeyConditionExpression=(
-                conditions.Key("PK").eq("burnday#" + county_name)
+                conditions.Key("PK").eq("burnday#" + zip_code)
             )
         )
 
