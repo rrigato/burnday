@@ -1,7 +1,7 @@
 from datetime import date
 
 class BurnStatus:
-    """Represents the burn status in a county for one day"""
+    """Represents the burn status in a location for one day"""
 
     @property
     def burn_day(self):
@@ -25,14 +25,15 @@ class BurnStatus:
 
 
     @property
-    def county_name(self):
-        return(self._county_name)
+    def zip_code(self):
+        return(self._zip_code)
 
-    @county_name.setter
-    def county_name(self, county_name):
-        if type(county_name) not in (str, type(None)):
-            raise TypeError("BurnStatus - county_name datatype must be a str")
-        self._county_name = county_name
+    @zip_code.setter
+    def zip_code(self, zip_code):
+        if type(zip_code) not in (int, type(None)):
+            raise TypeError("BurnStatus - zip_code datatype must be a int")
+        self._zip_code = zip_code
+
 
 
     @property
