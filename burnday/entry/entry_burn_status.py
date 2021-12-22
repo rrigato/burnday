@@ -1,68 +1,73 @@
-from burnday.entry.input_valdiators import validate_str_input
+from burnday.entry.input_valdiators import validate_numeric_input
 from burnday.entry.request_objects import InvalidRequest
 from burnday.entry.request_objects import ValidRequest
 
 import logging
 
 
-def county_burn_status(county_burn_status_request):
-    """Get the daily burn status for every county
+def location_burn_status(zip_code_burn_status):
+    """Get the daily burn status for the requested location
 
         Parameters
         ----------
-        county_burn_status_request: ValidRequest
-            county_burn_status_request.request_filters:
+        zip_code_burn_status: ValidRequest
+            zip_code_burn_status.request_filters:
             {
-                "county_name": str
+                "zip_code": int
             }
 
         Returns
         -------
-        county_burn_status_response: ResponseSuccess or ResponseFailure
-            county_burn_status_response.response_value is a list of dict where each dict has the keys:
+        location_burn_status_response: ResponseSuccess or ResponseFailure
+            location_burn_status_response.response_value is a list of dict where each dict has keys:
             {
                 "burn_day": datetime.date,
                 "burn_status": str,
-                "county_name": str
+                "zip_code": int
             }
-            if no burn status results are found for the given county_name,
-            county_burn_status_response.response_value=None
+            if no burn status results are found for the given zip_code,
+            location_burn_status_response.response_value=None
 
-            county_burn_status_response will be a ResponseFailure if any unexpected errors 
+            location_burn_status_response will be a ResponseFailure if any unexpected errors 
             occur when processing the usecase
     """
     '''
         TODO -
-        county_burn_status, burn_status_error = repo.burn_status_storage.burn_status_for_county
-        return ResponseSuccess(response_value=county_burn_status)
+        location_burn_status, burn_status_error = repo.burn_status_storage.burn_status_for_zip
+        return ResponseSuccess(response_value=location_burn_status)
         or ResponseFailure
     '''
     pass
 
 
-def validate_county_burn_status(county_name):
-    """Get a valid request for calling county_burn_status
+def validate_location_burn_status(zip_code):
+    """Get a valid request for calling location_burn_status
 
         Parameters
         ----------
-        county_name: str
-            name of the county to return burn status of
+        zip_code: int
+            numeric postal code
 
         Returns
         -------
-        county_burn_status_request: ValidRequest or InvalidRequest
+        zip_code_burn_status: ValidRequest or InvalidRequest
             request_filters attribute:
             {
-                "county_name": str
+                "zip_code": int
             }
             InvalidRequest is returned if the input does not pass validation
             
     """
-    county_name_validation = validate_str_input(str_input=county_name, max_len=150)
+    zip_code_validation = validate_numeric_input(
+        numeric_input=zip_code, 
+        min_val=0,
+        max_val=99999
+    )
 
-    if county_name_validation is not None:
-        logging.info("validate_county_burn_status - county_name did not pass input validation")
-        return(InvalidRequest(error_message=county_name_validation))
 
-    logging.info("validate_county_burn_status - returning a ValidRequest")
-    return(ValidRequest(request_filters={"county_name": county_name}))
+    if zip_code_validation is not None:
+        logging.info("validate_location_burn_status - zip_code did not pass input validation")
+        return(InvalidRequest(error_message=zip_code_validation))
+
+    logging.info("validate_location_burn_status - returning a ValidRequest")
+    return(ValidRequest(request_filters={"zip_code": zip_code}))

@@ -4,26 +4,26 @@ import unittest
 class TestEntryBurnStatus(unittest.TestCase):
 
 
-    def test_validate_county_burn_status(self):
-        """Happy Path validate_county_burn_status returns a ValidRequest"""
-        from burnday.entry.entry_burn_status import validate_county_burn_status
-        mock_county_name = "Sequoia National Park and Forest"
+    def test_validate_location_burn_status(self):
+        """Happy Path validate_location_burn_status returns a ValidRequest"""
+        from burnday.entry.entry_burn_status import validate_location_burn_status
+        mock_zip_code = 20002
 
-        county_burn_status_request = validate_county_burn_status(county_name=mock_county_name)
+        location_burn_status_request = validate_location_burn_status(zip_code=mock_zip_code)
 
         self.assertEqual(
-            county_burn_status_request.request_filters["county_name"], 
-            mock_county_name
+            location_burn_status_request.request_filters["zip_code"], 
+            mock_zip_code
         )
 
 
-    
-    def test_validate_county_burn_status_bad_input(self):
-        """Unhappy Path validate_county_burn_status returns a ValidRequest"""
-        from burnday.entry.entry_burn_status import validate_county_burn_status
+
+    def test_validate_location_burn_status_bad_input(self):
+        """Unhappy Path validate_location_burn_status returns an InvalidRequest"""
+        from burnday.entry.entry_burn_status import validate_location_burn_status
         from burnday.entry.request_objects import InvalidRequest
-        mock_county_name = ["Sequoia National Park and Forest", "Fresno"]
+        mock_zip_code = 100000
 
-        county_burn_status_request = validate_county_burn_status(county_name=mock_county_name)
+        location_burn_status_request = validate_location_burn_status(zip_code=mock_zip_code)
 
-        self.assertEqual(type(county_burn_status_request), InvalidRequest)
+        self.assertEqual(type(location_burn_status_request), InvalidRequest)
