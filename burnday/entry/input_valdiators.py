@@ -53,3 +53,35 @@ def validate_iso_8601_date(iso_formatted_str):
     except Exception as error_suppresion:
         logging.exception("validate_iso_8601_date - date.fromisoformat failed")
         return(None, "validate_iso_8601_date - str input not YYYY-MM-DD formatted")
+
+
+
+def validate_numeric_input(numeric_input, min_val, max_val):
+    """Validates numeric input is type int/float and in the inclusive interval [min_val, max_val]
+
+        Parameters
+        ----------
+        numeric_input: int or float
+            input that needs to be confirmed as a numeric
+
+        min_val: int or float
+            minimum value for numeric input
+
+        max_val: int or float
+            maximum for numeric_input
+
+        Returns
+        -------
+        validation_error: None
+            str if numeric_input did not pass validation
+    """
+    if type(numeric_input) not in (int, float):
+        return("validate_numeric_input - incorrect data type")
+
+    if numeric_input < min_val:
+        return("validate_numeric_input - numeric_input < min_val")
+
+    if numeric_input > max_val:
+        return("validate_numeric_input - numeric_input > max_val")
+
+    return(None)

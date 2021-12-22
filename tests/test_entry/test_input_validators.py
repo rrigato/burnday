@@ -83,3 +83,61 @@ class TestInputValidators(unittest.TestCase):
 
                 self.assertIsNone(parsed_date)
                 self.assertEqual(type(parse_date_error), str)
+
+
+    def test_validate_numeric_input(self):
+        """Happy Path, valid numeric input"""
+        from burnday.entry.input_valdiators import validate_numeric_input
+
+        mock_numeric_inputs = [
+            [3005, 11, 9000],
+            [1.5, 1.0, 2.0],
+            [1.3, 1.3, 1.3],
+            [3005, 11, 3006],
+            [3005, 3004, 3008],
+            [3005, 3005, 3005]
+
+        ]
+
+        for mock_numeric_input in mock_numeric_inputs:
+            with self.subTest(mock_numeric_input=mock_numeric_input):
+                self.assertIsNone(
+                    validate_numeric_input(
+                        numeric_input=mock_numeric_input[0],
+                        min_val=mock_numeric_input[1],
+                        max_val=mock_numeric_input[2],
+                    )
+                    
+                )
+
+
+    def test_validate_numeric_input_bad_input(self):
+        """Unhappy Path, incorrect data type or values"""
+        from burnday.entry.input_valdiators import validate_numeric_input
+
+        mock_numeric_inputs = [
+            [3005, 11, 28],
+            [1.5, 1.0, 1.1],
+            [1.2, 1.3, 1.3],
+            [3005, 3006, 3007],
+            [3005, 3008, 3008],
+            
+            ["20002", 0, 100000],
+            [None, 0, 100000]
+
+        ]
+
+        for mock_numeric_input in mock_numeric_inputs:
+            with self.subTest(mock_numeric_input=mock_numeric_input):
+                self.assertEqual(
+                    type(
+                        validate_numeric_input(
+                            numeric_input=mock_numeric_input[0],
+                            min_val=mock_numeric_input[1],
+                            max_val=mock_numeric_input[2],
+                        )
+                    ),
+                    str
+                )
+
+                
