@@ -3,12 +3,12 @@ import unittest
 class TestAirQualityIndexMapper(unittest.TestCase):
 
     def test_aqi_to_pm_breakpoints(self):
-        """Ensures air quality index breakpoints are present up through an AQI of 500"""
+        """Ensures air quality index breakpoints are present up through an AQI of 999"""
         from burnday.entities.air_quality_index_mapper import aqi_to_pm_breakpoints
 
         aqi_breakpoints = aqi_to_pm_breakpoints()
 
-        for possible_aqi_value in range(101):
+        for possible_aqi_value in range(1000):
             with self.subTest(possible_aqi_value=possible_aqi_value):
 
                 self.assertEqual(
@@ -36,15 +36,15 @@ class TestAirQualityIndexMapper(unittest.TestCase):
                     float
                 )
 
-                self.assertEqual(
-                    type(aqi_breakpoints[possible_aqi_value]["pm_10_lower"]),
-                    float
-                )
+                # self.assertEqual(
+                #     type(aqi_breakpoints[possible_aqi_value]["pm_10_lower"]),
+                #     float
+                # )
 
-                self.assertEqual(
-                    type(aqi_breakpoints[possible_aqi_value]["pm_10_upper"]),
-                    float
-                )
+                # self.assertEqual(
+                #     type(aqi_breakpoints[possible_aqi_value]["pm_10_upper"]),
+                #     float
+                # )
 
 
                 
