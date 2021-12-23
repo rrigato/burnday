@@ -2,6 +2,61 @@ from copy import deepcopy
 
 import csv
 
+def _load_csv_for_parameter(metric_to_convert_to, duration_description):
+    """loads rows of aqi_breakpoints.csv for the metric that the air quality index will be 
+        converted to
+
+        Parameters
+        -------
+        metric_to_convert_to: str
+            metric you want to convert to, filters first column of aqi_breakpoints.csv
+
+        duration_description: str
+            time period used when calculating the metric, fourth column of the csv
+
+        Returns
+        -------
+        aqi_mapping_table: list
+            Each element is a list containing the following element definition:
+
+            Element 0 - str - "Parameter" - corresponds to metrics you want to convert to such
+                as PM2.5 fine particulate matter
+            Element 1 - str - "Parameter code"
+
+            Element 2 - str - "Duration code" - corresponds to a code for duration description
+
+            Element 3 - str - "Duration Description"
+
+            Element 4 - str - "AQI Category" - Air Quality Index category
+
+            Element 5 - int - "Low AQI" - Lower bound of air quality 
+                Example AQI of 85 will result in this element being 51
+
+            Element 6 - int - "High AQI" - Upper bound of air quality 
+                Example AQI of 85 will result in this element being 100
+
+            Element 7 - float - "Low Breakpoint" - lower bound of metric you are converting to 
+                Example converting AQI of 85 to PM2.5 will result in this element being 12.1
+
+            Element 8 - float - "High Breakpoint" - Upper bound of metric you are converting to 
+                Example converting AQI of 85 to PM2.5 will result in this element being 35.4
+
+            
+
+    """
+    metric_selection_list = []
+    with open("burnday/entities/aqi_breakpoints.csv", "r") as aqi_mapping:
+        aqi_reader = csv.reader(aqi_mapping, delimiter=',')
+        
+        for aqi_row in aqi_reader:
+            aqi_row[5] = int(aqi_row[5])
+            aqi_row[6] = int(aqi_row[6])
+            aqi_row[7] = int(aqi_row[7])
+            aqi_row[8] = int(aqi_row[8])
+            if ((aqi_row[0] == metric_to_convert_to) and (aqi_row[3] == duration_description)):
+                metric_selection_list.append(aqi_row)
+
+
 def _apply_fine_particulate_matter_2_5(aqi_breakpoints):
     """Populates air quality index breakpoints for the PM2.5
 
@@ -14,9 +69,7 @@ def _apply_fine_particulate_matter_2_5(aqi_breakpoints):
                 "aqi_lower": float,
                 "aqi_upper": float,
                 "pm_2_5_lower": float,
-                "pm_2_5_upper": float,
-                "pm_10_lower": float,
-                "pm_10_upper": float
+                "pm_2_5_upper": float
             }
     """
     with open("burnday/entities/aqi_breakpoints.csv", "r") as aqi_mapping:
