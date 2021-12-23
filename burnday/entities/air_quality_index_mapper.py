@@ -86,13 +86,12 @@ def _apply_fine_particulate_matter_2_5(aqi_breakpoints):
             duration_description="24 HOUR"
         ):
         for air_quality_index_value in range(aqi_lookup["Low AQI"], (aqi_lookup["High AQI"] + 1)):
-            aqi_breakpoints[air_quality_index_value] = {
-                "aqi_category": aqi_lookup["AQI Category"],
-                "aqi_lower": aqi_lookup["Low AQI"],
-                "aqi_upper": aqi_lookup["High AQI"],
-                "pm_2_5_lower": aqi_lookup["Low Breakpoint"],
-                "pm_2_5_upper": aqi_lookup["High Breakpoint"]
-            }
+            
+            aqi_breakpoints[air_quality_index_value]["aqi_category"] = aqi_lookup["AQI Category"]
+            aqi_breakpoints[air_quality_index_value]["aqi_lower"] = aqi_lookup["Low AQI"]
+            aqi_breakpoints[air_quality_index_value]["aqi_upper"] = aqi_lookup["High AQI"]
+            aqi_breakpoints[air_quality_index_value]["pm_2_5_lower"] = aqi_lookup["Low Breakpoint"]
+            aqi_breakpoints[air_quality_index_value]["pm_2_5_upper"] = aqi_lookup["High Breakpoint"]
 
 
 def _apply_moderate_aqi_category(aqi_breakpoints):
