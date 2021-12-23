@@ -3,8 +3,8 @@ from copy import deepcopy
 import csv
 
 def _load_csv_for_parameter(metric_to_convert_to, duration_description):
-    """loads rows of aqi_breakpoints.csv for the metric that the air quality index will be 
-        converted to
+    """loads aqi_breakpoints.csv metadata for converting the air quality index 
+        to other metrics
 
         Parameters
         -------
@@ -17,28 +17,29 @@ def _load_csv_for_parameter(metric_to_convert_to, duration_description):
         Returns
         -------
         aqi_mapping_table: list
-            Each element is a list containing the following element definition:
+            Each element is a dict containing the following keys:
 
-            Element 0 - str - "Parameter" - corresponds to metrics you want to convert to such
+            "Parameter" - str - corresponds to metrics you want to convert to such
                 as PM2.5 fine particulate matter
-            Element 1 - str - "Parameter code"
 
-            Element 2 - str - "Duration code" - corresponds to a code for duration description
+            "Parameter code" - str -
 
-            Element 3 - str - "Duration Description"
+            "Duration code" - str - corresponds to a code for duration description
 
-            Element 4 - str - "AQI Category" - Air Quality Index category
+            "Duration Description" - str -
 
-            Element 5 - int - "Low AQI" - Lower bound of air quality 
+            "AQI Category" - str - Air Quality Index category
+
+            "Low AQI" - int - Lower bound of air quality 
                 Example AQI of 85 will result in this element being 51
 
-            Element 6 - int - "High AQI" - Upper bound of air quality 
+            "High AQI" - int - Upper bound of air quality 
                 Example AQI of 85 will result in this element being 100
 
-            Element 7 - float - "Low Breakpoint" - lower bound of metric you are converting to 
+            "Low Breakpoint" - float - lower bound of metric you are converting to 
                 Example converting AQI of 85 to PM2.5 will result in this element being 12.1
 
-            Element 8 - float - "High Breakpoint" - Upper bound of metric you are converting to 
+            "High Breakpoint" - float - Upper bound of metric you are converting to 
                 Example converting AQI of 85 to PM2.5 will result in this element being 35.4
 
             
@@ -46,15 +47,21 @@ def _load_csv_for_parameter(metric_to_convert_to, duration_description):
     """
     metric_selection_list = []
     with open("burnday/entities/aqi_breakpoints.csv", "r") as aqi_mapping:
-        aqi_reader = csv.reader(aqi_mapping, delimiter=',')
+        aqi_reader = csv.DictReader(aqi_mapping, delimiter=',')
         
-        for aqi_row in aqi_reader:
-            aqi_row[5] = int(aqi_row[5])
-            aqi_row[6] = int(aqi_row[6])
-            aqi_row[7] = int(aqi_row[7])
-            aqi_row[8] = int(aqi_row[8])
-            if ((aqi_row[0] == metric_to_convert_to) and (aqi_row[3] == duration_description)):
-                metric_selection_list.append(aqi_row)
+        for aqi_lookup in aqi_reader:
+            aqi_lookup["Low AQI"] = int(aqi_lookup["Low AQI"])
+            aqi_lookup["High AQI"] = int(aqi_lookup["High AQI"])
+            aqi_lookup["Low Breakpoint"] = float(aqi_lookup["Low Breakpoint"])
+            aqi_lookup["High Breakpoint"] = float(aqi_lookup["High Breakpoint"])
+            if (
+                    (aqi_lookup["Parameter"] == metric_to_convert_to) 
+                    and 
+                    (aqi_lookup["Duration Description"] == duration_description)
+                ):
+                metric_selection_list.append(aqi_lookup)
+
+    return(metric_selection_list)
 
 
 def _apply_fine_particulate_matter_2_5(aqi_breakpoints):
@@ -72,20 +79,18 @@ def _apply_fine_particulate_matter_2_5(aqi_breakpoints):
                 "pm_2_5_upper": float
             }
     """
-    with open("burnday/entities/aqi_breakpoints.csv", "r") as aqi_mapping:
-        aqi_reader = csv.reader(aqi_mapping, delimiter=',')
-        for aqi_row in aqi_reader:
-            if ((aqi_row[0] != "Acceptable PM2.5 AQI & Speciation Mass") and 
-                (aqi_row[2] != "7")):
-                continue
-            for air_quality_index_value in range(int(aqi_row[5]), int(aqi_row[6]) + 1):
-                aqi_breakpoints[air_quality_index_value] = {
-                    "aqi_category": aqi_row[4],
-                    "aqi_lower": int(aqi_row[5]),
-                    "aqi_upper": int(aqi_row[6]),
-                    "pm_2_5_lower": float(aqi_row[7]),
-                    "pm_2_5_upper": float(aqi_row[8])
-                }
+    for aqi_lookup in _load_csv_for_parameter(
+            metric_to_convert_to="Acceptable PM2.5 AQI & Speciation Mass", 
+            duration_description="24 HOUR"
+        ):
+        for air_quality_index_value in range(aqi_lookup["Low AQI"], (aqi_lookup["High AQI"] + 1)):
+            aqi_breakpoints[air_quality_index_value] = {
+                "aqi_category": aqi_lookup["AQI Category"],
+                "aqi_lower": aqi_lookup["Low AQI"],
+                "aqi_upper": aqi_lookup["High AQI"],
+                "pm_2_5_lower": aqi_lookup["Low Breakpoint"],
+                "pm_2_5_upper": aqi_lookup["High Breakpoint"]
+            }
 
 
 
@@ -220,9 +225,14 @@ def aqi_to_pm_breakpoints():
 
 
 if __name__ == "__main__":
-    print(_apply_fine_particulate_matter_2_5(_air_quality_index_structure({})))[0:50]
-    x = {}
-    _air_quality_index_structure(x)
+    # print(_apply_fine_particulate_matter_2_5(_air_quality_index_structure({})))[0:50]
+    # x = {}
+    # _air_quality_index_structure(x)
 
-    _apply_fine_particulate_matter_2_5(x)
-    print(x[0])
+    # _apply_fine_particulate_matter_2_5(x)
+    # print(x[0])
+
+    print(_load_csv_for_parameter(
+            metric_to_convert_to="Acceptable PM2.5 AQI & Speciation Mass", 
+            duration_description="24 HOUR"
+    ))
