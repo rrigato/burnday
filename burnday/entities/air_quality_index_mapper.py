@@ -1,6 +1,7 @@
 from copy import deepcopy
 
 import csv
+import logging
 
 def _load_csv_for_parameter(metric_to_convert_to, duration_description):
     """loads aqi_breakpoints.csv metadata for converting the air quality index 
@@ -16,7 +17,7 @@ def _load_csv_for_parameter(metric_to_convert_to, duration_description):
 
         Returns
         -------
-        aqi_mapping_table: list
+        selected_metric_mapping: list
             Each element is a dict containing the following keys:
 
             "Parameter" - str - corresponds to metrics you want to convert to such
@@ -45,7 +46,8 @@ def _load_csv_for_parameter(metric_to_convert_to, duration_description):
             
 
     """
-    metric_selection_list = []
+    selected_metric_mapping = []
+
     with open("burnday/entities/aqi_breakpoints.csv", "r") as aqi_mapping:
         aqi_reader = csv.DictReader(aqi_mapping, delimiter=',')
         
@@ -59,9 +61,9 @@ def _load_csv_for_parameter(metric_to_convert_to, duration_description):
                     and 
                     (aqi_lookup["Duration Description"] == duration_description)
                 ):
-                metric_selection_list.append(aqi_lookup)
+                selected_metric_mapping.append(aqi_lookup)
 
-    return(metric_selection_list)
+    return(selected_metric_mapping)
 
 
 def _apply_fine_particulate_matter_2_5(aqi_breakpoints):
@@ -91,7 +93,6 @@ def _apply_fine_particulate_matter_2_5(aqi_breakpoints):
                 "pm_2_5_lower": aqi_lookup["Low Breakpoint"],
                 "pm_2_5_upper": aqi_lookup["High Breakpoint"]
             }
-
 
 
 def _apply_moderate_aqi_category(aqi_breakpoints):
@@ -215,24 +216,22 @@ def aqi_to_pm_breakpoints():
             pm_10_lower = coarse particulate matter lower bound for given air quality index
             pm_10_upper = coarse particulate matter upper bound for given air quality index
     """
-    aqi_mapping_table = {}
+    aqi_metric_conversion_mapping = {}
 
-    _air_quality_index_structure(aqi_breakpoints=aqi_mapping_table)
+    logging.info("aqi_to_pm_breakpoints - loading aqi metric conversion table")
 
-    _apply_fine_particulate_matter_2_5(aqi_breakpoints=aqi_mapping_table)
+    _air_quality_index_structure(aqi_breakpoints=aqi_metric_conversion_mapping)
 
-    return(deepcopy(aqi_mapping_table))
+    _apply_fine_particulate_matter_2_5(aqi_breakpoints=aqi_metric_conversion_mapping)
+
+    logging.info("aqi_to_pm_breakpoints - pm2.5 loaded")
+
+    return(deepcopy(aqi_metric_conversion_mapping))
 
 
 if __name__ == "__main__":
-    # print(_apply_fine_particulate_matter_2_5(_air_quality_index_structure({})))[0:50]
-    # x = {}
-    # _air_quality_index_structure(x)
+    x = {}
+    _air_quality_index_structure(x)
 
-    # _apply_fine_particulate_matter_2_5(x)
-    # print(x[0])
-
-    print(_load_csv_for_parameter(
-            metric_to_convert_to="Acceptable PM2.5 AQI & Speciation Mass", 
-            duration_description="24 HOUR"
-    ))
+    _apply_fine_particulate_matter_2_5(x)
+    print(x[0])
