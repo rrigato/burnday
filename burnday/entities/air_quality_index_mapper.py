@@ -43,8 +43,6 @@ def _load_csv_for_parameter(metric_to_convert_to, duration_description):
             "High Breakpoint" - float - Upper bound of metric you are converting to 
                 Example converting AQI of 85 to PM2.5 will result in this element being 35.4
 
-            
-
     """
     selected_metric_mapping = []
 
@@ -66,6 +64,64 @@ def _load_csv_for_parameter(metric_to_convert_to, duration_description):
     return(selected_metric_mapping)
 
 
+def _aqi_breakpoints_wrapper(aqi_breakpoints, aqi_lookup, metric_prefix):
+    """Populates aqi_breakpoints for lower and upper thresholds
+
+        Parameters
+        -------
+        aqi_breakpoints: dict
+            key is an int representing the air quality index, value is a dict with the
+            following structure:
+            {
+                "aqi_category": str,
+                "aqi_lower": float,
+                "aqi_upper": float,
+                "pm_2_5_lower": float,
+                "pm_2_5_upper": float,
+                "pm_10_lower": float,
+                "pm_10_upper": float
+            }
+
+        aqi_lookup: list
+            Each element is a dict containing the following keys:
+
+            "Parameter" - str - corresponds to metrics you want to convert to such
+                as PM2.5 fine particulate matter
+
+            "Parameter code" - str -
+
+            "Duration code" - str - corresponds to a code for duration description
+
+            "Duration Description" - str -
+
+            "AQI Category" - str - Air Quality Index category
+
+            "Low AQI" - int - Lower bound of air quality 
+                Example AQI of 85 will result in this element being 51
+
+            "High AQI" - int - Upper bound of air quality 
+                Example AQI of 85 will result in this element being 100
+
+            "Low Breakpoint" - float - lower bound of metric you are converting to 
+                Example converting AQI of 85 to PM2.5 will result in this element being 12.1
+
+            "High Breakpoint" - float - Upper bound of metric you are converting to 
+                Example converting AQI of 85 to PM2.5 will result in this element being 35.4
+
+        metric_prefix: str
+            will be used for populating the aqi_breakpoints keys with the following logic:
+            <metric_prefix>_lower 
+            <metric_prefix>_upper
+    """
+    for air_quality_index_value in range(aqi_lookup["Low AQI"], (aqi_lookup["High AQI"] + 1)):
+
+        aqi_breakpoints[air_quality_index_value]["aqi_category"] = aqi_lookup["AQI Category"]
+        aqi_breakpoints[air_quality_index_value]["aqi_lower"] = aqi_lookup["Low AQI"]
+        aqi_breakpoints[air_quality_index_value]["aqi_upper"] = aqi_lookup["High AQI"]
+        aqi_breakpoints[air_quality_index_value][metric_prefix + "_lower"] = aqi_lookup["Low Breakpoint"]
+        aqi_breakpoints[air_quality_index_value][metric_prefix + "_upper"] = aqi_lookup["High Breakpoint"]
+
+
 def _apply_fine_particulate_matter_2_5(aqi_breakpoints):
     """Populates air quality index breakpoints for the PM2.5
 
@@ -85,13 +141,11 @@ def _apply_fine_particulate_matter_2_5(aqi_breakpoints):
             metric_to_convert_to="Acceptable PM2.5 AQI & Speciation Mass", 
             duration_description="24 HOUR"
         ):
-        for air_quality_index_value in range(aqi_lookup["Low AQI"], (aqi_lookup["High AQI"] + 1)):
-            
-            aqi_breakpoints[air_quality_index_value]["aqi_category"] = aqi_lookup["AQI Category"]
-            aqi_breakpoints[air_quality_index_value]["aqi_lower"] = aqi_lookup["Low AQI"]
-            aqi_breakpoints[air_quality_index_value]["aqi_upper"] = aqi_lookup["High AQI"]
-            aqi_breakpoints[air_quality_index_value]["pm_2_5_lower"] = aqi_lookup["Low Breakpoint"]
-            aqi_breakpoints[air_quality_index_value]["pm_2_5_upper"] = aqi_lookup["High Breakpoint"]
+        _aqi_breakpoints_wrapper(
+            aqi_breakpoints=aqi_breakpoints, 
+            aqi_lookup=aqi_lookup,
+            metric_prefix="pm_2_5"
+        )
 
 
 def _apply_moderate_aqi_category(aqi_breakpoints):
