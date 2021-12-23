@@ -36,6 +36,9 @@ class BurnStatus:
 
 
 
+    '''
+        TODO - change to int
+    '''
     @property
     def air_quality_index(self):
         return(self._air_quality_index)
