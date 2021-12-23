@@ -10,7 +10,6 @@ def _apply_good_aqi_category(aqi_breakpoints):
             following structure:
             {
                 "aqi_category": str,
-                "aqi_color": str,
                 "aqi_lower": float,
                 "aqi_upper": float,
                 "pm_2_5_lower": float,
@@ -22,7 +21,6 @@ def _apply_good_aqi_category(aqi_breakpoints):
     for air_quality_value in range(0, 51):
         aqi_breakpoints[air_quality_value] = {
             "aqi_category": "good",
-            "aqi_color": "green",
             "aqi_lower": 0,
             "aqi_upper": 50,
             "pm_2_5_lower": 0.0,
@@ -42,7 +40,6 @@ def _apply_moderate_aqi_category(aqi_breakpoints):
             following structure:
             {
                 "aqi_category": str,
-                "aqi_color": str,
                 "aqi_lower": float,
                 "aqi_upper": float,
                 "pm_2_5_lower": float,
@@ -51,14 +48,13 @@ def _apply_moderate_aqi_category(aqi_breakpoints):
                 "pm_10_upper": float
             }
     """
-    for air_quality_value in range(0, 51):
+    for air_quality_value in range(51, 101):
         aqi_breakpoints[air_quality_value] = {
             "aqi_category": "moderate",
-            "aqi_color": "green",
-            "aqi_lower": 0,
-            "aqi_upper": 50,
-            "pm_2_5_lower": 0.0,
-            "pm_2_5_upper": 12.0,
+            "aqi_lower": 51,
+            "aqi_upper": 101,
+            "pm_2_5_lower": 12.1,
+            "pm_2_5_upper": 35.4,
             "pm_10_lower": 0.0,
             "pm_10_upper": 54.0 
         }
@@ -75,7 +71,6 @@ def aqi_to_pm_breakpoints():
             following structure:
             {
                 "aqi_category": str,
-                "aqi_color": str,
                 "aqi_lower": float,
                 "aqi_upper": float,
                 "pm_2_5_lower": float,
@@ -85,8 +80,6 @@ def aqi_to_pm_breakpoints():
             }
             aqi_category = "good", "moderate", "UNHEALTHY FOR SENSITIVE", "UNHEALTHY", 
             "VERY UNHEALTHY", "HAZARDOUS"
-            aqi_color = color to symbolize category
-            https://www.epa.gov/outdoor-air-quality-data/air-data-basic-information
 
             aqi_lower = air quality index lower bound for given air quality index
             aqi_upper = air quality index upper bound for given air quality index            
@@ -101,6 +94,6 @@ def aqi_to_pm_breakpoints():
 
     _apply_good_aqi_category(aqi_breakpoints=aqi_mapping_table)
 
-    # _apply_moderate_aqi_category(aqi_breakpoints=aqi_mapping_table)
+    _apply_moderate_aqi_category(aqi_breakpoints=aqi_mapping_table)
 
     return(deepcopy(aqi_mapping_table))
