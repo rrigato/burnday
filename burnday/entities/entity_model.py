@@ -42,16 +42,13 @@ class BurnStatus:
             raise TypeError("BurnStatus - zip_code datatype must be a int")
         self._zip_code = zip_code
 
-    '''
-        TODO - change to int
-    '''
     @property
     def air_quality_index(self):
         return(self._air_quality_index)
 
     @air_quality_index.setter
     def air_quality_index(self, air_quality_index):
-        if type(air_quality_index) not in (int, float, type(None)):
+        if type(air_quality_index) not in (int, type(None)):
             raise TypeError("BurnStatus - air_quality_index datatype must be a int/float")
         self._air_quality_index = air_quality_index
 
