@@ -1,17 +1,18 @@
 from burnday.entry.input_valdiators import validate_numeric_input
 from burnday.entry.request_objects import InvalidRequest
 from burnday.entry.request_objects import ValidRequest
+from burnday.repo.burn_status_storage import burn_status_for_zip
 
 import logging
 
 
-def location_burn_status(zip_code_burn_status):
+def location_burn_status(zip_code_request):
     """Get the daily burn status for the requested location
 
         Parameters
         ----------
-        zip_code_burn_status: ValidRequest
-            zip_code_burn_status.request_filters:
+        zip_code_request: ValidRequest
+            zip_code_request.request_filters:
             {
                 "zip_code": int
             }
@@ -33,7 +34,9 @@ def location_burn_status(zip_code_burn_status):
     """
     '''
         TODO -
-        location_burn_status, burn_status_error = repo.burn_status_storage.burn_status_for_zip
+        location_burn_status, burn_status_error = burn_status_for_zip(zip_code=zip_code_request.request_filters["zip_code"])
+        if burn_status_error is not None:
+            return(ResponseFailure(error_message=burn_status_error))
         return ResponseSuccess(response_value=location_burn_status)
         or ResponseFailure
     '''
@@ -50,7 +53,7 @@ def validate_location_burn_status(zip_code):
 
         Returns
         -------
-        zip_code_burn_status: ValidRequest or InvalidRequest
+        zip_code_request: ValidRequest or InvalidRequest
             request_filters attribute:
             {
                 "zip_code": int
