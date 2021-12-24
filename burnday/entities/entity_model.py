@@ -3,6 +3,15 @@ from datetime import date
 class BurnStatus:
     """Represents the burn status in a location for one day"""
 
+    def __init__(self):
+        """Initialize all attributes to None"""
+        self.air_quality_index = None
+        self.burn_day = None
+        self.burn_status = None
+        self.coarse_particulate_matter_10 = None
+        self.fine_particulate_matter_2_5 = None
+        self.zip_code = None
+
     @property
     def burn_day(self):
         return(self._burn_day)
@@ -23,7 +32,6 @@ class BurnStatus:
             raise TypeError("BurnStatus - burn_status datatype must be a str")
         self._burn_status = burn_status
 
-
     @property
     def zip_code(self):
         return(self._zip_code)
@@ -33,8 +41,6 @@ class BurnStatus:
         if type(zip_code) not in (int, type(None)):
             raise TypeError("BurnStatus - zip_code datatype must be a int")
         self._zip_code = zip_code
-
-
 
     '''
         TODO - change to int
@@ -48,8 +54,6 @@ class BurnStatus:
         if type(air_quality_index) not in (int, float, type(None)):
             raise TypeError("BurnStatus - air_quality_index datatype must be a int/float")
         self._air_quality_index = air_quality_index
-
-
 
     @property
     def fine_particulate_matter_2_5(self):

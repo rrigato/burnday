@@ -95,3 +95,21 @@ class TestEntityModel(unittest.TestCase):
 
                 with self.assertRaises(TypeError):
                     mock_burn_status.coarse_particulate_matter_10 = mock_invalid_type
+
+
+    def test_burn_status_defaults_none(self):
+        """All BurnStatus attributes are None after instance intialization"""
+        from burnday.entities.entity_model import BurnStatus
+
+        burn_status_entity = BurnStatus()
+
+        
+        burn_status_attributes = [
+            attribute_name for attribute_name in dir(burn_status_entity) 
+            if not attribute_name.startswith("_")
+        ]
+
+        [
+            self.assertIsNone(getattr(burn_status_entity, burn_status_attribute)) 
+            for burn_status_attribute in burn_status_attributes
+        ]
