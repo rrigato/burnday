@@ -1,6 +1,8 @@
 from burnday.entry.input_valdiators import validate_numeric_input
 from burnday.entry.request_objects import InvalidRequest
 from burnday.entry.request_objects import ValidRequest
+from burnday.entry.response_objects import ResponseFailure
+from burnday.entry.response_objects import ResponseSuccess
 from burnday.repo.burn_status_storage import burn_status_for_zip
 
 import logging
@@ -20,27 +22,27 @@ def location_burn_status(zip_code_request):
         Returns
         -------
         location_burn_status_response: ResponseSuccess or ResponseFailure
-            location_burn_status_response.response_value is a list of dict where each dict has keys:
-            {
-                "burn_day": datetime.date,
-                "burn_status": str,
-                "zip_code": int
-            }
+            location_burn_status_response.response_value is a BurnStatus Entity
             if no burn status results are found for the given zip_code,
             location_burn_status_response.response_value=None
 
             location_burn_status_response will be a ResponseFailure if any unexpected errors 
             occur when processing the usecase
     """
-    '''
-        TODO -
-        location_burn_status, burn_status_error = burn_status_for_zip(zip_code=zip_code_request.request_filters["zip_code"])
-        if burn_status_error is not None:
-            return(ResponseFailure(error_message=burn_status_error))
-        return ResponseSuccess(response_value=location_burn_status)
-        or ResponseFailure
-    '''
-    pass
+    location_burn_status, burn_status_error = burn_status_for_zip(
+        zip_code=zip_code_request.request_filters["zip_code"]
+    )
+
+    if burn_status_error is not None:
+        logging.info("location_burn_status - burn_status_error")
+        return(ResponseFailure(error_message=burn_status_error))
+
+    if location_burn_status is None:
+        logging.info("location_burn_status - location_burn_status is None")
+        return(ResponseSuccess(response_value=None))   
+
+    logging.info("location_burn_status - ResponseSuccess with entity")
+    return(ResponseSuccess(response_value=location_burn_status))     
 
 
 def validate_location_burn_status(zip_code):
