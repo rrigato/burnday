@@ -49,22 +49,22 @@ def _load_csv_for_parameter(metric_to_convert_to, duration_description):
     with open("burnday/entities/aqi_breakpoints.csv", "r") as aqi_mapping:
         aqi_reader = csv.DictReader(aqi_mapping, delimiter=',')
         
-        for aqi_lookup in aqi_reader:
-            aqi_lookup["Low AQI"] = int(aqi_lookup["Low AQI"])
-            aqi_lookup["High AQI"] = int(aqi_lookup["High AQI"])
-            aqi_lookup["Low Breakpoint"] = float(aqi_lookup["Low Breakpoint"])
-            aqi_lookup["High Breakpoint"] = float(aqi_lookup["High Breakpoint"])
+        for aqi_category in aqi_reader:
+            aqi_category["Low AQI"] = int(aqi_category["Low AQI"])
+            aqi_category["High AQI"] = int(aqi_category["High AQI"])
+            aqi_category["Low Breakpoint"] = float(aqi_category["Low Breakpoint"])
+            aqi_category["High Breakpoint"] = float(aqi_category["High Breakpoint"])
             if (
-                    (aqi_lookup["Parameter"] == metric_to_convert_to) 
+                    (aqi_category["Parameter"] == metric_to_convert_to) 
                     and 
-                    (aqi_lookup["Duration Description"] == duration_description)
+                    (aqi_category["Duration Description"] == duration_description)
                 ):
-                selected_metric_mapping.append(aqi_lookup)
+                selected_metric_mapping.append(aqi_category)
 
     return(selected_metric_mapping)
 
 
-def _aqi_breakpoints_wrapper(aqi_breakpoints, aqi_lookup, metric_prefix):
+def _aqi_breakpoints_wrapper(aqi_breakpoints, aqi_category, metric_prefix):
     """Populates aqi_breakpoints for lower and upper thresholds
 
         Parameters
@@ -82,7 +82,7 @@ def _aqi_breakpoints_wrapper(aqi_breakpoints, aqi_lookup, metric_prefix):
                 "pm_10_upper": float
             }
 
-        aqi_lookup: list
+        aqi_category: list
             Each element is a dict containing the following keys:
 
             "Parameter" - str - corresponds to metrics you want to convert to such
@@ -113,15 +113,20 @@ def _aqi_breakpoints_wrapper(aqi_breakpoints, aqi_lookup, metric_prefix):
             <metric_prefix>_lower 
             <metric_prefix>_upper
     """
-    for air_quality_index_value in range(aqi_lookup["Low AQI"], (aqi_lookup["High AQI"] + 1)):
+    for aqi_value in range(aqi_category["Low AQI"], (aqi_category["High AQI"] + 1)):
 
-        aqi_breakpoints[air_quality_index_value]["aqi_category"] = aqi_lookup["AQI Category"]
-        aqi_breakpoints[air_quality_index_value]["aqi_lower"] = aqi_lookup["Low AQI"]
-        aqi_breakpoints[air_quality_index_value]["aqi_upper"] = aqi_lookup["High AQI"]
-        aqi_breakpoints[air_quality_index_value][metric_prefix + "_lower"] = aqi_lookup["Low Breakpoint"]
-        aqi_breakpoints[air_quality_index_value][metric_prefix + "_upper"] = aqi_lookup["High Breakpoint"]
+        aqi_breakpoints[aqi_value]["aqi_category"] = aqi_category["AQI Category"]
+        aqi_breakpoints[aqi_value]["aqi_lower"] = aqi_category["Low AQI"]
+        aqi_breakpoints[aqi_value]["aqi_upper"] = aqi_category["High AQI"]
+        aqi_breakpoints[aqi_value][metric_prefix + "_lower"] = aqi_category["Low Breakpoint"]
+        aqi_breakpoints[aqi_value][metric_prefix + "_upper"] = aqi_category["High Breakpoint"]
 
 
+
+'''
+    TODO - 
+    take this function and load the coarse_particulate_matter_10 upper and lower bounds
+'''
 def _apply_fine_particulate_matter_2_5(aqi_breakpoints):
     """Populates air quality index breakpoints for the PM2.5
 
@@ -137,74 +142,15 @@ def _apply_fine_particulate_matter_2_5(aqi_breakpoints):
                 "pm_2_5_upper": float
             }
     """
-    for aqi_lookup in _load_csv_for_parameter(
+    for aqi_category in _load_csv_for_parameter(
             metric_to_convert_to="Acceptable PM2.5 AQI & Speciation Mass", 
             duration_description="24 HOUR"
         ):
         _aqi_breakpoints_wrapper(
             aqi_breakpoints=aqi_breakpoints, 
-            aqi_lookup=aqi_lookup,
+            aqi_category=aqi_category,
             metric_prefix="pm_2_5"
         )
-
-
-def _apply_moderate_aqi_category(aqi_breakpoints):
-    """Populates dict keys with the air quality index values in the moderate category
-
-        Parameters
-        -------
-        aqi_breakpoints: dict
-            key is an int representing the air quality index, value is a dict with the
-            following structure:
-            {
-                "aqi_category": str,
-                "aqi_lower": float,
-                "aqi_upper": float,
-                "pm_2_5_lower": float,
-                "pm_2_5_upper": float,
-                "pm_10_lower": float,
-                "pm_10_upper": float
-            }
-    """
-    for air_quality_value in range(51, 101):
-        aqi_breakpoints[air_quality_value] = {
-            "aqi_category": "moderate",
-            "aqi_lower": 51,
-            "aqi_upper": 101,
-            "pm_2_5_lower": 12.1,
-            "pm_2_5_upper": 35.4,
-            "pm_10_lower": 0.0,
-            "pm_10_upper": 54.0 
-        }
-
-def _apply_unhealthy_for_sensitive_aqi_category(aqi_breakpoints):
-    """Populates dict keys with the air quality index values in the unhealthy for sensitive category
-
-        Parameters
-        -------
-        aqi_breakpoints: dict
-            key is an int representing the air quality index, value is a dict with the
-            following structure:
-            {
-                "aqi_category": str,
-                "aqi_lower": float,
-                "aqi_upper": float,
-                "pm_2_5_lower": float,
-                "pm_2_5_upper": float,
-                "pm_10_lower": float,
-                "pm_10_upper": float
-            }
-    """
-    for air_quality_value in range(101, 151):
-        aqi_breakpoints[air_quality_value] = {
-            "aqi_category": "moderate",
-            "aqi_lower": 51,
-            "aqi_upper": 101,
-            "pm_2_5_lower": 35.5,
-            "pm_2_5_upper": 55.4,
-            "pm_10_lower": 0.0,
-            "pm_10_upper": 54.0 
-        }
 
 
 def _air_quality_index_structure(aqi_breakpoints):
@@ -288,3 +234,4 @@ if __name__ == "__main__":
 
     _apply_fine_particulate_matter_2_5(x)
     print(x[0])
+    print(len(x))

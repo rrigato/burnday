@@ -36,6 +36,10 @@ class TestAirQualityIndexMapper(unittest.TestCase):
                     float
                 )
 
+                '''
+                    TODO - uncomment once coarse_particulate_matter_10 
+                    upper and lower bounds are populated
+                '''
                 # self.assertEqual(
                 #     type(aqi_breakpoints[possible_aqi_value]["pm_10_lower"]),
                 #     float
