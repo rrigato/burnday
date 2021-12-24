@@ -18,6 +18,9 @@ def burn_status_for_zip(zip_code):
     """
     '''
         TODO - 
+        load api credentials
+        before making api call:
+        str(zip_code).rjust(5, '0')
         API call to load AQI from persistant storage
         https://docs.airnowapi.org/forecastsbyzip/docs
 
