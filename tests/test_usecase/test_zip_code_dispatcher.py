@@ -1,7 +1,41 @@
+from unittest.mock import MagicMock
+from unittest.mock import patch
+
 import unittest
 
 class TestZipCodeDispatcher(unittest.TestCase):
-    def test_factory_router(self):
-        """Each zip code has a default function handler"""
-        pass
+    def test_zip_based_mapping(self):
+        """100000 item dict has one function handling each zip code"""
+        from burnday.usecase.zip_code_dispatcher import _zip_based_mapping
+        from inspect import isfunction
+
+
+        dispatch_functions = _zip_based_mapping()
+
+
+        [
+            self.assertTrue(isfunction(dispatch_function)) 
+            for dispatch_function in dispatch_functions.values()
+        ]
+        [self.assertEqual(type(zip_code), int) for zip_code in dispatch_functions.keys()]
+        self.assertEqual(len(dispatch_functions.keys()), 100000)
+
+
+    @patch("burnday.usecase.zip_code_dispatcher._zip_based_mapping")
+    def test_factory_router(self, mock_zip_based_mapping):
+        """selects key of _zip_based_mapping and invokes corresponding function with entity"""
+        from burnday.usecase.zip_code_dispatcher import factory_router
+        from burnday.entities.entity_model import BurnStatus
+
+        mock_business_rule_function = MagicMock()
+        mock_burn_status = BurnStatus()
+        mock_zip_code = 20002
+
+        mock_zip_based_mapping.return_value = {20002: mock_business_rule_function}
+        mock_burn_status.zip_code = mock_zip_code
+
+        factory_router(populated_burn_status=mock_burn_status)
+
+
+        mock_business_rule_function.assert_called_once_with(populated_burn_status=mock_burn_status)
 
