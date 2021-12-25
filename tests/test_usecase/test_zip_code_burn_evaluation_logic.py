@@ -41,8 +41,8 @@ class TestZipCodeBurnEvaluationLogic(unittest.TestCase):
             {"pm_2_5_input": 17.0, "expected_burn_status": "burning discouraged"},
             {"pm_2_5_input": 20.1, "expected_burn_status": "no burning unless registered"},
             {"pm_2_5_input": 64.4, "expected_burn_status": "no burning unless registered"},
-            {"pm_2_5_input": 65.2,  "expected_burn_status": "no burning for all"},
-            {"pm_2_5_input": 79.7,  "expected_burn_status": "no burning for all"}
+            {"pm_2_5_input": 65.2, "expected_burn_status": "no burning for all"},
+            {"pm_2_5_input": 79.7, "expected_burn_status": "no burning for all"}
         ]
 
         for pm_2_5_value in pm_2_5_values:

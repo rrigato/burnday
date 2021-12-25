@@ -2,7 +2,7 @@ import logging
 
 
 def default_burn_rules(populated_burn_status):
-    """Mutates populated_burn_status.burn_status with generic air quality information
+    """Mutates populated_burn_status.burn_status with air_quality_index category
 
         Parameters
         ----------
@@ -18,6 +18,7 @@ def default_burn_rules(populated_burn_status):
         populated_burn_status.burn_status = generic_air_quality_message.format(
             aqi_range="healthy"
         )
+
     if populated_burn_status.air_quality_index in range(51, 101):
         populated_burn_status.burn_status = generic_air_quality_message.format(
             aqi_range="moderate"
@@ -43,8 +44,27 @@ def default_burn_rules(populated_burn_status):
             aqi_range="hazardous"
         )
 
-def _get_california_valley_default_burn_rules(fine_particulate_matter_2_5):
-    pass
+
+def _get_california_valley_default_burn_rules(populated_burn_status):
+    """Helper to 
+        Parameters
+        ----------
+        populated_burn_status: BurnStatus
+            burn_status attribute will be mutated, fine_particulate_matter_2_5 must be populated 
+
+        Returns
+        -------
+        burn_status: str
+            description of whether fuel burning is allowed for the location
+    """
+    if populated_burn_status.fine_particulate_matter_2_5 < 20.0:
+        return("burning discouraged")
+
+    if populated_burn_status.fine_particulate_matter_2_5 < 65.0:
+        return("no burning unless registered")
+
+    return("no burning for all")
+
 
 def california_valley_default_burn_rules(populated_burn_status):
     """Mutates populated_burn_status.burn_status with default burn status regulations 
@@ -58,8 +78,9 @@ def california_valley_default_burn_rules(populated_burn_status):
         populated_burn_status: BurnStatus
             burn_status attribute will be mutated, fine_particulate_matter_2_5 must be populated 
     """
-    populated_burn_status.fine_particulate_matter_2_5 =_get_california_valley_default_burn_rules(
-
+    logging.info("california_valley_default_burn_rules - ")
+    populated_burn_status.burn_status =_get_california_valley_default_burn_rules(
+        populated_burn_status=populated_burn_status
     )
 
 
