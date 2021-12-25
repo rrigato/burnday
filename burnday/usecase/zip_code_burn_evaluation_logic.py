@@ -1,4 +1,7 @@
+from burnday.entities import domain_specific_terminology
+
 import logging
+
 
 
 def default_burn_rules(populated_burn_status):
@@ -16,32 +19,32 @@ def default_burn_rules(populated_burn_status):
 
     if populated_burn_status.air_quality_index in range(0, 51):
         populated_burn_status.burn_status = generic_air_quality_message.format(
-            aqi_range="healthy"
+            aqi_range=domain_specific_terminology.AQI_CATEGORY_ZERO
         )
 
     if populated_burn_status.air_quality_index in range(51, 101):
         populated_burn_status.burn_status = generic_air_quality_message.format(
-            aqi_range="moderate"
+            aqi_range=domain_specific_terminology.AQI_CATEGORY_ONE
         )
 
     if populated_burn_status.air_quality_index in range(101, 151):
         populated_burn_status.burn_status = generic_air_quality_message.format(
-            aqi_range="unhealthy for sensitive groups"
+            aqi_range=domain_specific_terminology.AQI_CATEGORY_TWO
         )
 
     if populated_burn_status.air_quality_index in range(151, 201):
         populated_burn_status.burn_status = generic_air_quality_message.format(
-            aqi_range="unhealthy"
+            aqi_range=domain_specific_terminology.AQI_CATEGORY_THREE
         )
 
     if populated_burn_status.air_quality_index in range(201, 301):
         populated_burn_status.burn_status = generic_air_quality_message.format(
-            aqi_range="very unhealthy"
+            aqi_range=domain_specific_terminology.AQI_CATEGORY_FOUR
         )
 
     if populated_burn_status.air_quality_index >= 301:
         populated_burn_status.burn_status = generic_air_quality_message.format(
-            aqi_range="hazardous"
+            aqi_range=domain_specific_terminology.AQI_CATEGORY_FIVE
         )
 
 
@@ -58,12 +61,12 @@ def _get_california_valley_default_burn_rules(populated_burn_status):
             description of whether fuel burning is allowed for the location
     """
     if populated_burn_status.fine_particulate_matter_2_5 < 20.0:
-        return("burning discouraged")
+        return(domain_specific_terminology.CALIFORNIA_TIER_ZERO)
 
     if populated_burn_status.fine_particulate_matter_2_5 < 65.0:
-        return("no burning unless registered")
+        return(domain_specific_terminology.CALIFORNIA_TIER_ONE)
 
-    return("no burning for all")
+    return(domain_specific_terminology.CALIFORNIA_TIER_TWO)
 
 
 def california_valley_default_burn_rules(populated_burn_status):
