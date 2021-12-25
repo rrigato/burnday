@@ -1,9 +1,22 @@
 import unittest
 
 class TestAirQualityIndexConversions(unittest.TestCase):
+
     def test_aqi_to_pm_2point5(self):
         """BurnStatus.fine_particulate_matter_2_5 attribute updated"""
-        pass
+        from burnday.entities.entity_model import BurnStatus
+        from burnday.usecase.air_quality_index_conversions import aqi_to_pm_2point5
+
+        '''
+        TODO - subtest with multiple air quality index values being tested
+        '''
+        mock_air_quality_index = 123
+        burn_status_entity = BurnStatus()
+        burn_status_entity.air_quality_index = mock_air_quality_index
+
+        aqi_to_pm_2point5(populated_burn_status=burn_status_entity)
+
+        self.assertEqual(round(burn_status_entity.fine_particulate_matter_2_5, 3), 44.435)
 
     def test_aqi_to_pm_2point5_air_quality_index_is_none(self):
         """air_quality_index attr is None, no mutation occurred on fine_particulate_matter_2_5"""
