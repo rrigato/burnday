@@ -12,11 +12,27 @@ class TestAirQualityIndexConversions(unittest.TestCase):
         '''
         mock_air_quality_index = 123
         burn_status_entity = BurnStatus()
-        burn_status_entity.air_quality_index = mock_air_quality_index
 
-        aqi_to_pm_2point5(populated_burn_status=burn_status_entity)
+        aqi_test_values = [
+            {"aqi_input": 17, "expected_pm_2_5": 4.080},
+            {"aqi_input": 74, "expected_pm_2_5": 23.037},
+            {"aqi_input": 123, "expected_pm_2_5": 44.435},
+            {"aqi_input": 189, "expected_pm_2_5": 129.096},
+            {"aqi_input": 201, "expected_pm_2_5": 150.500},
+            {"aqi_input": 349, "expected_pm_2_5": 298.936}
+        ]
 
-        self.assertEqual(round(burn_status_entity.fine_particulate_matter_2_5, 3), 44.435)
+        for aqi_test_value in aqi_test_values:
+            with self.subTest(aqi_test_value=aqi_test_value):
+                burn_status_entity.air_quality_index = aqi_test_value["aqi_input"]
+                
+                aqi_to_pm_2point5(populated_burn_status=burn_status_entity)
+
+                self.assertEqual(
+                    burn_status_entity.fine_particulate_matter_2_5, 
+                    aqi_test_value["expected_pm_2_5"]
+                )
+
 
     def test_aqi_to_pm_2point5_air_quality_index_is_none(self):
         """air_quality_index attr is None, no mutation occurred on fine_particulate_matter_2_5"""
