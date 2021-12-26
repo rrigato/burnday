@@ -30,4 +30,10 @@ def factory_router(populated_burn_status):
     """
     dispatch_functions = _zip_based_mapping()
 
+    '''
+        mapping zip codes for these rulesets:
+            california_valley_default_burn_rules
+            california_valley_hot_spot_burn_rules
+    '''
+
     dispatch_functions[populated_burn_status.zip_code](populated_burn_status=populated_burn_status)

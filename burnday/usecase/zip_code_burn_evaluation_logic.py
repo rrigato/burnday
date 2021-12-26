@@ -49,7 +49,11 @@ def default_burn_rules(populated_burn_status):
 
 
 def _get_california_valley_default_burn_rules(populated_burn_status):
-    """Helper to 
+    """Applies wood burning curtailment rules for California Valley
+
+        https://valleyair.org/rule4901/documents/FAQ-Rule4901.pdf
+        https://www.valleyair.org/rules/currntrules/r4901.pdf
+
         Parameters
         ----------
         populated_burn_status: BurnStatus
@@ -101,6 +105,9 @@ def california_valley_hot_spot_burn_rules(populated_burn_status):
             no attributes are modified
     """
     '''
-    TODO - apply coarse_particulate_matter_10
+    TODO - 
+    
+        same as california_valley_default_burn_rules, just different fine_particulate_matter_2_5
+        thresholds
     '''
     pass

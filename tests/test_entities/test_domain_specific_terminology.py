@@ -7,8 +7,8 @@ class TestDomainSpecificTerminology(unittest.TestCase):
         from burnday.entities import domain_specific_terminology
 
         [
-            self.assertEqual(type(getattr(domain_specific_terminology, domain_constant)), str) 
-            for domain_constant in dir(domain_specific_terminology) 
-            if not domain_constant.startswith("_")
+            self.assertEqual(type(getattr(domain_specific_terminology, domain_terminology)), str) 
+            for domain_terminology in dir(domain_specific_terminology) 
+            if not domain_terminology.startswith("_")
         ]
 
