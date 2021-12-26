@@ -33,4 +33,12 @@ def burn_status_for_zip(zip_code):
         return(create_burn_status(), None)
 
     '''
-    pass
+    from datetime import date
+    return(
+        create_burn_status(
+            burn_day=date.today(),
+            air_quality_index=123,
+            zip_code=zip_code
+        
+        )
+    )

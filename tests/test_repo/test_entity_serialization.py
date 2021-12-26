@@ -12,13 +12,13 @@ class TestEntitySerialization(unittest.TestCase):
         from datetime import date
 
         mock_burn_day = date.fromisoformat("3005-11-29")
-        mock_burn_status = "No Burning Unless Registered"
+        mock_air_quality_index = 123
         mock_zip_code = 20002
 
 
         burn_status_entity, entity_creation_error = create_burn_status(
             burn_day=mock_burn_day,
-            burn_status=mock_burn_status,
+            air_quality_index=mock_air_quality_index,
             zip_code=mock_zip_code
         )
 
@@ -32,13 +32,13 @@ class TestEntitySerialization(unittest.TestCase):
         from burnday.repo.entity_serialization import create_burn_status
 
         mock_burn_day = "3005-11-29"
-        mock_burn_status = "No Burning Unless Registered"
+        mock_air_quality_index = 123
         mock_zip_code = 20002
 
 
         burn_status_entity, entity_creation_error = create_burn_status(
             burn_day=mock_burn_day,
-            burn_status=mock_burn_status,
+            air_quality_index=mock_air_quality_index,
             zip_code=mock_zip_code
         )
 
