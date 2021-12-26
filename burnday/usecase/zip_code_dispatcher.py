@@ -1,6 +1,8 @@
-from copy import deepcopy
-
 from burnday.usecase import zip_code_burn_evaluation_logic
+from burnday.usecase.air_quality_index_conversions import aqi_to_pm_2point5
+
+import logging
+
 
 def _zip_based_mapping():
     """Dict that routes to applicable factory function based on zip_code key
@@ -79,6 +81,9 @@ def factory_router(populated_burn_status):
             if populated_burn_status.air_quality_index is None, 
             no attributes are modified
     """
+    aqi_to_pm_2point5(populated_burn_status=populated_burn_status)
+    logging.info("factory_router - aqi_to_pm_2point5 complete")
+
     dispatch_functions = _zip_based_mapping()
 
     _apply_california_valley_default_burn_rules(dispatch_functions=dispatch_functions)
@@ -86,5 +91,7 @@ def factory_router(populated_burn_status):
         mapping zip codes for this ruleset:
             california_valley_hot_spot_burn_rules
     '''
+    logging.info("factory_router - custom rulesets mapped")
 
     dispatch_functions[populated_burn_status.zip_code](populated_burn_status=populated_burn_status)
+    logging.info("factory_router - mapped function invocation complete")

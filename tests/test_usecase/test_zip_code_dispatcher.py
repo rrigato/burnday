@@ -26,8 +26,9 @@ class TestZipCodeDispatcher(unittest.TestCase):
         patch _apply_california_valley_default_burn_rules or
         test output dict directly?
     '''
+    @patch("burnday.usecase.zip_code_dispatcher.aqi_to_pm_2point5")
     @patch("burnday.usecase.zip_code_dispatcher._zip_based_mapping")
-    def test_factory_router(self, mock_zip_based_mapping):
+    def test_factory_router(self, mock_zip_based_mapping, mock_aqi_to_pm_2point5):
         """selects key of _zip_based_mapping and invokes corresponding function with entity"""
         from burnday.entities.entity_model import BurnStatus
         from burnday.usecase.zip_code_burn_evaluation_logic import california_valley_default_burn_rules
@@ -46,6 +47,7 @@ class TestZipCodeDispatcher(unittest.TestCase):
 
 
         mock_business_rule_function.assert_called_once_with(populated_burn_status=mock_burn_status)
+        mock_aqi_to_pm_2point5.assert_called_once_with(populated_burn_status=mock_burn_status)
         '''
             TODO - 
             as-is = test random zip code has the appropriate handler
@@ -53,3 +55,4 @@ class TestZipCodeDispatcher(unittest.TestCase):
             test output dict directly?
         '''
         self.assertEqual(mock_dispatch_router[93261], california_valley_default_burn_rules)
+        
