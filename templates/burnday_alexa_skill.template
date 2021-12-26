@@ -25,6 +25,12 @@ Parameters:
 
 Resources:
 
+
+  artifactBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub ${projectName}-app-artifacts
+
   lambdaPythonFunction:
     Type: AWS::Lambda::Function
     Properties: 
@@ -37,7 +43,7 @@ Resources:
       Description: String
 
       FunctionName: !Sub ${projectName}-alexa-skill
-      Handler: lambda_handler
+      Handler: index.lambda_handler
 
       MemorySize: !Ref lambdaMemorySize
       PackageType: Zip

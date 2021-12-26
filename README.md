@@ -22,6 +22,13 @@ python -m unittest
 ((aws ssm get-parameter --name <ssm_parameter_store_name> --with-decryption | ConvertFrom-Json).Parameter.Value | ConvertFrom-Json)
 ```
 
+# cloudformation create-stack
+
+```powershell
+aws cloudformation update-stack --stack-name burnday-alexa-skill --template-body file://templates/burnday_alexa_skill.template --tags Key=project,Value=burnday Key=prod,Value=yes Key=cloudformation_managed,Value=yes
+```
+
+
 # detect_secrets
 implement to ensure no secrets are commited locally:
 
