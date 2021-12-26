@@ -82,6 +82,7 @@ def factory_router(populated_burn_status):
             no attributes are modified
     """
     aqi_to_pm_2point5(populated_burn_status=populated_burn_status)
+
     logging.info("factory_router - aqi_to_pm_2point5 complete")
 
     dispatch_functions = _zip_based_mapping()
@@ -94,4 +95,5 @@ def factory_router(populated_burn_status):
     logging.info("factory_router - custom rulesets mapped")
 
     dispatch_functions[populated_burn_status.zip_code](populated_burn_status=populated_burn_status)
+    
     logging.info("factory_router - mapped function invocation complete")
