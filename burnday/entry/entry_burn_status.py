@@ -4,6 +4,7 @@ from burnday.entry.request_objects import ValidRequest
 from burnday.entry.response_objects import ResponseFailure
 from burnday.entry.response_objects import ResponseSuccess
 from burnday.repo.burn_status_storage import burn_status_for_zip
+from burnday.usecase.zip_code_dispatcher import factory_router
 
 import logging
 
@@ -40,6 +41,9 @@ def location_burn_status(zip_code_request):
     if location_burn_status is None:
         logging.info("location_burn_status - location_burn_status is None")
         return(ResponseSuccess(response_value=None))   
+
+    logging.info("location_burn_status - factory_router")
+    factory_router(populated_burn_status=location_burn_status)
 
     logging.info("location_burn_status - ResponseSuccess with entity")
     return(ResponseSuccess(response_value=location_burn_status))     

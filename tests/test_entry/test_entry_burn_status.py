@@ -33,6 +33,28 @@ class TestEntryBurnStatus(unittest.TestCase):
 
 
 
+    @patch("burnday.entry.entry_burn_status.burn_status_for_zip")
+    def test_location_burn_status(self, mock_burn_status_for_zip):
+        """Happy Path ResponseSuccess returned with populated burn_status"""
+        from burnday.entities.entity_model import BurnStatus
+        from burnday.entry.entry_burn_status import location_burn_status
+        from burnday.entry.request_objects import ValidRequest
+
+        mock_zip_code = 20002
+        mock_air_quality_index = 123
+        burn_status_entity = BurnStatus()
+        burn_status_entity.zip_code = mock_zip_code
+        burn_status_entity.air_quality_index = mock_air_quality_index
+        
+
+        mock_burn_status_for_zip.return_value = (burn_status_entity, None)
+
+        zip_code_burn_status = location_burn_status(
+            zip_code_request=ValidRequest(request_filters={"zip_code": mock_zip_code})
+        )
+
+        self.assertEqual(type(zip_code_burn_status.response_value.burn_status), str)
+
 
     @patch("burnday.entry.entry_burn_status.burn_status_for_zip")
     def test_location_burn_status_unexpected_error(self, mock_burn_status_for_zip):
