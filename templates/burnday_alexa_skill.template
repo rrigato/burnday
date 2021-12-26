@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: Lambda function specification for a custom alexa skill
+
+Parameters:
+  lambdaExecutionRoleName:
+    Type: String
+    Default: burnday_lambda_role
+
+  lambdaMemorySize:
+    Type: Number
+    Default: 256
+    MinValue: 64
+    MaxValue: 1024
+
+  lambdaTimeout:
+    Type: Number
+    Default: 5
+    MinValue: 1
+    MaxValue: 900
+
+  projectName:
+    Type: String
+    Default: burnday
+
+Resources:
+
+  lambdaPythonFunction:
+    Type: AWS::Lambda::Function
+    Properties: 
+
+      Code:
+        ZipFile: |
+          def lambda_handler(event, context):
+            print("lambda_handler stub")
+
+      Description: String
+
+      FunctionName: !Sub ${projectName}-alexa-skill
+      Handler: lambda_handler
+
+      MemorySize: !Ref lambdaMemorySize
+      PackageType: Zip
+      Role: !Sub arn:aws:iam::${AWS::AccountId}:role/${lambdaExecutionRoleName}
+      Runtime: python3.9
+      Timeout: !Ref lambdaTimeout
+      TracingConfig: 
+        Mode: Active
