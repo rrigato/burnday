@@ -14,6 +14,14 @@ pip install -r requirements/requirements-dev.txt
 python -m unittest
 ```
 
+3) install [aws cli v2](https://aws.amazon.com/cli/) for working with aws resources locally 
+
+# load_ssm_parameter_store_secure_string_with_aws_cli
+```powershell
+#assumes region is set and output type is json
+((aws ssm get-parameter --name <ssm_parameter_store_name> --with-decryption | ConvertFrom-Json).Parameter.Value | ConvertFrom-Json)
+```
+
 # detect_secrets
 implement to ensure no secrets are commited locally:
 

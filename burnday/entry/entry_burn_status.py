@@ -87,4 +87,4 @@ if __name__ == "__main__":
 
     location_burn_status_response = location_burn_status(zip_code_request=zip_code_request)
 
-    print(location_burn_status_response.response_value)
+    print(location_burn_status_response.response_value.burn_status)
