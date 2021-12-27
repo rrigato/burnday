@@ -50,7 +50,7 @@ def validate_iso_8601_date(iso_formatted_str):
     try:
         return(date.fromisoformat(iso_formatted_str), None)
 
-    except Exception as error_suppresion:
+    except Exception as error_suppression:
         logging.exception("validate_iso_8601_date - date.fromisoformat failed")
         return(None, "validate_iso_8601_date - str input not YYYY-MM-DD formatted")
 
