@@ -12,6 +12,6 @@ class TestBurndaySkill(unittest.TestCase):
 
     def test_burnday_get(self):
         """TODO - implementation based on alexa skills kit"""
-        from burnday.handlers.burnday_skill import lambda_handler
+        from handlers.burnday_skill import lambda_handler
 
 

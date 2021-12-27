@@ -19,7 +19,7 @@ python -m unittest
 # load_ssm_parameter_store_secure_string_with_aws_cli
 ```powershell
 #assumes region is set and output type is json
-((aws ssm get-parameter --name <ssm_parameter_store_name> --with-decryption | ConvertFrom-Json).Parameter.Value | ConvertFrom-Json)
+((aws ssm get-parameter --name /burnday/v1 --with-decryption | ConvertFrom-Json).Parameter.Value | ConvertFrom-Json)
 ```
 
 # cloudformation create-stack
