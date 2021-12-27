@@ -3,6 +3,11 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: Lambda function specification for a custom alexa skill
 
 Parameters:
+
+  functionHandler:
+    Type: String
+    Default: burnday_skill.lambda_handler
+
   lambdaExecutionRoleName:
     Type: String
     Default: burnday_lambda_role
@@ -36,14 +41,13 @@ Resources:
     Properties: 
 
       Code:
-        ZipFile: |
-          def lambda_handler(event, context):
-            print("lambda_handler stub")
+        S3Bucket: !Ref artifactBucket
+        S3Key: !Sub ${projectName}_deployment_package.zip
 
-      Description: String
+      Description: !Sub 'Alexa custom skill handler for ${projectName}'
 
       FunctionName: !Sub ${projectName}-alexa-skill
-      Handler: index.lambda_handler
+      Handler: !Ref functionHandler
 
       MemorySize: !Ref lambdaMemorySize
       PackageType: Zip

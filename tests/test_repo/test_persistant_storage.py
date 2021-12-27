@@ -24,7 +24,7 @@ class TestPersistantStorage(unittest.TestCase):
 
         mock_boto3_client.return_value.get_parameter.return_value = deepcopy(
             {
-                "Parameter":{
+                "Parameter": {
                     "Value": json.dumps(deepcopy(self.mock_project_secrets))
                 }
             }
