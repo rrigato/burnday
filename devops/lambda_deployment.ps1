@@ -29,14 +29,17 @@ if (Test-Path -Path "${bundle_dir_name}"){
     echo "${bundle_dir_name} directory not found"
 }
 
-$exclude_files = (Get-ChildItem -Path "./burnday/*/__pycache__" -Recurse ).FullName
+$exclude_files = (Get-ChildItem -Path "./${project_name}/*/__pycache__" -Recurse ).FullName
 
-echo $exclude_files
-Copy-Item -Path  $project_name -Recurse -Exclude $exclude_files -Force -Destination "${bundle_dir_name}"
+
+Copy-Item -Path  $project_name -Recurse -Exclude $exclude_files -Force -Destination "${bundle_dir_name}\${project_name}"
 
 
 Copy-Item -Path  "handlers/${project_name}_skill.py"  -Force -Destination "${bundle_dir_name}"
 
 Compress-Archive -Path "${bundle_dir_name}\*" -DestinationPath  "${project_name}_deployment_package.zip" -Force
 
-# aws s3api put-object --bucket "${project_name}-app-artifacts" --key "${project_name}_deployment_package.zip" --body "${project_name}_deployment_package.zip" --tags key=cloudformation_managed,Value=no
+aws s3api put-object --bucket "${project_name}-app-artifacts" --key "${project_name}_deployment_package.zip" --body "${project_name}_deployment_package.zip" --tagging "cloudformation_managed=no&project=${project_name}&prod=yes"
+
+
+aws lambda update-function-code --function-name "${project_name}-alexa-skill" --s3-bucket "${project_name}-app-artifacts" --s3-key "${project_name}_deployment_package.zip" | ConvertFrom-Json

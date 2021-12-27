@@ -82,9 +82,3 @@ def validate_location_burn_status(zip_code):
     return(ValidRequest(request_filters={"zip_code": zip_code}))
 
 
-if __name__ == "__main__":
-    zip_code_request = validate_location_burn_status(zip_code=93261)
-
-    location_burn_status_response = location_burn_status(zip_code_request=zip_code_request)
-
-    print(location_burn_status_response.response_value.burn_status)
