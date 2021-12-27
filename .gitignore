@@ -1,2 +1,4 @@
 /avenv
 __pycache__/
+/deployment
+*.zip

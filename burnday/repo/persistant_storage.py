@@ -36,12 +36,16 @@ def get_burnday_secrets():
         )
 
     except Exception as error_suppression:
-        
+
         logging.exception("get_burnday_secrets - unexpected error")
         return(None, str(error_suppression))
 
 
 if __name__ == "__main__":
+    '''
+        TODO - 
+        remove manual component test 
+    '''
     os.environ["AWS_REGION"] = "us-east-1"
     burnday_project_config, repo_retrieval_error = get_burnday_secrets()
     print(burnday_project_config)
