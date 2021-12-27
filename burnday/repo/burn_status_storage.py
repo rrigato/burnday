@@ -1,7 +1,7 @@
 from burnday.repo.entity_serialization import create_burn_status
 
-def burn_status_for_zip(zip_code):
-    """Retrieves a BurnStatus entity from persistant storage for a zip_code
+def load_burn_status(zip_code):
+    """Retrieves a BurnStatus entity from persistant storage 
 
         Parameters
         ----------
@@ -10,7 +10,7 @@ def burn_status_for_zip(zip_code):
             
         Returns
         -------
-        zip_burn_status: BurnStatus
+        burn_status_entity: BurnStatus
             None if no BurnStatus entites were found for the passed zip_code
 
         repo_retrieval_error: None

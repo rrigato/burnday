@@ -3,7 +3,7 @@ from burnday.entry.request_objects import InvalidRequest
 from burnday.entry.request_objects import ValidRequest
 from burnday.entry.response_objects import ResponseFailure
 from burnday.entry.response_objects import ResponseSuccess
-from burnday.repo.burn_status_storage import burn_status_for_zip
+from burnday.repo.burn_status_storage import load_burn_status
 from burnday.usecase.zip_code_dispatcher import factory_router
 
 import logging
@@ -30,7 +30,7 @@ def location_burn_status(zip_code_request):
             location_burn_status_response will be a ResponseFailure if any unexpected errors 
             occur when processing the usecase
     """
-    location_burn_status, burn_status_error = burn_status_for_zip(
+    location_burn_status, burn_status_error = load_burn_status(
         zip_code=zip_code_request.request_filters["zip_code"]
     )
 
