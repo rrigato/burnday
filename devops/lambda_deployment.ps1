@@ -1,3 +1,4 @@
+$bundle_dir_name="deployment"
 $project_name="burnday"
 
 python -m unittest
@@ -13,17 +14,29 @@ if(-not ( (detect-secrets scan | ConvertFrom-Json).results.ToString() -eq "") ){
 }
 
 
-#TODO - validate archive was successful
-#delete deployment folder if it exists
+#TODO - get rid of __pycache__ files
 #add tags to uploaded bucket
-#Switch to deployment archive in cloudformation template
+#Switch to ${bundle_dir_name} archive in cloudformation template
 #perform lambda function code update
 
-Copy-Item -Path  $project_name -Recurse -Exclude "*.pyc", "__pycache__", "*\__pycache__", "*\__pycache__\*" -Force -Destination "deployment"
+if (Test-Path -Path "${bundle_dir_name}"){
+    echo "Removing ${bundle_dir_name} directory"
+    #remove ${bundle_dir_name} contents recursively
+    Get-ChildItem -Path "${bundle_dir_name}" -Recurse | Remove-Item -force -recurse
+    #remove ${bundle_dir_name} directory
+    Remove-Item "${bundle_dir_name}" -Force
+}else{
+    echo "${bundle_dir_name} directory not found"
+}
+
+$exclude_files = (Get-ChildItem -Path "./burnday/*/__pycache__" -Recurse ).FullName
+
+echo $exclude_files
+Copy-Item -Path  $project_name -Recurse -Exclude $exclude_files -Force -Destination "${bundle_dir_name}"
 
 
-Copy-Item -Path  "handlers/${project_name}_skill.py", "handlers/__init__.py" -Recurse -Force -Destination "deployment"
+Copy-Item -Path  "handlers/${project_name}_skill.py"  -Force -Destination "${bundle_dir_name}"
 
-Compress-Archive -Path "deployment\*" -DestinationPath  "${project_name}_deployment_package.zip" -Force
+Compress-Archive -Path "${bundle_dir_name}\*" -DestinationPath  "${project_name}_deployment_package.zip" -Force
 
-aws s3api put-object --bucket "${project_name}-app-artifacts" --key "${project_name}_deployment_package.zip" --body "${project_name}_deployment_package.zip"
+# aws s3api put-object --bucket "${project_name}-app-artifacts" --key "${project_name}_deployment_package.zip" --body "${project_name}_deployment_package.zip" --tags key=cloudformation_managed,Value=no
