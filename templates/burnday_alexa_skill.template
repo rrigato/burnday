@@ -4,6 +4,14 @@ Description: Lambda function specification for a custom alexa skill
 
 Parameters:
 
+  alexaSkillsKitLayerName:
+    Type: String
+    Default: ask-core-1-16-1
+
+  alexaSkillsKitLayerVersion:
+    Type: String
+    Default: 1
+
   functionHandler:
     Type: String
     Default: burnday_skill.lambda_handler
@@ -48,6 +56,9 @@ Resources:
 
       FunctionName: !Sub ${projectName}-alexa-skill
       Handler: !Ref functionHandler
+
+      Layers: 
+        - !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:${alexaSkillsKitLayerName}:${alexaSkillsKitLayerVersion}'
 
       MemorySize: !Ref lambdaMemorySize
       PackageType: Zip
