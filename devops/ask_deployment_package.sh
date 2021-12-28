@@ -19,3 +19,15 @@ sudo ./configure
 #makes sure not to overwrite existing python3
 sudo make altinstall
 
+##############################################
+#Create lambda layer for alexa skills kit sdk
+##############################################
+mkdir ask_layer
+cd ask_layer
+mkdir python
+cd python 
+pip3.9 install ask-sdk-core==1.16.1 -t .
+
+zip -r ask_layer.zip .
+
+aws s3 cp ask_layer.zip s3://burnday-app-artifacts
