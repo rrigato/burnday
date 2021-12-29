@@ -1,4 +1,9 @@
 from burnday.repo.entity_serialization import create_burn_status
+from burnday.repo.persistant_storage import get_burnday_secrets
+from datetime import date
+
+import logging
+
 
 def load_burn_status(zip_code):
     """Retrieves a BurnStatus entity from persistant storage 
@@ -12,6 +17,11 @@ def load_burn_status(zip_code):
         -------
         burn_status_entity: BurnStatus
             None if no BurnStatus entites were found for the passed zip_code
+            Populates the following attributes: 
+                burn_status_entity.burn_day = datetime.date
+                burn_status_entity.air_quality_index = int
+                burn_status_entity.zip_code = zip_code
+
 
         repo_retrieval_error: None
             str if any unexpected error occurred when retrieving the BurnStatus entity 
@@ -33,7 +43,12 @@ def load_burn_status(zip_code):
         return(create_burn_status(), None)
 
     '''
-    from datetime import date
+    burnday_project_config, config_retrieval_error = get_burnday_secrets()
+    if config_retrieval_error is not None:
+        logging.info("load_burn_status - config_retrieval_error")
+
+        return(None, config_retrieval_error)
+
     return(
         create_burn_status(
             burn_day=date.today(),
