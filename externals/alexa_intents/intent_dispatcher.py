@@ -124,9 +124,9 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
 
 
 def get_alexa_lambda_handler():
-    """Retrieves a lambda_handler for different alexa skills kit sdk 
+    """Retrieves a lambda_handler function after binding all custom skill intent request and
+    exception objects
 
-            
         Returns
         -------
         alexa_lambda_handler: function

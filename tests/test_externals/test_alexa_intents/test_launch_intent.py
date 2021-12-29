@@ -15,7 +15,10 @@ class TestLaunchIntent(unittest.TestCase):
         from externals.alexa_intents.intent_dispatcher import get_alexa_lambda_handler
 
         expected_response_message = "What location would you like the burn status for?"
+
+
         alexa_lambda_handler = get_alexa_lambda_handler()
+
 
         self.assertTrue(
             expected_response_message in 
@@ -24,6 +27,4 @@ class TestLaunchIntent(unittest.TestCase):
                 None
             )["response"]["outputSpeech"]["ssml"]
         )
-
-
 
