@@ -28,6 +28,8 @@ mkdir python
 cd python 
 pip3.9 install ask-sdk-core==1.16.1 -t .
 
+cd ..
+
 zip -r ask_layer.zip .
 
 aws s3 cp ask_layer.zip s3://burnday-app-artifacts
