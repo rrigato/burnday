@@ -136,6 +136,8 @@ def get_alexa_lambda_handler():
 
 
     """
+    logging.info("get_alexa_lambda_handler - SkillBuilder")
+
     alexa_skill = SkillBuilder()
 
     '''
@@ -150,4 +152,5 @@ def get_alexa_lambda_handler():
 
     alexa_skill.add_exception_handler(CatchAllExceptionHandler())
 
+    logging.info("get_alexa_lambda_handler - returning alexa_lambda_handler")
     return(alexa_skill.lambda_handler())

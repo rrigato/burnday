@@ -14,7 +14,7 @@ Parameters:
 
   functionHandler:
     Type: String
-    Default: burnday_skill.lambda_handler
+    Default: burnday_skill.alexa_lambda_handler
 
   lambdaExecutionRoleName:
     Type: String

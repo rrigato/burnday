@@ -27,13 +27,15 @@ if (Test-Path -Path "${bundle_dir_name}"){
 }
 
 #excludes lambda files
-$exclude_files = (Get-ChildItem -Path "./${project_name}/*/__pycache__" -Recurse ).FullName
-
+$exclude_files = @("*.pyc")
 
 Copy-Item -Path  $project_name -Recurse -Exclude $exclude_files -Force -Destination "${bundle_dir_name}\${project_name}"
 
+#clean architecture
+Copy-Item -Path  ".\externals" -Recurse -Exclude $exclude_files -Force -Destination "${bundle_dir_name}"
 
-Copy-Item -Path  "handlers/${project_name}_skill.py"  -Force -Destination "${bundle_dir_name}"
+#externals lambda handler
+Copy-Item -Path  "handlers/${project_name}_skill.py" -Exclude $exclude_files -Force -Destination "${bundle_dir_name}"
 
 Compress-Archive -Path "${bundle_dir_name}\*" -DestinationPath  "${project_name}_deployment_package.zip" -Force
 
