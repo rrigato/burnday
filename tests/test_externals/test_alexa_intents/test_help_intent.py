@@ -29,12 +29,12 @@ class TestHelpIntent(unittest.TestCase):
             expected_message in actual_response_message["response"]["outputSpeech"]["ssml"],
             msg="""
                 Expected Alexa Response - 
-                '{expected_response}' 
+                {expected_response} 
                 Actual Alexa Response - 
                 {actual_response}
             """.format(
                     expected_response=expected_message,
-                    actual_response=actual_response_message
+                    actual_response=actual_response_message["response"]["outputSpeech"]["ssml"]
                 )
         )
 
