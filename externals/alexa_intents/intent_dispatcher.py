@@ -1,70 +1,22 @@
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
-from ask_sdk_core.dispatch_components import AbstractExceptionHandler
 from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_core.utils import is_intent_name
 from ask_sdk_core.utils import is_request_type
 from ask_sdk_model import Response
+from externals.alexa_intents.burn_status_intent import BurnStatusIntentHandler
+from externals.alexa_intents.cancel_stop_intent import CancelOrStopIntentHandler
+from externals.alexa_intents.help_intent import HelpRequestHandler
+from externals.alexa_intents.launch_intent import LaunchRequestHandler
+from externals.alexa_exceptions.default_graceful_exit import CatchAllExceptionHandler
 
 import logging
-from externals.alexa_intents.launch_intent import LaunchRequestHandler
 
 
 '''
 TODO - extract each intent into separate modules
 '''
-class HelloWorldIntentHandler(AbstractRequestHandler):
-    """Handler for Hello World Intent."""
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return is_intent_name("HelloWorldIntent")(handler_input)
 
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        speak_output = "Hello World!"
-
-        return (
-            handler_input.response_builder
-                .speak(speak_output)
-                # .ask("add a reprompt if you want to keep the session open for the user to respond")
-                .response
-        )
-
-
-class HelpIntentHandler(AbstractRequestHandler):
-    """Handler for Help Intent."""
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return is_intent_name("AMAZON.HelpIntent")(handler_input)
-
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        speak_output = "You can say hello to me! How can I help?"
-
-        return (
-            handler_input.response_builder
-                .speak(speak_output)
-                .ask(speak_output)
-                .response
-        )
-
-
-class CancelOrStopIntentHandler(AbstractRequestHandler):
-    """Single handler for Cancel and Stop Intent."""
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return (is_intent_name("AMAZON.CancelIntent")(handler_input) or
-                is_intent_name("AMAZON.StopIntent")(handler_input))
-
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        speak_output = "Goodbye!"
-
-        return (
-            handler_input.response_builder
-                .speak(speak_output)
-                .response
-        )
 
 class FallbackIntentHandler(AbstractRequestHandler):
     """Single handler for Fallback Intent."""
@@ -95,34 +47,6 @@ class SessionEndedRequestHandler(AbstractRequestHandler):
 
 
 
-
-class CatchAllExceptionHandler(AbstractExceptionHandler):
-    """Generic error handling to capture any syntax or routing errors. If you receive an error
-    stating the request handler chain is not found, you have not implemented a handler for
-    the intent being invoked or included it in the skill builder below.
-    """
-    def can_handle(self, handler_input, exception):
-        # type: (HandlerInput, Exception) -> bool
-        return True
-
-    def handle(self, handler_input, exception):
-        # type: (HandlerInput, Exception) -> Response
-        logging.error(exception, exc_info=True)
-
-        speak_output = "Sorry, I had trouble doing what you asked. Please try again."
-
-        return (
-            handler_input.response_builder
-                .speak(speak_output)
-                .ask(speak_output)
-                .response
-        )
-
-
-
-
-
-
 def get_alexa_lambda_handler():
     """Retrieves a lambda_handler function after binding all custom skill intent request and
     exception objects
@@ -144,8 +68,8 @@ def get_alexa_lambda_handler():
         request handlers are processed from top to bottom
     '''
     alexa_skill.add_request_handler(LaunchRequestHandler())
-    alexa_skill.add_request_handler(HelloWorldIntentHandler())
-    alexa_skill.add_request_handler(HelpIntentHandler())
+    alexa_skill.add_request_handler(BurnStatusIntentHandler())
+    alexa_skill.add_request_handler(HelpRequestHandler())
     alexa_skill.add_request_handler(CancelOrStopIntentHandler())
     alexa_skill.add_request_handler(FallbackIntentHandler())
     alexa_skill.add_request_handler(SessionEndedRequestHandler())
