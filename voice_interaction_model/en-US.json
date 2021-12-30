@@ -40,10 +40,10 @@
             "Is burning restricted for {burn_location}",
             "Does today's air quality allow burning",
             "Is there any fuel based burning curtailments in effect", 
-            "Any rules against burning today?",
+            "Any rules against burning today",
             "Is my postal code allowed to burn",
-            "Will I be able to use my fireplace today?",
-            "Any wood burning restrictions in effect?"
+            "Will I be able to use my fireplace today",
+            "Any wood burning restrictions in effect"
           ]
         },
         {
