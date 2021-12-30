@@ -1,0 +1,62 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "burn day",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "BurnStatusIntent",
+          "slots": [
+              {
+                "name": "burn_location",
+                "type": "AMAZON.NUMBER",
+                "samples": [
+                    "postal code {burn_location}" ,
+                    "{burn_location}",
+                    "zip code {burn_location}",
+                    "{burn_location} is my postal code",
+                    "{burn_location} is my zip code"
+
+                ]
+              }
+
+            ],
+          "samples": [
+            "What is today's burn status for {burn_location}",
+            "Can we burn today in {burn_location}",
+            "Is {burn_location} allowed to burn today", 
+            "Give me the burn status for {burn_location}",
+            "Is burning restricted for {burn_location}",
+            "Does today's air quality allow burning",
+            "Is there any fuel based burning curtailments in effect", 
+            "Any rules against burning today?",
+            "Is my postal code allowed to burn",
+            "Will I be able to use my fireplace today?",
+            "Any wood burning restrictions in effect?"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        }
+      ],
+      "types": []
+    }
+  },
+  "version": "3"
+}
