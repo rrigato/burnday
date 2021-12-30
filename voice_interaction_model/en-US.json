@@ -1,108 +1,138 @@
 {
-  "interactionModel": {
-      "languageModel": {
-          "invocationName": "burn day",
-          "intents": [
-              {
-                  "name": "AMAZON.CancelIntent",
-                  "samples": []
-              },
-              {
-                  "name": "AMAZON.HelpIntent",
-                  "samples": [
-                    "how does this work",
-                    "what information do I need to provide to get the burn status"
-                  ]
-              },
-              {
-                  "name": "AMAZON.StopIntent",
-                  "samples": []
-              },
-              {
-                  "name": "BurnStatusIntent",
-                  "slots": [
-                      {
-                          "name": "burn_location",
-                          "type": "AMAZON.NUMBER",
-                          "samples": [
-                              "postal code {burn_location}",
-                              "{burn_location}",
-                              "zip code {burn_location}",
-                              "{burn_location} is my postal code",
-                              "{burn_location} is my zip code"
-                          ]
-                      }
-                  ],
-                  "samples": [
-                      "What is today's burn status for {burn_location}",
-                      "Can we burn today in {burn_location}",
-                      "Is {burn_location} allowed to burn today",
-                      "Give me the burn status for {burn_location}",
-                      "Is burning restricted for {burn_location}",
-                      "burn status for {burn_location}",
-                      "todays burn status in {burn_location}",
-                      "for wood burning restrictions in {burn_location}",
-                      "any wood burning curtailments in {burn_location}",
-                      "Does today's air quality allow burning",
-                      "Is there any fuel based burning curtailments in effect",
-                      "Any rules against burning today",
-                      "Is my postal code allowed to burn",
-                      "Will I be able to use my fireplace today",
-                      "Any wood burning restrictions in effect",
-                      "for the burn status",
-                      "for today's burn status"
-                  ]
-              },
-              {
-                  "name": "AMAZON.NavigateHomeIntent",
-                  "samples": []
-              },
-              {
-                  "name": "AMAZON.FallbackIntent",
-                  "samples": []
-              }
-          ],
-          "types": []
-      },
-      "dialog": {
-          "intents": [
-              {
-                  "name": "BurnStatusIntent",
-                  "confirmationRequired": false,
-                  "prompts": {},
-                  "slots": [
-                      {
-                          "name": "burn_location",
-                          "type": "AMAZON.NUMBER",
-                          "confirmationRequired": false,
-                          "elicitationRequired": true,
-                          "prompts": {
-                              "elicitation": "Elicit.Slot.1478075417589.1211875597270"
-                          }
-                      }
-                  ]
-              }
-          ],
-          "delegationStrategy": "ALWAYS"
-      },
-      "prompts": [
-          {
-              "id": "Elicit.Slot.1478075417589.1211875597270",
-              "variations": [
-                  {
-                      "type": "PlainText",
-                      "value": "Which zip code?"
-                  },
-                  {
-                      "type": "PlainText",
-                      "value": "Please provide a zip code"
-                  },
-                  {
-                      "type": "PlainText",
-                      "value": "What zip code would you like the burn status for?"
-                  }
-              ]
-          }
-      ]
-  }
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "burn day",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": [
+                        "how does this work",
+                        "what information do I need to provide to get the burn status"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "BurnStatusIntent",
+                    "slots": [
+                        {
+                            "name": "burn_location",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "postal code {burn_location}",
+                                "{burn_location}",
+                                "zip code {burn_location}",
+                                "{burn_location} is my postal code",
+                                "{burn_location} is my zip code"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "What is today's burn status for {burn_location}",
+                        "Can we burn today in {burn_location}",
+                        "Is {burn_location} allowed to burn today",
+                        "Give me the burn status for {burn_location}",
+                        "Is burning restricted for {burn_location}",
+                        "burn status for {burn_location}",
+                        "todays burn status in {burn_location}",
+                        "for wood burning restrictions in {burn_location}",
+                        "any wood burning curtailments in {burn_location}",
+                        "Does today's air quality allow burning",
+                        "Is there any fuel based burning curtailments in effect",
+                        "Any rules against burning today",
+                        "Is my postal code allowed to burn",
+                        "Will I be able to use my fireplace today",
+                        "Any wood burning restrictions in effect",
+                        "for the burn status",
+                        "for today's burn status"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "BurnStatusIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "burn_location",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1478075417589.1211875597270"
+                            },
+                            "validations": [
+                                {
+                                    "type": "isGreaterThanOrEqualTo",
+                                    "prompt": "Slot.Validation.44851225916.1270823316763.1393217586674",
+                                    "value": "0"
+                                },
+                                {
+                                    "type": "isLessThanOrEqualTo",
+                                    "prompt": "Slot.Validation.44851225916.1270823316763.731369587247",
+                                    "value": "99999"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.1478075417589.1211875597270",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Which zip code?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Please provide a zip code"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "What zip code would you like the burn status for?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.44851225916.1270823316763.1393217586674",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Zip code must be between zero and ninety nine thousand nine hundred and ninety nine"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.44851225916.1270823316763.731369587247",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Zip code must be between zero and ninety nine thousand nine hundred and ninety nine"
+                    }
+                ]
+            }
+        ]
+    }
 }
