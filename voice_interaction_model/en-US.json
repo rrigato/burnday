@@ -9,7 +9,10 @@
               },
               {
                   "name": "AMAZON.HelpIntent",
-                  "samples": []
+                  "samples": [
+                    "how does this work",
+                    "what information do I need to provide to get the burn status"
+                  ]
               },
               {
                   "name": "AMAZON.StopIntent",
@@ -36,12 +39,18 @@
                       "Is {burn_location} allowed to burn today",
                       "Give me the burn status for {burn_location}",
                       "Is burning restricted for {burn_location}",
+                      "burn status for {burn_location}",
+                      "todays burn status in {burn_location}",
+                      "for wood burning restrictions in {burn_location}",
+                      "any wood burning curtailments in {burn_location}",
                       "Does today's air quality allow burning",
                       "Is there any fuel based burning curtailments in effect",
                       "Any rules against burning today",
                       "Is my postal code allowed to burn",
                       "Will I be able to use my fireplace today",
-                      "Any wood burning restrictions in effect"
+                      "Any wood burning restrictions in effect",
+                      "for the burn status",
+                      "for today's burn status"
                   ]
               },
               {
