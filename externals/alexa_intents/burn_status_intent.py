@@ -1,19 +1,40 @@
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
-from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_core.utils import is_intent_name
-from ask_sdk_model import Response
 
 import logging
 
 class BurnStatusIntentHandler(AbstractRequestHandler):
     """Handler for retrieving the Burn Status for a location specified by a user"""
+
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return is_intent_name("BurnStatusIntent")(handler_input)
+        """Determines the type of input the class can handle
+
+            Parameters
+            ----------
+            handler_input: ask_sdk_core.handler_input.HandlerInput
+
+            Returns
+            -------
+            can_class_handle_request: bool
+                True if this class can handle the provided request, False otherwise
+        """
+        '''TODO - apply docstr to all handlers
+        '''
+        return(is_intent_name("BurnStatusIntent")(handler_input))
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
+        """Applies business logic for the appropriate class handler
 
+            Parameters
+            ----------
+            handler_input: ask_sdk_core.handler_input.HandlerInput
+
+            Returns
+            -------
+            alexa_sdk_response: ask_sdk_model.Response
+        """
+        '''TODO - apply docstr to all handlers
+        '''
         logging.info("BurnStatusIntentHandler.handle - ")
         
         speak_output = "Hello World!"
@@ -31,7 +52,6 @@ class BurnStatusIntentHandler(AbstractRequestHandler):
         return (
             handler_input.response_builder
                 .speak(speak_output)
-                # .ask("add a reprompt if you want to keep the session open for the user to respond")
                 .response
         )
 

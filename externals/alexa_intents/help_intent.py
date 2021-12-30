@@ -10,13 +10,13 @@ class HelpRequestHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
 
-        return is_intent_name("AMAZON.HelpIntent")(handler_input)
+        return(is_intent_name("AMAZON.HelpIntent")(handler_input))
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         output_message = "Provide a zip code to receive that location's burn status"
         logging.info("HelpRequestHandler - handle")
-        return (
+        return(
             handler_input.response_builder
                 .speak(output_message)
                 .response
