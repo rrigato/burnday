@@ -37,6 +37,8 @@
                         "What is today's burn status for {burn_location}",
                         "Can we burn today in {burn_location}",
                         "Is {burn_location} allowed to burn today",
+                        "Does {burn_location} have any burning restrictions",
+                        "Is {burn_location} under a burning curtailment",
                         "Give me the burn status for {burn_location}",
                         "Is burning restricted for {burn_location}",
                         "burn status for {burn_location}",

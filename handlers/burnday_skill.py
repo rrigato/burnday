@@ -28,6 +28,6 @@ if __name__ == "__main__":
 
     logging.info(location_burn_status_response.response_value.burn_status)
 
-    with open("tests/events/intent_requests/launch_intent.json", "r") as intent_request:
+    with open("tests/events/intent_requests/burn_status_intent.json", "r") as intent_request:
         intent_request = json.load(intent_request)
     alexa_lambda_handler(intent_request, None)
