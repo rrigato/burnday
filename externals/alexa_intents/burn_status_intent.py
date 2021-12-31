@@ -35,7 +35,7 @@ def _orchestrate_location_burn_status(handler_input):
     location_burn_status_response = location_burn_status(zip_code_request=zip_code_request)
 
     logging.info(
-        "_orchestrate_location_burn_status - location_burn_status_response {burn_status}".format(
+        "_orchestrate_location_burn_status - location_burn_status_response - {burn_status}".format(
             burn_status=location_burn_status_response.response_value.burn_status
         )
     )

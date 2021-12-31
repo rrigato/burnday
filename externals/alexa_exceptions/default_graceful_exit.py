@@ -8,17 +8,35 @@ from ask_sdk_model import Response
 
 import logging
 
-class CatchAllExceptionHandler(AbstractExceptionHandler):
-    """Generic error handling to capture any syntax or routing errors. If you receive an error
-    stating the request handler chain is not found, you have not implemented a handler for
-    the intent being invoked or included it in the skill builder below.
-    """
+class DefaultExceptionHandler(AbstractExceptionHandler):
+    """Default error message returned to user if an intent is not handled or an intent handler
+    throws an unexpected error"""
+
     def can_handle(self, handler_input, exception):
-        # type: (HandlerInput, Exception) -> bool
+        """Determines the type of input the class can handle
+
+            Parameters
+            ----------
+            handler_input: ask_sdk_core.handler_input.HandlerInput
+
+            Returns
+            -------
+            can_class_handle_request: bool
+                True if this class can handle the provided request, False otherwise
+        """
         return(True)
 
     def handle(self, handler_input, exception):
-        # type: (HandlerInput, Exception) -> Response
+        """Applies business logic for the appropriate class handler
+
+            Parameters
+            ----------
+            handler_input: ask_sdk_core.handler_input.HandlerInput
+
+            Returns
+            -------
+            alexa_sdk_response: ask_sdk_model.Response
+        """
         logging.error(exception, exc_info=True)
 
         speak_output = "Unexpected error, looks like you found a bug before the developers did!"

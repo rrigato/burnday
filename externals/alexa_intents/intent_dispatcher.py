@@ -8,7 +8,7 @@ from externals.alexa_intents.burn_status_intent import BurnStatusIntentHandler
 from externals.alexa_intents.cancel_stop_intent import CancelOrStopIntentHandler
 from externals.alexa_intents.help_intent import HelpRequestHandler
 from externals.alexa_intents.launch_intent import LaunchRequestHandler
-from externals.alexa_exceptions.default_graceful_exit import CatchAllExceptionHandler
+from externals.alexa_exceptions.default_graceful_exit import DefaultExceptionHandler
 
 import logging
 
@@ -74,7 +74,7 @@ def get_alexa_lambda_handler():
     alexa_skill.add_request_handler(FallbackIntentHandler())
     alexa_skill.add_request_handler(SessionEndedRequestHandler())
 
-    alexa_skill.add_exception_handler(CatchAllExceptionHandler())
+    alexa_skill.add_exception_handler(DefaultExceptionHandler())
 
     logging.info("get_alexa_lambda_handler - returning alexa_lambda_handler")
     return(alexa_skill.lambda_handler())
