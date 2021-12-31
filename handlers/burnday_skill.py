@@ -12,9 +12,12 @@ logging.basicConfig(format="%(asctime)s %(message)s")
 def lambda_handler(event, context):
     zip_code_request = validate_location_burn_status(zip_code=93261)
 
+    if bool(zip_code_request) == False:
+        return(zip_code_request.error_message)
+
     location_burn_status_response = location_burn_status(zip_code_request=zip_code_request)
 
-    print(location_burn_status_response.response_value.burn_status)
+    return(location_burn_status_response.response_value.burn_status)
 
 alexa_lambda_handler = get_alexa_lambda_handler()
 
