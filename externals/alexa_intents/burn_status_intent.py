@@ -1,11 +1,12 @@
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
+from ask_sdk_core.utils import get_slot
 from ask_sdk_core.utils import is_intent_name
 from burnday.entry.entry_burn_status import location_burn_status
 from burnday.entry.entry_burn_status import validate_location_burn_status
 
 import logging
 
-def _orchestrate_usecase():
+def _orchestrate_location_burn_status(handler_input):
     """orchestration required to invoke the location_burn_status usecase
 
         Parameters
@@ -17,19 +18,27 @@ def _orchestrate_usecase():
         burn_status_message: str
             The burn status message or any unexpected errors
     """
-    zip_code_request = validate_location_burn_status(zip_code=93261)
+    slot_value = None
+    try:
+        slot_value = int(get_slot(handler_input=handler_input, slot_name="burn_location").value)
+    except Exception:
+        logging.exception("_orchestrate_location_burn_status - error retrieving slot")
+
+    zip_code_request = validate_location_burn_status(zip_code=slot_value)
 
     if bool(zip_code_request) == False:
-        logging.info("_orchestrate_usecase - invalid zip_code_request")
+        logging.info("_orchestrate_location_burn_status - invalid zip_code_request")
         return(zip_code_request.error_message)
 
-    logging.info("_orchestrate_usecase - obtained a valid request")
+    logging.info("_orchestrate_location_burn_status - obtained a valid request")
 
     location_burn_status_response = location_burn_status(zip_code_request=zip_code_request)
 
-    logging.info("_orchestrate_usecase - location_burn_status_response {burn_status}".format(
-        burn_status=location_burn_status_response.response_value.burn_status
-    ))
+    logging.info(
+        "_orchestrate_location_burn_status - location_burn_status_response {burn_status}".format(
+            burn_status=location_burn_status_response.response_value.burn_status
+        )
+    )
 
     return(location_burn_status_response.response_value.burn_status)
 
@@ -67,7 +76,7 @@ class BurnStatusIntentHandler(AbstractRequestHandler):
         '''
         logging.info("BurnStatusIntentHandler.handle - ")
         
-        speak_output = _orchestrate_usecase()
+        speak_output = _orchestrate_location_burn_status(handler_input=handler_input)
         '''
             TODO -
             load burn_location slot

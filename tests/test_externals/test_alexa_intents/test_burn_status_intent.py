@@ -41,6 +41,13 @@ class TestBurnStatusIntent(unittest.TestCase):
             None
         )
 
+
+        mock_validate_location_burn_status.assert_called_once_with(
+            zip_code=int(
+                self.intent_request["request"]["intent"]["slots"]["burn_location"]["value"]
+            )
+        )
+
         self.assertTrue(
             expected_message in actual_response_message["response"]["outputSpeech"]["ssml"],
             msg="""
