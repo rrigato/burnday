@@ -1,13 +1,11 @@
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
-from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_core.utils import is_intent_name
-from ask_sdk_model import Response
 
 import logging
 
 class CancelOrStopIntentHandler(AbstractRequestHandler):
     """User requests AMAZON.CancelIntent or AMAZON.StopIntent during a session"""
-    
+
     def can_handle(self, handler_input):
         """Determines the type of input the class can handle
 
