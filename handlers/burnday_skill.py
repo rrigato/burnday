@@ -9,15 +9,6 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 logging.basicConfig(format="%(asctime)s %(message)s")
 
-def lambda_handler(event, context):
-    zip_code_request = validate_location_burn_status(zip_code=93261)
-
-    if bool(zip_code_request) == False:
-        return(zip_code_request.error_message)
-
-    location_burn_status_response = location_burn_status(zip_code_request=zip_code_request)
-
-    return(location_burn_status_response.response_value.burn_status)
 
 alexa_lambda_handler = get_alexa_lambda_handler()
 
@@ -33,4 +24,4 @@ if __name__ == "__main__":
 
     with open("tests/events/intent_requests/burn_status_intent.json", "r") as intent_request:
         intent_request = json.load(intent_request)
-    alexa_lambda_handler(intent_request, None)
+    print(alexa_lambda_handler(intent_request, None)["response"]["outputSpeech"]["ssml"])
