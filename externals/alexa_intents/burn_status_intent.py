@@ -6,6 +6,25 @@ from burnday.entry.entry_burn_status import validate_location_burn_status
 
 import logging
 
+
+def _get_burn_location_slot(handler_input):
+    """orchestration required to invoke the location_burn_status usecase
+
+        Parameters
+        ----------
+        handler_input: ask_sdk_core.handler_input.HandlerInput
+
+        Returns
+        -------
+        zip_code: int
+            postal code from the slot value
+    """
+    try:
+        return(int(get_slot(handler_input=handler_input, slot_name="burn_location").value))
+    except Exception:
+        logging.exception("_get_burn_location_slot - error retrieving slot")
+        return(None)
+
 def _orchestrate_location_burn_status(handler_input):
     """orchestration required to invoke the location_burn_status usecase
 
@@ -18,13 +37,10 @@ def _orchestrate_location_burn_status(handler_input):
         burn_status_message: str
             The burn status message or any unexpected errors
     """
-    slot_value = None
-    try:
-        slot_value = int(get_slot(handler_input=handler_input, slot_name="burn_location").value)
-    except Exception:
-        logging.exception("_orchestrate_location_burn_status - error retrieving slot")
-
-    zip_code_request = validate_location_burn_status(zip_code=slot_value)
+    logging.info("_orchestrate_location_burn_status - invoking _get_burn_location_slot")
+    zip_code_request = validate_location_burn_status(
+        zip_code=_get_burn_location_slot(handler_input=handler_input)
+    )
 
     if bool(zip_code_request) == False:
         logging.info("_orchestrate_location_burn_status - invalid zip_code_request")
