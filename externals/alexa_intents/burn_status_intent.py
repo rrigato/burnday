@@ -1,7 +1,37 @@
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_intent_name
+from burnday.entry.entry_burn_status import location_burn_status
+from burnday.entry.entry_burn_status import validate_location_burn_status
 
 import logging
+
+def _orchestrate_usecase():
+    """orchestration required to invoke the location_burn_status usecase
+
+        Parameters
+        ----------
+        handler_input: ask_sdk_core.handler_input.HandlerInput
+
+        Returns
+        -------
+        burn_status_message: str
+            The burn status message or any unexpected errors
+    """
+    zip_code_request = validate_location_burn_status(zip_code=93261)
+
+    if bool(zip_code_request) == False:
+        logging.info("_orchestrate_usecase - invalid zip_code_request")
+        return(zip_code_request.error_message)
+
+    logging.info("_orchestrate_usecase - obtained a valid request")
+
+    location_burn_status_response = location_burn_status(zip_code_request=zip_code_request)
+
+    logging.info("_orchestrate_usecase - location_burn_status_response {burn_status}".format(
+        burn_status=location_burn_status_response.response_value.burn_status
+    ))
+
+    return(location_burn_status_response.response_value.burn_status)
 
 class BurnStatusIntentHandler(AbstractRequestHandler):
     """Handler for retrieving the Burn Status for a location specified by a user"""
@@ -37,7 +67,7 @@ class BurnStatusIntentHandler(AbstractRequestHandler):
         '''
         logging.info("BurnStatusIntentHandler.handle - ")
         
-        speak_output = "Hello World!"
+        speak_output = _orchestrate_usecase()
         '''
             TODO -
             load burn_location slot
