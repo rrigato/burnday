@@ -25,6 +25,7 @@ def _get_burn_location_slot(handler_input):
         logging.exception("_get_burn_location_slot - error retrieving slot")
         return(None)
 
+
 def _orchestrate_location_burn_status(handler_input):
     """orchestration required to invoke the location_burn_status usecase
 
@@ -57,6 +58,7 @@ def _orchestrate_location_burn_status(handler_input):
     )
 
     return(location_burn_status_response.response_value.burn_status)
+
 
 class BurnStatusIntentHandler(AbstractRequestHandler):
     """Handler for retrieving the Burn Status for a location specified by a user"""
@@ -107,6 +109,7 @@ class BurnStatusIntentHandler(AbstractRequestHandler):
         return (
             handler_input.response_builder
                 .speak(speak_output)
+                .set_should_end_session(True)
                 .response
         )
 

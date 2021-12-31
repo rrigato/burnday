@@ -63,6 +63,8 @@ class TestBurnStatusIntent(unittest.TestCase):
                 )
         )
 
+        self.assertTrue(actual_response_message["response"]["shouldEndSession"])
+
 
     @patch("externals.alexa_intents.burn_status_intent.BurnStatusIntentHandler.handle")
     def test_burn_status_intent_unexpected_error(self, mock_burn_status_handle):
@@ -79,3 +81,5 @@ class TestBurnStatusIntent(unittest.TestCase):
         )
 
         self.assertEqual(type(actual_response_message["response"]["outputSpeech"]["ssml"]), str)
+    
+        self.assertTrue(actual_response_message["response"]["shouldEndSession"])
