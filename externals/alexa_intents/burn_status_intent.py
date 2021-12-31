@@ -8,7 +8,7 @@ import logging
 
 
 def _get_burn_location_slot(handler_input):
-    """orchestration required to invoke the location_burn_status usecase
+    """loading burn_location slot
 
         Parameters
         ----------
@@ -95,17 +95,7 @@ class BurnStatusIntentHandler(AbstractRequestHandler):
         logging.info("BurnStatusIntentHandler.handle - ")
         
         speak_output = _orchestrate_location_burn_status(handler_input=handler_input)
-        '''
-            TODO -
-            load burn_location slot
-            zip_code_request = validate_location_burn_status(zip_code=burn_location_slot)
 
-            location_burn_status_response = location_burn_status(zip_code_request=zip_code_request)
-
-            handler_input.response_builder
-                .speak(location_burn_status_response.response_value.burn_status)
-                .response
-        '''
         return (
             handler_input.response_builder
                 .speak(speak_output)

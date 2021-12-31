@@ -28,10 +28,6 @@ class TestBurnStatusIntent(unittest.TestCase):
         mock_location_burn_status.return_value = ResponseSuccess(
             response_value=mock_burn_status_entity
         )
-        '''
-            TODO 
-            - assert the zip code is taken from burn_status_intent.json successfully
-        '''
 
         alexa_lambda_handler = get_alexa_lambda_handler()
 
