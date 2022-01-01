@@ -21,11 +21,7 @@ class TestZipCodeDispatcher(unittest.TestCase):
         self.assertEqual(len(dispatch_functions.keys()), 100000)
 
 
-    '''
-        TODO - 
-        patch _apply_california_valley_default_burn_rules or
-        test output dict directly?
-    '''
+
     @patch("burnday.usecase.zip_code_dispatcher.aqi_to_pm_2point5")
     @patch("burnday.usecase.zip_code_dispatcher._zip_based_mapping")
     def test_factory_router(self, mock_zip_based_mapping, mock_aqi_to_pm_2point5):
@@ -48,11 +44,39 @@ class TestZipCodeDispatcher(unittest.TestCase):
 
         mock_business_rule_function.assert_called_once_with(populated_burn_status=mock_burn_status)
         mock_aqi_to_pm_2point5.assert_called_once_with(populated_burn_status=mock_burn_status)
-        '''
-            TODO - 
-            as-is = test random zip code has the appropriate handler
-            patch _apply_california_valley_default_burn_rules or
-            test output dict directly?
-        '''
+        '''Testing random rule set'''
         self.assertEqual(mock_dispatch_router[93261], california_valley_default_burn_rules)
         
+
+    @patch("burnday.usecase.zip_code_dispatcher.washington_state_burn_rules")
+    @patch("burnday.usecase.zip_code_dispatcher.aqi_to_pm_2point5")
+    def test_apply_washington_state_burn_rules(self, mock_aqi_to_pm_2point5,
+        mock_washington_state_burn_rules):
+        """Washington state zip codes correct callback function"""
+        from burnday.entities.entity_model import BurnStatus
+        from burnday.usecase.zip_code_dispatcher import factory_router
+
+        wa_boundary_zip_codes = [
+            {"zip_code": 97999, "expected_callback_function_call_count": 0},
+            {"zip_code": 98000, "expected_callback_function_call_count": 1},
+            {"zip_code": 98078, "expected_callback_function_call_count": 1},
+            {"zip_code": 99451, "expected_callback_function_call_count": 1},
+            {"zip_code": 99499, "expected_callback_function_call_count": 1},
+            {"zip_code": 99500, "expected_callback_function_call_count": 0}
+        ]
+
+        for wa_boundary_zip_code in wa_boundary_zip_codes:
+            with self.subTest(wa_boundary_zip_code=wa_boundary_zip_code):
+                mock_burn_status = BurnStatus()
+                mock_burn_status.zip_code = wa_boundary_zip_code["zip_code"]
+                mock_burn_status.air_quality_index = 123
+
+                factory_router(populated_burn_status=mock_burn_status)
+
+
+                self.assertEqual(
+                    mock_washington_state_burn_rules.call_count,
+                    wa_boundary_zip_code["expected_callback_function_call_count"]
+                )
+
+                mock_washington_state_burn_rules.reset_mock()
