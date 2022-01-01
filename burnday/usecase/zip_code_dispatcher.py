@@ -71,6 +71,22 @@ def _apply_california_valley_default_burn_rules(dispatch_functions):
     for tulare_zip_code in tulare_county:
         dispatch_functions[tulare_zip_code] = zip_code_burn_evaluation_logic.california_valley_default_burn_rules
 
+def _apply_washington_state_burn_rules(dispatch_functions):
+    """All zip codes in the state of Washington use the washington_state_burn_rules ruleset
+    
+        Parameters
+        -------
+        dispatch_functions: dict
+            Where each key is the int zip_code for the burn status request and 
+            each value is the factory function to execute the appropriate business logic
+    """
+    '''
+        TODO -
+        for wa_state_zip_code in range(98000, 99499 + 1):
+            dispatch_functions[wa_state_zip_code] = zip_code_burn_evaluation_logic.washington_state_burn_rules
+    '''
+    pass
+
 
 def factory_router(populated_burn_status):
     """Mutates populated_burn_status.burn_status with applicable business logic
