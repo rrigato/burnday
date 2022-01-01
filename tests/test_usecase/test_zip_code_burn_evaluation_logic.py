@@ -62,3 +62,34 @@ class TestZipCodeBurnEvaluationLogic(unittest.TestCase):
         """California valley hot spot ruleset"""
         pass
 
+
+
+    def test_washington_state_burn_rules(self):
+        """washington state default burn rules"""
+        from burnday.entities.entity_model import BurnStatus
+        from burnday.entities.domain_specific_terminology import NO_BURN_RESTRICTIONS
+        from burnday.usecase.zip_code_burn_evaluation_logic import washington_state_burn_rules
+
+
+        pm_2_5_values = [
+            {"pm_2_5_input": 0.5, "expected_burn_status": NO_BURN_RESTRICTIONS},
+            {"pm_2_5_input": 17.0, "expected_burn_status": NO_BURN_RESTRICTIONS},
+            {"pm_2_5_input": 29.9, "expected_burn_status": NO_BURN_RESTRICTIONS},
+            {"pm_2_5_input": 30.0, "expected_burn_status": NO_BURN_RESTRICTIONS},
+            {"pm_2_5_input": 30.1, 
+                "expected_burn_status": "stage 1 burn ban is in effect, no wood burning allowed"},
+            {"pm_2_5_input": 79.7, 
+                "expected_burn_status": "stage 1 burn ban is in effect, no wood burning allowed"}
+        ]
+
+        for pm_2_5_value in pm_2_5_values:
+            with self.subTest(pm_2_5_value=pm_2_5_value):
+                burn_status_entity = BurnStatus()
+                burn_status_entity.fine_particulate_matter_2_5 = pm_2_5_value["pm_2_5_input"]
+                
+                washington_state_burn_rules(populated_burn_status=burn_status_entity)
+
+                self.assertEqual(
+                    burn_status_entity.burn_status, 
+                    pm_2_5_value["expected_burn_status"]
+                )

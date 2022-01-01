@@ -114,6 +114,28 @@ def california_valley_hot_spot_burn_rules(populated_burn_status):
 
 
 
+def _get_washington_state_burn_rules(populated_burn_status):
+    """Applies wood burning curtailment rules 
+
+        https://apps.leg.wa.gov/rcw/default.aspx?cite=70A.15.3580
+        https://pscleanair.gov/FAQ.aspx?TID=19
+        
+
+        Parameters
+        ----------
+        populated_burn_status: BurnStatus
+            no mutation occurs
+
+        Returns
+        -------
+        burn_status: str
+            description of whether fuel burning is allowed for the location
+    """
+    if populated_burn_status.fine_particulate_matter_2_5 <= 30.0:
+        return(domain_specific_terminology.NO_BURN_RESTRICTIONS)
+
+    return(domain_specific_terminology.WASHINGTON_STAGE_ONE)
+
 def washington_state_burn_rules(populated_burn_status):
     """Mutates populated_burn_status.burn_status with Washington state section RCW 70A.15.3580
 
@@ -126,13 +148,6 @@ def washington_state_burn_rules(populated_burn_status):
         populated_burn_status: BurnStatus
             if populated_burn_status.air_quality_index is None
     """
-    '''
-        TODO
-    '''
-    if populated_burn_status.fine_particulate_matter_2_5 < 20.0:
-        return(domain_specific_terminology.CALIFORNIA_TIER_ZERO)
-
-    if populated_burn_status.fine_particulate_matter_2_5 < 65.0:
-        return(domain_specific_terminology.CALIFORNIA_TIER_ONE)
-
-    return(domain_specific_terminology.CALIFORNIA_TIER_TWO)
+    populated_burn_status.burn_status = _get_washington_state_burn_rules(
+        populated_burn_status=populated_burn_status
+    )
