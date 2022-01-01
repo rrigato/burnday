@@ -11,7 +11,7 @@ def get_burnday_secrets():
         burnday_project_config: dict
             burnday project secrets and config with the following keys:
             {
-                "airnow_api_key": str,
+                "airnow_key": str,
                 "aqs_email": str,
                 "aqs_key": str
             }
