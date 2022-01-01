@@ -94,7 +94,7 @@ def _handle_api_request(burnday_project_config, zip_code):
 
         with urlopen(get_request) as api_response:
             assert api_response.getcode() == 200, (
-                "_handle_api_request - api_response.getcode" + str(api_response.getcode())
+                "_handle_api_request - api_response.getcode - " + str(api_response.getcode())
             )
 
             return(json.loads(api_response.read()), None)
