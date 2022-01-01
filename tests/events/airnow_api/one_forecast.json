@@ -1,0 +1,17 @@
+[
+    {
+        "DateIssue": "2021-12-30 ",
+        "DateForecast": "2021-12-31 ",
+        "ReportingArea": "Bakersfield",
+        "StateCode": "CA",
+        "Latitude": 35.3577,
+        "Longitude": -119.0046,
+        "ParameterName": "PM2.5",
+        "AQI": 42,
+        "Category": {
+            "Number": 1,
+            "Name": "Good"
+        },
+        "ActionDay": false
+    }
+]

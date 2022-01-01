@@ -1,0 +1,82 @@
+[
+    {
+        "DateIssue": "2021-12-30 ",
+        "DateForecast": "2021-12-31 ",
+        "ReportingArea": "Metropolitan Washington",
+        "StateCode": "DC",
+        "Latitude": 38.919,
+        "Longitude": -77.013,
+        "ParameterName": "PM2.5",
+        "AQI": 50,
+        "Category": {
+            "Number": 1,
+            "Name": "Good"
+        },
+        "ActionDay": false,
+        "Discussion": "Patchy fog on Friday morning will give way to mostly cloudy conditions.  The first weekend of 2022 will seem Spring like with rain and temperatures in the 60’s.  A return to winter on Monday as temperatures drop into the mid-30’s with a chance of some morning snow flurries as a storm quickly passes by to the east of the area.  Clear conditions through mid-week.  Expect Good air quality through the weekend into next week.  -MDE "
+    },
+    {
+        "DateIssue": "2021-12-30 ",
+        "DateForecast": "2022-01-01 ",
+        "ReportingArea": "Metropolitan Washington",
+        "StateCode": "DC",
+        "Latitude": 38.919,
+        "Longitude": -77.013,
+        "ParameterName": "PM2.5",
+        "AQI": 50,
+        "Category": {
+            "Number": 1,
+            "Name": "Good"
+        },
+        "ActionDay": false,
+        "Discussion": "Patchy fog on Friday morning will give way to mostly cloudy conditions.  The first weekend of 2022 will seem Spring like with rain and temperatures in the 60’s.  A return to winter on Monday as temperatures drop into the mid-30’s with a chance of some morning snow flurries as a storm quickly passes by to the east of the area.  Clear conditions through mid-week.  Expect Good air quality through the weekend into next week.  -MDE "
+    },
+    {
+        "DateIssue": "2021-12-30 ",
+        "DateForecast": "2022-01-02 ",
+        "ReportingArea": "Metropolitan Washington",
+        "StateCode": "DC",
+        "Latitude": 38.919,
+        "Longitude": -77.013,
+        "ParameterName": "PM2.5",
+        "AQI": 42,
+        "Category": {
+            "Number": 1,
+            "Name": "Good"
+        },
+        "ActionDay": false,
+        "Discussion": "Patchy fog on Friday morning will give way to mostly cloudy conditions.  The first weekend of 2022 will seem Spring like with rain and temperatures in the 60’s.  A return to winter on Monday as temperatures drop into the mid-30’s with a chance of some morning snow flurries as a storm quickly passes by to the east of the area.  Clear conditions through mid-week.  Expect Good air quality through the weekend into next week.  -MDE "
+    },
+    {
+        "DateIssue": "2021-12-30 ",
+        "DateForecast": "2022-01-03 ",
+        "ReportingArea": "Metropolitan Washington",
+        "StateCode": "DC",
+        "Latitude": 38.919,
+        "Longitude": -77.013,
+        "ParameterName": "PM2.5",
+        "AQI": 42,
+        "Category": {
+            "Number": 1,
+            "Name": "Good"
+        },
+        "ActionDay": false,
+        "Discussion": "Patchy fog on Friday morning will give way to mostly cloudy conditions.  The first weekend of 2022 will seem Spring like with rain and temperatures in the 60’s.  A return to winter on Monday as temperatures drop into the mid-30’s with a chance of some morning snow flurries as a storm quickly passes by to the east of the area.  Clear conditions through mid-week.  Expect Good air quality through the weekend into next week.  -MDE "
+    },
+    {
+        "DateIssue": "2021-12-30 ",
+        "DateForecast": "2022-01-04 ",
+        "ReportingArea": "Metropolitan Washington",
+        "StateCode": "DC",
+        "Latitude": 38.919,
+        "Longitude": -77.013,
+        "ParameterName": "PM2.5",
+        "AQI": 42,
+        "Category": {
+            "Number": 1,
+            "Name": "Good"
+        },
+        "ActionDay": false,
+        "Discussion": "Patchy fog on Friday morning will give way to mostly cloudy conditions.  The first weekend of 2022 will seem Spring like with rain and temperatures in the 60’s.  A return to winter on Monday as temperatures drop into the mid-30’s with a chance of some morning snow flurries as a storm quickly passes by to the east of the area.  Clear conditions through mid-week.  Expect Good air quality through the weekend into next week.  -MDE "
+    }
+]
