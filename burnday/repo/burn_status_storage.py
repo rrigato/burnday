@@ -5,8 +5,8 @@ from urllib.parse import urlencode
 from urllib.request import Request
 from urllib.request import urlopen
 
-import logging
 import json
+import logging
 import uuid
 
 def _get_encoded_parameters(airnow_api_key, zip_code):
@@ -96,6 +96,101 @@ def _handle_api_request(airnow_api_key, zip_code):
         logging.exception("_handle_api_request - unexpected error")
         return(None, str(error_suppression))
     
+def _filter_most_recent_forecast(airnow_api_response_dict):
+    """Mutates airnow_api_response down to only one element with a DateForecast of 
+        datetime.date.today()
+
+        Parameters
+        ----------
+        airnow_api_response: list
+            list of dict where each dict has the following keys
+            {
+                "DateIssue": str in YYYY-MM-DD,
+                "DateForecast": str in YYYY-MM-DD,
+                "ReportingArea": str,
+                "StateCode": str ,
+                "Latitude": float,
+                "Longitude": float,
+                "ParameterName": str,
+                "AQI": int,
+                "Category": {
+                    "Number": int,
+                    "Name": str
+                },
+                "ActionDay": boolean,
+                "Discussion": str
+            } 
+            or None if unexpected error occured
+            
+    """
+    return(
+        airnow_api_response_dict["DateForecast"].strip() == date.today().isoformat()
+    )
+
+def _select_todays_air_quality(airnow_api_response, zip_code):
+    """selects todays air quality index and creates a BurnStatus entity
+
+        Parameters
+        ----------
+        airnow_api_response: list
+            list of dict where each dict has the following keys
+            {
+                "DateIssue": str in YYYY-MM-DD,
+                "DateForecast": str in YYYY-MM-DD,
+                "ReportingArea": str,
+                "StateCode": str ,
+                "Latitude": float,
+                "Longitude": float,
+                "ParameterName": str,
+                "AQI": int,
+                "Category": {
+                    "Number": int,
+                    "Name": str
+                },
+                "ActionDay": boolean,
+                "Discussion": str
+            } 
+            or None if unexpected error occured
+
+        zip_code: int
+            numeric postal code
+
+        Returns
+        -------
+        burn_status_entity: BurnStatus
+            None if no BurnStatus entites were found for the passed zip_code
+            Populates the following attributes: 
+                burn_status_entity.burn_day = datetime.date
+                burn_status_entity.air_quality_index = int
+                burn_status_entity.zip_code = zip_code
+
+
+        repo_retrieval_error: None
+            str if any unexpected error occurred when retrieving the BurnStatus entity 
+
+    """
+    try:
+        if len(airnow_api_response) == 0:
+            logging.warning("_select_todays_air_quality - no results returned in list")
+            return(None, "No air quality index found for today")
+
+        if len(airnow_api_response) > 1:
+            logging.info("_select_todays_air_quality - applying _filter_most_recent_forecast")
+            airnow_api_response = list(filter(_filter_most_recent_forecast, airnow_api_response))
+
+        logging.info("_select_todays_air_quality - invoking create_burn_status")
+        return(        
+            create_burn_status(
+                burn_day=date.today(),
+                air_quality_index=airnow_api_response[0]["AQI"],
+                zip_code=zip_code
+            
+            )
+        )
+
+    except Exception as error_suppression:
+        logging.exception("_select_todays_air_quality - unexpected error")
+        return(None, str(error_suppression))
 
 
 def load_burn_status(zip_code):
@@ -151,15 +246,13 @@ def load_burn_status(zip_code):
         logging.info("load_burn_status - _handle_api_request error")
         return(None, repo_retrieval_error)
 
+
+    logging.info("load_burn_status - _handle_api_request success")
+ 
     return(
-        create_burn_status(
-            burn_day=date.today(),
-            air_quality_index=123,
-            zip_code=zip_code
-        
-        )
+        _select_todays_air_quality(airnow_api_response=airnow_api_response, zip_code=zip_code)
     )
 
 
 if __name__ == "__main__":
-    load_burn_status(20002)
+    print(load_burn_status(20002))

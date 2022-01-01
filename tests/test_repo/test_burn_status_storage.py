@@ -15,9 +15,16 @@ class TestBurnStatusStorage(unittest.TestCase):
         }
         cls.MOCK_AWS_REGION = "us-east-1"
 
+        with open("tests/events/airnow_api/multiple_forecasts.json", "r") as api_request:
+            cls.multiple_airnow_api_forecasts = json.load(api_request)
 
+        with open("tests/events/airnow_api/one_forecast.json", "r") as api_request:
+            cls.one_airnow_api_forecast = json.load(api_request)
+
+
+    @patch("burnday.repo.burn_status_storage.urlopen")
     @patch("burnday.repo.burn_status_storage.get_burnday_secrets")
-    def test_load_burn_status(self, mock_get_burnday_secrets):
+    def test_load_burn_status(self, mock_get_burnday_secrets, mock_urlopen):
         """Happy Path BurnStatus Entity returned from API"""
         from burnday.repo.burn_status_storage import load_burn_status
 
