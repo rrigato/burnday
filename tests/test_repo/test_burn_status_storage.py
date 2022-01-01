@@ -25,43 +25,84 @@ class TestBurnStatusStorage(unittest.TestCase):
     @patch("burnday.repo.burn_status_storage.urlopen")
     @patch("burnday.repo.burn_status_storage.get_burnday_secrets")
     def test_load_burn_status(self, mock_get_burnday_secrets, mock_urlopen):
-        """Happy Path BurnStatus Entity returned from API"""
+        """Happy Path BurnStatus Entity created from API response"""
         from burnday.repo.burn_status_storage import load_burn_status
+        from datetime import date
         from urllib.parse import urlparse
 
         mock_zip_code = 20002
-        mock_air_quality_index = 123
         mock_get_burnday_secrets.return_value = (deepcopy(self.mock_project_secrets), None)
 
         mock_urlopen.return_value.__enter__.return_value.getcode.return_value = 200
         mock_urlopen.return_value.__enter__.return_value.read.return_value = json.dumps(
-            deepcopy(self.multiple_airnow_api_forecasts)
+            deepcopy(self.one_airnow_api_forecast)
         ).encode("utf-8")
+
 
 
         burn_status_entity, load_burn_status_error = load_burn_status(zip_code=mock_zip_code)
 
+
         
-        args, kwargs = mock_urlopen.return_value.__enter__.return_value
+        args, kwargs = mock_urlopen.call_args
 
         self.assertEqual(len(args), 1)
         self.assertEqual(len(kwargs), 0)
         outgoing_api_call = urlparse(args[0].get_full_url())
 
-        '''
-            TODO - 
-            Remove test of outgoing secrets arguements
-            patch of outgoing API call
-            that returns the API response json structure then tests the burn_status_entity 
-            returned is as expected
-        '''
+        self.assertEqual(outgoing_api_call.hostname, "www.airnowapi.org")
+        self.assertEqual(outgoing_api_call.scheme, "https")
+        self.assertEqual(outgoing_api_call.path, "/aq/forecast/zipCode")
+        self.assertEqual(
+            outgoing_api_call.query, 
+            "api_key=1234&distance=500&format=json&zipCode=20002"
+        )
 
-        self.assertIsNotNone(burn_status_entity.burn_day)
-        # self.assertEqual(burn_status_entity.air_quality_index, mock_air_quality_index)
-        # self.assertEqual(burn_status_entity.zip_code, mock_zip_code)
-        # self.assertIsNone(load_burn_status_error)
+        self.assertEqual(
+            burn_status_entity.burn_day, 
+            date.fromisoformat(self.one_airnow_api_forecast[0]["DateForecast"].strip())
+        )
+        self.assertEqual(
+            burn_status_entity.air_quality_index, 
+            self.one_airnow_api_forecast[0]["AQI"]
+        )
+        self.assertEqual(burn_status_entity.zip_code, mock_zip_code)
+        self.assertIsNone(load_burn_status_error)
 
+ 
+    @patch("burnday.repo.burn_status_storage.urlopen")
+    @patch("burnday.repo.burn_status_storage.get_burnday_secrets")
+    def test_load_burn_status_multiple_forecasts(self, mock_get_burnday_secrets, mock_urlopen):
+        """Oldest DateForecast selected from api response with multiple forecast dicts"""
+        from burnday.repo.burn_status_storage import load_burn_status
+        from datetime import date
+
+        mock_zip_code = 20002
+        mock_get_burnday_secrets.return_value = (deepcopy(self.mock_project_secrets), None)
+
+        mock_urlopen.return_value.__enter__.return_value.getcode.return_value = 200
+        multiple_forecasts = deepcopy(self.multiple_airnow_api_forecasts)[1:]
         
+        multiple_forecasts.append(deepcopy(self.multiple_airnow_api_forecasts)[0])
+        mock_urlopen.return_value.__enter__.return_value.read.return_value = json.dumps(
+            multiple_forecasts
+        ).encode("utf-8")
+
+
+
+        burn_status_entity, load_burn_status_error = load_burn_status(zip_code=mock_zip_code)
+
+
+        self.assertEqual(
+            burn_status_entity.burn_day, 
+            date.fromisoformat(self.multiple_airnow_api_forecasts[0]["DateForecast"].strip())
+        )
+        self.assertEqual(
+            burn_status_entity.air_quality_index, 
+            self.multiple_airnow_api_forecasts[0]["AQI"]
+        )
+        self.assertEqual(burn_status_entity.zip_code, mock_zip_code)
+        self.assertIsNone(load_burn_status_error)
 
 
     @patch("burnday.repo.burn_status_storage.urlopen")
@@ -71,7 +112,6 @@ class TestBurnStatusStorage(unittest.TestCase):
         from burnday.repo.burn_status_storage import load_burn_status
 
         mock_zip_code = 20002
-        mock_air_quality_index = 123
         mock_get_burnday_secrets.return_value = (deepcopy(self.mock_project_secrets), None)
 
         mock_urlopen.return_value.__enter__.return_value.getcode.return_value = 400
