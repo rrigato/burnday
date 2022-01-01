@@ -96,9 +96,8 @@ def _handle_api_request(airnow_api_key, zip_code):
         logging.exception("_handle_api_request - unexpected error")
         return(None, str(error_suppression))
     
-def _filter_most_recent_forecast(airnow_api_response_dict):
-    """Mutates airnow_api_response down to only one element with a DateForecast of 
-        datetime.date.today()
+def _filter_most_recent_forecast(airnow_api_response):
+    """Returns the airnow forecast with the oldest DateForecast
 
         Parameters
         ----------
@@ -121,11 +120,40 @@ def _filter_most_recent_forecast(airnow_api_response_dict):
                 "Discussion": str
             } 
             or None if unexpected error occured
+
+        Returns
+        ----------
+        airnow_api_forecast: dict
+            dict with the following keys
+            {
+                "DateIssue": str in YYYY-MM-DD,
+                "DateForecast": str in YYYY-MM-DD,
+                "ReportingArea": str,
+                "StateCode": str ,
+                "Latitude": float,
+                "Longitude": float,
+                "ParameterName": str,
+                "AQI": int,
+                "Category": {
+                    "Number": int,
+                    "Name": str
+                },
+                "ActionDay": boolean,
+                "Discussion": str
+            } 
             
     """
-    return(
-        airnow_api_response_dict["DateForecast"].strip() == date.today().isoformat()
-    )
+    oldest_airnow_forecast = airnow_api_response[0]
+    if len(airnow_api_response) == 1:
+        return(oldest_airnow_forecast)
+
+    for airnow_forecast in airnow_api_response:
+        if date.fromisoformat(airnow_forecast["DateForecast"].strip()) < date.fromisoformat(
+            oldest_airnow_forecast["DateForecast"].strip()):
+            oldest_airnow_forecast = airnow_forecast
+
+    return(oldest_airnow_forecast)
+
 
 def _select_todays_air_quality(airnow_api_response, zip_code):
     """selects todays air quality index and creates a BurnStatus entity
@@ -174,15 +202,15 @@ def _select_todays_air_quality(airnow_api_response, zip_code):
             logging.warning("_select_todays_air_quality - no results returned in list")
             return(None, "No air quality index found for today")
 
-        if len(airnow_api_response) > 1:
-            logging.info("_select_todays_air_quality - applying _filter_most_recent_forecast")
-            airnow_api_response = list(filter(_filter_most_recent_forecast, airnow_api_response))
+        
+        logging.info("_select_todays_air_quality - applying _filter_most_recent_forecast")
+        airnow_api_forecast = _filter_most_recent_forecast(airnow_api_response=airnow_api_response)
 
         logging.info("_select_todays_air_quality - invoking create_burn_status")
         return(        
             create_burn_status(
-                burn_day=date.today(),
-                air_quality_index=airnow_api_response[0]["AQI"],
+                burn_day=date.fromisoformat(airnow_api_forecast["DateForecast"].strip()),
+                air_quality_index=airnow_api_forecast["AQI"],
                 zip_code=zip_code
             
             )
@@ -190,7 +218,7 @@ def _select_todays_air_quality(airnow_api_response, zip_code):
 
     except Exception as error_suppression:
         logging.exception("_select_todays_air_quality - unexpected error")
-        return(None, str(error_suppression))
+        return(None, "unexpected error when attempting to retrieve the air quality forecast")
 
 
 def load_burn_status(zip_code):
