@@ -1,6 +1,6 @@
 from burnday.usecase.air_quality_index_conversions import aqi_to_pm_2point5
 from burnday.usecase.zip_code_burn_evaluation_logic import california_valley_default_burn_rules
-from burnday.usecase.zip_code_burn_evaluation_logic import california_valley_hot_spot_burn_rules
+from burnday.usecase.zip_code_burn_evaluation_logic import ca_valley_hot_spot_burn_rules
 from burnday.usecase.zip_code_burn_evaluation_logic import default_burn_rules
 from burnday.usecase.zip_code_burn_evaluation_logic import washington_state_burn_rules
 
@@ -110,7 +110,7 @@ def factory_router(populated_burn_status):
     '''
         TODO-
         mapping zip codes for this ruleset:
-            california_valley_hot_spot_burn_rules
+            ca_valley_hot_spot_burn_rules
     '''
     logging.info("factory_router - custom rulesets mapped")
 

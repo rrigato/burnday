@@ -80,3 +80,35 @@ class TestZipCodeDispatcher(unittest.TestCase):
                 )
 
                 mock_washington_state_burn_rules.reset_mock()
+
+
+    @unittest.skip("TODO - skip until kern county is implemented")
+    @patch("burnday.usecase.zip_code_dispatcher.ca_valley_hot_spot_burn_rules")
+    @patch("burnday.usecase.zip_code_dispatcher.aqi_to_pm_2point5")
+    def test_apply_ca_valley_hot_spot_burn_rules(self, mock_aqi_to_pm_2point5,
+        mock_ca_valley_hot_spot_burn_rules):
+        """California Valley hot spot rule zip codes correct callback function"""
+        from burnday.entities.entity_model import BurnStatus
+        from burnday.usecase.zip_code_dispatcher import factory_router
+
+        ca_hot_spot_zips = [
+            {"zip_code": 93304, "expected_callback_function_call_count": 1},
+            {"zip_code": 93240, "expected_callback_function_call_count": 1},
+            {"zip_code": 93313, "expected_callback_function_call_count": 1}
+        ]
+
+        for ca_hot_spot_zip in ca_hot_spot_zips:
+            with self.subTest(ca_hot_spot_zip=ca_hot_spot_zip):
+                mock_burn_status = BurnStatus()
+                mock_burn_status.zip_code = ca_hot_spot_zip["zip_code"]
+                mock_burn_status.air_quality_index = 123
+
+                factory_router(populated_burn_status=mock_burn_status)
+
+
+                self.assertEqual(
+                    mock_ca_valley_hot_spot_burn_rules.call_count,
+                    ca_hot_spot_zip["expected_callback_function_call_count"]
+                )
+
+                mock_ca_valley_hot_spot_burn_rules.reset_mock()
