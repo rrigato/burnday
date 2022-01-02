@@ -14,7 +14,6 @@ if(-not ( (detect-secrets scan | ConvertFrom-Json).results.ToString() -eq "") ){
 }
 
 
-#TODO - get rid of __pycache__ files locally
 
 
 if (Test-Path -Path "${bundle_dir_name}"){

@@ -7,10 +7,6 @@ class TestAirQualityIndexConversions(unittest.TestCase):
         from burnday.entities.entity_model import BurnStatus
         from burnday.usecase.air_quality_index_conversions import aqi_to_pm_2point5
 
-        '''
-        TODO - subtest with multiple air quality index values being tested
-        '''
-        mock_air_quality_index = 123
         burn_status_entity = BurnStatus()
 
         aqi_test_values = [
