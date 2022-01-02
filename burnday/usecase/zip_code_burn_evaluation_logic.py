@@ -129,7 +129,7 @@ def ca_valley_hot_spot_burn_rules(populated_burn_status):
             if populated_burn_status.air_quality_index is None, 
             no attributes are modified
     """
-    logging.info("california_valley_default_burn_rules - ")
+    logging.info("ca_valley_hot_spot_burn_rules - ")
     populated_burn_status.burn_status =_get_ca_valley_hot_spot_burn_rules(
         populated_burn_status=populated_burn_status
     )
@@ -171,5 +171,49 @@ def washington_state_burn_rules(populated_burn_status):
             if populated_burn_status.air_quality_index is None
     """
     populated_burn_status.burn_status = _get_washington_state_burn_rules(
+        populated_burn_status=populated_burn_status
+    )
+
+
+
+
+def _get_ca_south_coast_burn_rules(populated_burn_status):
+    """Applies wood burning curtailment rules for the California South Coast 
+        Air Quality Management District rule 445:
+
+        http://www.aqmd.gov/docs/default-source/rule-book/rule-iv/rule-445.pdf
+        https://www.aqmd.gov/home/programs/community/cbyb---faq#3
+
+        Parameters
+        ----------
+        populated_burn_status: BurnStatus
+            will not be mutated by this function
+
+        Returns
+        -------
+        burn_status: str
+            description of whether fuel burning is allowed for the location
+    """
+    if populated_burn_status.fine_particulate_matter_2_5 < 30.0:
+        return(domain_specific_terminology.CA_SOUTH_COAST_BURNING_ALLOWED)
+
+    return(domain_specific_terminology.CA_SOUTH_COAST_BURN_BAN)
+
+
+def ca_south_coast_burn_rules(populated_burn_status):
+    """Mutates populated_burn_status.burn_status with the California South Coast 
+        Air Quality Management District rule 445:
+
+        http://www.aqmd.gov/docs/default-source/rule-book/rule-iv/rule-445.pdf
+        https://www.aqmd.gov/home/programs/community/cbyb---faq#3
+
+        Parameters
+        ----------
+        populated_burn_status: BurnStatus
+            if populated_burn_status.air_quality_index is None, 
+            no attributes are modified
+    """
+    logging.info("ca_south_coast_burn_rules - ")
+    populated_burn_status.burn_status =_get_ca_south_coast_burn_rules(
         populated_burn_status=populated_burn_status
     )
