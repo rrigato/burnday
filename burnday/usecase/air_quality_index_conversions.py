@@ -21,33 +21,25 @@ def _aqi_conversion_formula(aqi_value, metric_lower_bound_name, metric_upper_bou
         converted_metric_value: float
             rounded to 3 decimal places 
     """
-    '''
-        TODO - 
-        aqi_breakpoints = aqi_to_pm_breakpoints()
-        pm = 
-        (aqi*(metric_upper_breakpoint - metric_lower_breakpoint) + aqi_upper*metric_lower_breakpoint - aqi_lower*metric_upper_breakpoint)
-        / (aqi_upper - aqi_lower)
-        
-    '''
     aqi_breakpoints = aqi_to_pm_breakpoints()
 
-    '''
-        TODO - 
-        inline metric lookups
-        round to only 2 decimal places?
-    '''
+
+    aqi_lower_breakpoint = aqi_breakpoints[aqi_value]["aqi_lower"]
+    aqi_upper_breakpoint = aqi_breakpoints[aqi_value]["aqi_upper"]
     metric_lower_breakpoint = aqi_breakpoints[aqi_value][metric_lower_bound_name]
     metric_upper_breakpoint = aqi_breakpoints[aqi_value][metric_upper_bound_name]
 
     return(
         round(
-        (
-            aqi_value*(metric_upper_breakpoint - metric_lower_breakpoint) 
-            + aqi_breakpoints[aqi_value]["aqi_upper"]*metric_lower_breakpoint - aqi_breakpoints[aqi_value]["aqi_lower"]*metric_upper_breakpoint
-        )
-        /
-        (aqi_breakpoints[aqi_value]["aqi_upper"] - aqi_breakpoints[aqi_value]["aqi_lower"]),
-        3
+            (
+                aqi_value*(metric_upper_breakpoint - metric_lower_breakpoint) 
+                + aqi_upper_breakpoint * metric_lower_breakpoint 
+                - aqi_lower_breakpoint * metric_upper_breakpoint
+            )
+            /
+            (aqi_upper_breakpoint - aqi_lower_breakpoint)
+            ,
+            3
         )
     )
     
