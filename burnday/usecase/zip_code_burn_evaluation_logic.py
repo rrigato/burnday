@@ -91,9 +91,9 @@ def california_valley_default_burn_rules(populated_burn_status):
     )
 
 
-def california_valley_hot_spot_burn_rules(populated_burn_status):
-    """Mutates populated_burn_status.burn_status with hot spot specific burn status regulations 
-        based on rule 4901: 
+def ca_valley_hot_spot_burn_rules(populated_burn_status):
+    """Mutates populated_burn_status.burn_status with California 
+        'hot spot' specific location burning regulations based on rule 4901: 
 
         https://valleyair.org/rule4901/documents/FAQ-Rule4901.pdf
         https://www.valleyair.org/rules/currntrules/r4901.pdf

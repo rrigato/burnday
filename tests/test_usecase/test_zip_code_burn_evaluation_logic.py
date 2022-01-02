@@ -58,7 +58,7 @@ class TestZipCodeBurnEvaluationLogic(unittest.TestCase):
                 )
 
 
-    def test_california_valley_hot_spot_burn_rules(self):
+    def test_ca_valley_hot_spot_burn_rules(self):
         """California valley hot spot ruleset"""
         pass
 

@@ -51,6 +51,15 @@ def _orchestrate_location_burn_status(handler_input):
 
     location_burn_status_response = location_burn_status(zip_code_request=zip_code_request)
 
+    if bool(location_burn_status_response) == False:
+        logging.info("_orchestrate_location_burn_status - location_burn_status_response is False")
+        logging.info(location_burn_status_response.error_message)
+        return(
+            ("Something went wrong when attempting to retrieve" + 
+            " the burn status for that location, please try again later"
+            )
+        )
+
     logging.info(
         "_orchestrate_location_burn_status - location_burn_status_response - {burn_status}".format(
             burn_status=location_burn_status_response.response_value.burn_status
@@ -94,7 +103,9 @@ class BurnStatusIntentHandler(AbstractRequestHandler):
         '''
         logging.info("BurnStatusIntentHandler.handle - ")
         
-        speak_output = _orchestrate_location_burn_status(handler_input=handler_input)
+        speak_output = "The burn status is " + _orchestrate_location_burn_status(
+            handler_input=handler_input
+        )
 
         return (
             handler_input.response_builder
