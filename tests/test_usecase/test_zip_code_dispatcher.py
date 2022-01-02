@@ -117,7 +117,7 @@ class TestZipCodeDispatcher(unittest.TestCase):
     @patch("burnday.usecase.zip_code_dispatcher.aqi_to_pm_2point5")
     def test_apply_ca_south_coast_burn_rules(self, mock_aqi_to_pm_2point5,
         mock_ca_south_coast_burn_rules):
-        """ca_south_coast_burn_rules zip codes invoked callback function"""
+        """ca_south_coast_burn_rules invoked as callback function for sample zip codes"""
         from burnday.entities.entity_model import BurnStatus
         from burnday.usecase.zip_code_dispatcher import factory_router
 
