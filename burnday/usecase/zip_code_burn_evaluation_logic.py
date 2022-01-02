@@ -182,7 +182,7 @@ def _get_ca_south_coast_burn_rules(populated_burn_status):
         Air Quality Management District rule 445:
 
         http://www.aqmd.gov/docs/default-source/rule-book/rule-iv/rule-445.pdf
-        https://www.aqmd.gov/home/programs/community/cbyb---faq#3
+        https://www.aqmd.gov/home/programs/community/cbyb---faq#2
 
         Parameters
         ----------
@@ -205,7 +205,7 @@ def ca_south_coast_burn_rules(populated_burn_status):
         Air Quality Management District rule 445:
 
         http://www.aqmd.gov/docs/default-source/rule-book/rule-iv/rule-445.pdf
-        https://www.aqmd.gov/home/programs/community/cbyb---faq#3
+        https://www.aqmd.gov/home/programs/community/cbyb---faq#2
 
         Parameters
         ----------
