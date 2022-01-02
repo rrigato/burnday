@@ -57,7 +57,7 @@ def _get_california_valley_default_burn_rules(populated_burn_status):
         Parameters
         ----------
         populated_burn_status: BurnStatus
-            burn_status attribute will be mutated, fine_particulate_matter_2_5 must be populated 
+            will not be mutated by this function 
 
         Returns
         -------
@@ -89,6 +89,35 @@ def california_valley_default_burn_rules(populated_burn_status):
     populated_burn_status.burn_status =_get_california_valley_default_burn_rules(
         populated_burn_status=populated_burn_status
     )
+
+
+def _apply_ca_valley_hot_spot_burn_rules(populated_burn_status):
+    """Applies wood burning curtailment rules for California 'hot spot' specific locations
+
+        https://valleyair.org/rule4901/documents/FAQ-Rule4901.pdf
+        https://www.valleyair.org/rules/currntrules/r4901.pdf
+
+        Parameters
+        ----------
+        populated_burn_status: BurnStatus
+            will not be mutated by this function
+
+        Returns
+        -------
+        burn_status: str
+            description of whether fuel burning is allowed for the location
+    """
+    '''
+        TODO -
+        Lookup correct threshold for hot spot burn counties
+    '''
+    if populated_burn_status.fine_particulate_matter_2_5 < 20.0:
+        return(domain_specific_terminology.CALIFORNIA_TIER_ZERO)
+
+    if populated_burn_status.fine_particulate_matter_2_5 < 65.0:
+        return(domain_specific_terminology.CALIFORNIA_TIER_ONE)
+
+    return(domain_specific_terminology.CALIFORNIA_TIER_TWO)
 
 
 def ca_valley_hot_spot_burn_rules(populated_burn_status):
