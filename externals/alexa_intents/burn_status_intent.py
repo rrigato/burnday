@@ -66,7 +66,7 @@ def _orchestrate_location_burn_status(handler_input):
         )
     )
 
-    return(location_burn_status_response.response_value.burn_status)
+    return("The burn status is " + location_burn_status_response.response_value.burn_status)
 
 
 class BurnStatusIntentHandler(AbstractRequestHandler):
@@ -103,9 +103,7 @@ class BurnStatusIntentHandler(AbstractRequestHandler):
         '''
         logging.info("BurnStatusIntentHandler.handle - ")
         
-        speak_output = "The burn status is " + _orchestrate_location_burn_status(
-            handler_input=handler_input
-        )
+        speak_output = _orchestrate_location_burn_status(handler_input=handler_input)
 
         return (
             handler_input.response_builder
