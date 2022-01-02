@@ -1,3 +1,4 @@
+from burnday.entities.zip_codes import california
 from burnday.usecase.air_quality_index_conversions import aqi_to_pm_2point5
 from burnday.usecase.zip_code_burn_evaluation_logic import california_valley_default_burn_rules
 from burnday.usecase.zip_code_burn_evaluation_logic import ca_valley_hot_spot_burn_rules
@@ -74,6 +75,23 @@ def _apply_california_valley_default_burn_rules(dispatch_functions):
     for tulare_zip_code in tulare_county:
         dispatch_functions[tulare_zip_code] = california_valley_default_burn_rules
 
+
+def _apply_ca_valley_hot_spot_burn_rules(dispatch_functions):
+    """Zip codes that use the ca_valley_hot_spot_burn_rules ruleset
+    
+        Parameters
+        -------
+        dispatch_functions: dict
+            Where each key is the int zip_code for the burn status request and 
+            each value is the factory function to execute the appropriate business logic
+    """
+    hot_spot_zip_codes = []
+    hot_spot_zip_codes.extend(california.kern_county)
+
+    for ca_hot_spot_zip in hot_spot_zip_codes:
+        dispatch_functions[ca_hot_spot_zip] = ca_valley_hot_spot_burn_rules
+
+
 def _apply_washington_state_burn_rules(dispatch_functions):
     """All zip codes in the state of Washington use the washington_state_burn_rules ruleset
     
@@ -106,12 +124,9 @@ def factory_router(populated_burn_status):
     dispatch_functions = _zip_based_mapping()
 
     _apply_california_valley_default_burn_rules(dispatch_functions=dispatch_functions)
-    _apply_washington_state_burn_rules(dispatch_functions)
-    '''
-        TODO-
-        mapping zip codes for this ruleset:
-            ca_valley_hot_spot_burn_rules
-    '''
+    _apply_washington_state_burn_rules(dispatch_functions=dispatch_functions)
+    _apply_ca_valley_hot_spot_burn_rules(dispatch_functions=dispatch_functions)
+    
     logging.info("factory_router - custom rulesets mapped")
 
     dispatch_functions[populated_burn_status.zip_code](populated_burn_status=populated_burn_status)

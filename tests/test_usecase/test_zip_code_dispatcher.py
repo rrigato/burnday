@@ -82,7 +82,6 @@ class TestZipCodeDispatcher(unittest.TestCase):
                 mock_washington_state_burn_rules.reset_mock()
 
 
-    @unittest.skip("TODO - skip until kern county is implemented")
     @patch("burnday.usecase.zip_code_dispatcher.ca_valley_hot_spot_burn_rules")
     @patch("burnday.usecase.zip_code_dispatcher.aqi_to_pm_2point5")
     def test_apply_ca_valley_hot_spot_burn_rules(self, mock_aqi_to_pm_2point5,
