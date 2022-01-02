@@ -35,46 +35,11 @@ def _apply_california_valley_default_burn_rules(dispatch_functions):
             Where each key is the int zip_code for the burn status request and 
             each value is the factory function to execute the appropriate business logic
     """
-    '''
-        TODO - extract into seperate module if zip codes are still used?
-    '''
-    tulare_county= [
-        93201,
-        93603,
-        93208,
-        93615,
-        93618,
-        93218,
-        93219,
-        93221,
-        93223,
-        93235,
-        93633,
-        93244,
-        93247,
-        93647,
-        93207,
-        93256,
-        93258,
-        93257,
-        93260,
-        93261,
-        93262,
-        93265,
-        93267,
-        93666,
-        93270,
-        93271,
-        93272,
-        93673,
-        93274,
-        93277,
-        93291,
-        93292,
-        93286
-    ]
-    for tulare_zip_code in tulare_county:
-        dispatch_functions[tulare_zip_code] = california_valley_default_burn_rules
+    ca_valley_default_zip_codes = []
+    ca_valley_default_zip_codes.extend(california.tulare_county)
+
+    for ca_default_zip in ca_valley_default_zip_codes:
+        dispatch_functions[ca_default_zip] = california_valley_default_burn_rules
 
 
 def _apply_ca_valley_hot_spot_burn_rules(dispatch_functions):
