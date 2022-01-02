@@ -120,3 +120,31 @@ class TestBurnStatusStorage(unittest.TestCase):
 
 
         self.assertEqual(mock_urlopen.return_value.__enter__.return_value.read.call_count, 0)
+
+
+    @unittest.skip("TODO - body of test case")
+    @patch("burnday.repo.burn_status_storage.urlopen")
+    @patch("burnday.repo.burn_status_storage.get_burnday_secrets")
+    def test_load_burn_status_empty_list(self, mock_get_burnday_secrets, mock_urlopen):
+        """Api returns [] in post body"""
+        from burnday.repo.burn_status_storage import load_burn_status
+        from datetime import date
+
+        mock_zip_code = 20002
+        mock_get_burnday_secrets.return_value = (deepcopy(self.mock_project_secrets), None)
+
+        mock_urlopen.return_value.__enter__.return_value.read.return_value = json.dumps(
+            []
+        ).encode("utf-8")
+
+
+
+        burn_status_entity, load_burn_status_error = load_burn_status(zip_code=mock_zip_code)
+
+
+        '''
+            TODO - what to say when unable to retrieve burn status for a location,
+            currently says
+            <speak>Something went wrong when attempting to retrieve the burn status for that location, please try again later</speak>
+            set in externals.alexa_intents.burn_status_intent
+        '''
