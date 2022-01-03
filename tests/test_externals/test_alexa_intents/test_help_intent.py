@@ -38,3 +38,15 @@ class TestHelpIntent(unittest.TestCase):
                 )
         )
 
+        '''
+            to ensure a reprompt message and the session is left open when the user 
+            asks for help
+        '''
+        self.assertEqual(
+            actual_response_message["response"]["outputSpeech"]["ssml"],
+            actual_response_message["response"]["reprompt"]["outputSpeech"]["ssml"]
+        )
+
+        self.assertFalse(
+            actual_response_message["response"]["shouldEndSession"]
+        )

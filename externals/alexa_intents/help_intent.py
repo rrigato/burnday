@@ -19,5 +19,6 @@ class HelpRequestHandler(AbstractRequestHandler):
         return(
             handler_input.response_builder
                 .speak(output_message)
+                .ask(output_message)
                 .response
         )
