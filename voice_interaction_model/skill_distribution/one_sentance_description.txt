@@ -1,0 +1,1 @@
+Provides fuel burning restrictions for a zip code.

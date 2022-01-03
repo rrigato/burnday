@@ -1,0 +1,3 @@
+Alexa, ask burn day for the burn status in 98109
+Alexa, tell burn day to check if zip code 90012 is allowed to burn today
+Alexa, ask burn day if there are any burning restrictions in 98121
