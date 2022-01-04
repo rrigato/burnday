@@ -1,0 +1,19 @@
+Use this skill to determine if a zip code has any fuel burning restrictions for heating your home in the winter.
+
+
+**FAQ**
+
+Which zip codes can return a burn status?
+- Washington (entire state)
+- Los Angeles County (California)
+- Kern County (California)
+- Tulare County (California)
+
+
+* More locations are being added with each new feature release. If you are aware of local burning restrictions not present in this skill, please provide us feedback by leaving this skill a review.
+
+How is the fuel burning status calculated?
+We take the air quality index for a given zip code to calculate the fine and coarse particulate matter for the provided zip code. The burn status is then calculated based on local ordinances/regulations.
+
+Why did the zip code I provide result in an air quality status being returned?
+Burning restriction thresholds differ across local municipalities, at this time we do not have specific burning regulations for that zip code. Please check back in the future as we are adding new zip codes with each feature release.
