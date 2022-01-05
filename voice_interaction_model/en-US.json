@@ -34,13 +34,16 @@
                         }
                     ],
                     "samples": [
+                        "to get the burn status in {burn_location}",
+                        "for the burn status in {burn_location}",
                         "What is today's burn status for {burn_location}",
                         "What is today's burn status for zip code {burn_location}",
                         "Can we burn today in {burn_location}",
                         "Is {burn_location} allowed to burn today",
                         "Is zip code {burn_location} allowed to burn today",
                         "to check if zip code {burn_location} is allowed to burn today",
-                        "give me the burn status for zip code {burn_location}",
+                        "To give me the burn status for zip code {burn_location}",
+                        "To give me the burn status for zip code {burn_location}",
                         "give me the burn status for {burn_location}",
                         "Give me the burn status in {burn_location}",
                         "to check if {burn_location} is allowed to burn today",
@@ -50,6 +53,8 @@
                         "Is {burn_location} under a burning curtailment",
                         "Is burning restricted for {burn_location}",
                         "Is burning restricted for zip code {burn_location}",
+                        "about the burn status in {burn_location}",
+                        "about the burn status for {burn_location}",
                         "burn status for {burn_location}",
                         "burn status for zip code {burn_location}",
                         "todays burn status in {burn_location}",
@@ -61,13 +66,16 @@
                         "if there are any burning restrictions in postal code {burn_location}",
                         "if there are any burning restrictions",
                         "Does today's air quality allow burning",
+                        "to check if I am allowed to burn today",
                         "Is there any fuel based burning curtailments in effect",
                         "Any rules against burning today",
                         "Is my postal code allowed to burn",
                         "Will I be able to use my fireplace today",
                         "Any wood burning restrictions in effect",
                         "for the burn status",
-                        "for today's burn status"
+                        "for today's burn status",
+                        "to get the burn status",
+                        "about the burn status"
                     ]
                 },
                 {
