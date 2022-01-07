@@ -14,17 +14,30 @@ class TestLaunchIntent(unittest.TestCase):
         """LaunchRequest for initally opening the skill"""
         from externals.alexa_intents.intent_dispatcher import get_alexa_lambda_handler
 
-        expected_response_message = "What location would you like the burn status for?"
+        expected_message = "Welcome to the burn day tracker"
 
 
         alexa_lambda_handler = get_alexa_lambda_handler()
 
 
-        self.assertTrue(
-            expected_response_message in 
-            alexa_lambda_handler(
-                deepcopy(self.intent_request), 
-                None
-            )["response"]["outputSpeech"]["ssml"]
+
+        actual_response_message = alexa_lambda_handler(
+            deepcopy(self.intent_request), 
+            None
         )
+
+
+        self.assertTrue(
+            expected_message in actual_response_message["response"]["outputSpeech"]["ssml"],
+            msg="""
+                Expected Alexa Response - 
+                {expected_response} 
+                Actual Alexa Response - 
+                {actual_response}
+            """.format(
+                    expected_response=expected_message,
+                    actual_response=actual_response_message["response"]["outputSpeech"]["ssml"]
+                )
+        )
+
 
