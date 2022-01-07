@@ -46,9 +46,11 @@ class TestBurnStatusStorage(unittest.TestCase):
         
         args, kwargs = mock_urlopen.call_args
 
-        self.assertEqual(len(args), 1)
-        self.assertEqual(len(kwargs), 0)
-        outgoing_api_call = urlparse(args[0].get_full_url())
+        self.assertEqual(len(args), 0)
+        self.assertEqual(len(kwargs), 3)
+        self.assertIsNone(kwargs["data"])
+        self.assertEqual(kwargs["timeout"], 4)
+        outgoing_api_call = urlparse(kwargs["url"].get_full_url())
 
         self.assertEqual(outgoing_api_call.hostname, "www.airnowapi.org")
         self.assertEqual(outgoing_api_call.scheme, "https")

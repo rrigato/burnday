@@ -92,7 +92,7 @@ def _handle_api_request(burnday_project_config, zip_code):
 
         get_request.add_header("x-request-id", request_id_header)
 
-        with urlopen(get_request) as api_response:
+        with urlopen(url=get_request, data=None, timeout=4) as api_response:
             assert api_response.getcode() == 200, (
                 "_handle_api_request - api_response.getcode - " + str(api_response.getcode())
             )
@@ -274,7 +274,7 @@ def load_burn_status(zip_code):
 
 
 if __name__ == "__main__":
-    burn_status_entity, repo_error = load_burn_status(20002)
+    burn_status_entity, repo_error = load_burn_status(95236)
     if burn_status_entity is not None:
         print(burn_status_entity.burn_day)
         print(burn_status_entity.air_quality_index)
