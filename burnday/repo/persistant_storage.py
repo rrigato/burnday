@@ -43,8 +43,7 @@ def get_burnday_secrets():
 
 if __name__ == "__main__":
     '''
-        TODO - 
-        remove manual component test 
+        manual component test 
     '''
     os.environ["AWS_REGION"] = "us-east-1"
     burnday_project_config, repo_retrieval_error = get_burnday_secrets()

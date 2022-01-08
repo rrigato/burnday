@@ -84,8 +84,6 @@ class BurnStatusIntentHandler(AbstractRequestHandler):
             can_class_handle_request: bool
                 True if this class can handle the provided request, False otherwise
         """
-        '''TODO - apply docstr to all handlers
-        '''
         return(is_intent_name("BurnStatusIntent")(handler_input))
 
     def handle(self, handler_input):
@@ -99,8 +97,6 @@ class BurnStatusIntentHandler(AbstractRequestHandler):
             -------
             alexa_sdk_response: ask_sdk_model.Response
         """
-        '''TODO - apply docstr to all handlers
-        '''
         logging.info("BurnStatusIntentHandler.handle - ")
         
         speak_output = _orchestrate_location_burn_status(handler_input=handler_input)
