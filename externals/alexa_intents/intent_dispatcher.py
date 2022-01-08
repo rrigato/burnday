@@ -1,7 +1,4 @@
 from ask_sdk_core.skill_builder import SkillBuilder
-from ask_sdk_core.dispatch_components import AbstractRequestHandler
-from ask_sdk_core.utils import is_intent_name
-from ask_sdk_core.utils import is_request_type
 from externals.alexa_intents.burn_status_intent import BurnStatusIntentHandler
 from externals.alexa_intents.cancel_stop_intent import CancelOrStopIntentHandler
 from externals.alexa_intents.fallback_intent import FallbackIntentHandler
