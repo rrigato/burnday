@@ -8,47 +8,9 @@ from externals.alexa_intents.fallback_intent import FallbackIntentHandler
 from externals.alexa_intents.help_intent import HelpRequestHandler
 from externals.alexa_intents.launch_intent import LaunchRequestHandler
 from externals.alexa_exceptions.default_graceful_exit import DefaultExceptionHandler
+from externals.alexa_requests.session_ended_request import SessionEndedRequestHandler
 
 import logging
-
-
-'''
-TODO - extract each intent into separate modules
-'''
-
-
-
-class SessionEndedRequestHandler(AbstractRequestHandler):
-    """Handler for Session End."""
-    def can_handle(self, handler_input):
-        """Determines the type of input the class can handle
-
-            Parameters
-            ----------
-            handler_input: ask_sdk_core.handler_input.HandlerInput
-
-            Returns
-            -------
-            can_class_handle_request: bool
-                True if this class can handle the provided request, False otherwise
-        """
-        return is_request_type("SessionEndedRequest")(handler_input)
-
-    def handle(self, handler_input):
-        """Applies business logic for the appropriate class handler
-
-            Parameters
-            ----------
-            handler_input: ask_sdk_core.handler_input.HandlerInput
-
-            Returns
-            -------
-            alexa_sdk_response: ask_sdk_model.Response
-        """
-        logging.info("SessionEndedRequestHandler.handle")
-        
-        return handler_input.response_builder.response
-
 
 
 def get_alexa_lambda_handler():
