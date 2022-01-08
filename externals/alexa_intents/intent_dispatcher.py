@@ -1,9 +1,7 @@
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
-from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_core.utils import is_intent_name
 from ask_sdk_core.utils import is_request_type
-from ask_sdk_model import Response
 from externals.alexa_intents.burn_status_intent import BurnStatusIntentHandler
 from externals.alexa_intents.cancel_stop_intent import CancelOrStopIntentHandler
 from externals.alexa_intents.help_intent import HelpRequestHandler
@@ -21,11 +19,30 @@ TODO - extract each intent into separate modules
 class FallbackIntentHandler(AbstractRequestHandler):
     """Single handler for Fallback Intent."""
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
+        """Determines the type of input the class can handle
+
+            Parameters
+            ----------
+            handler_input: ask_sdk_core.handler_input.HandlerInput
+
+            Returns
+            -------
+            can_class_handle_request: bool
+                True if this class can handle the provided request, False otherwise
+        """
         return is_intent_name("AMAZON.FallbackIntent")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
+        """Applies business logic for the appropriate class handler
+
+            Parameters
+            ----------
+            handler_input: ask_sdk_core.handler_input.HandlerInput
+
+            Returns
+            -------
+            alexa_sdk_response: ask_sdk_model.Response
+        """
         logging.info("In FallbackIntentHandler")
         speech = "Hmm, I'm not sure. You can say Hello or Help. What would you like to do?"
         reprompt = "I didn't catch that. What can I help you with?"
@@ -35,13 +52,30 @@ class FallbackIntentHandler(AbstractRequestHandler):
 class SessionEndedRequestHandler(AbstractRequestHandler):
     """Handler for Session End."""
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
+        """Determines the type of input the class can handle
+
+            Parameters
+            ----------
+            handler_input: ask_sdk_core.handler_input.HandlerInput
+
+            Returns
+            -------
+            can_class_handle_request: bool
+                True if this class can handle the provided request, False otherwise
+        """
         return is_request_type("SessionEndedRequest")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
+        """Applies business logic for the appropriate class handler
 
-        # Any cleanup logic goes here.
+            Parameters
+            ----------
+            handler_input: ask_sdk_core.handler_input.HandlerInput
+
+            Returns
+            -------
+            alexa_sdk_response: ask_sdk_model.Response
+        """
 
         return handler_input.response_builder.response
 
