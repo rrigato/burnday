@@ -45,7 +45,8 @@ class SessionEndedRequestHandler(AbstractRequestHandler):
             -------
             alexa_sdk_response: ask_sdk_model.Response
         """
-
+        logging.info("SessionEndedRequestHandler.handle")
+        
         return handler_input.response_builder.response
 
 

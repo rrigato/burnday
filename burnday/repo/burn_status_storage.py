@@ -274,7 +274,7 @@ def load_burn_status(zip_code):
 
 
 if __name__ == "__main__":
-    burn_status_entity, repo_error = load_burn_status(95236)
+    burn_status_entity, repo_error = load_burn_status(20002)
     if burn_status_entity is not None:
         print(burn_status_entity.burn_day)
         print(burn_status_entity.air_quality_index)
