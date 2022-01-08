@@ -7,10 +7,10 @@ import logging
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-logging.basicConfig(format="%(asctime)s %(message)s")
 
 
 alexa_lambda_handler = get_alexa_lambda_handler()
+
 
 if __name__ == "__main__":
     import json
