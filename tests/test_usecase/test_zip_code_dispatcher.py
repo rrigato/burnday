@@ -122,13 +122,22 @@ class TestZipCodeDispatcher(unittest.TestCase):
         from burnday.usecase.zip_code_dispatcher import factory_router
 
         ca_hot_spot_zips = [
-            {"zip_code": 89999, "expected_callback_function_call_count": 0},
-            {"zip_code": 90001, "expected_callback_function_call_count": 1},
-            {"zip_code": 90012, "expected_callback_function_call_count": 1},
-            {"zip_code": 90028, "expected_callback_function_call_count": 1},
-            {"zip_code": 90037, "expected_callback_function_call_count": 1},
-            {"zip_code": 93599, "expected_callback_function_call_count": 1},
-            {"zip_code": 93601, "expected_callback_function_call_count": 0}
+            {"zip_code": 89999, "expected_callback_count": 0, "county": "los_angeles"},
+            {"zip_code": 90001, "expected_callback_count": 0, "county": "los_angeles"},
+            {"zip_code": 90012, "expected_callback_count": 1, "county": "los_angeles"},
+            {"zip_code": 90028, "expected_callback_count": 1, "county": "los_angeles"},
+            {"zip_code": 90037, "expected_callback_count": 1, "county": "los_angeles"},
+            {"zip_code": 93599, "expected_callback_count": 1, "county": "los_angeles"},
+            {"zip_code": 93601, "expected_callback_count": 0, "county": "los_angeles"},
+
+            {"zip_code": 89999, "expected_callback_count": 0, "county": "san_bernadino"},
+            {"zip_code": 90001, "expected_callback_count": 1, "county": "los_angeles"},
+            {"zip_code": 90012, "expected_callback_count": 1, "county": "los_angeles"},
+            {"zip_code": 90028, "expected_callback_count": 1, "county": "los_angeles"},
+            {"zip_code": 90037, "expected_callback_count": 1, "county": "los_angeles"},
+            {"zip_code": 93599, "expected_callback_count": 1, "county": "los_angeles"},
+            {"zip_code": 93601, "expected_callback_count": 0, "county": "los_angeles"}
+            
         ]
 
         for ca_hot_spot_zip in ca_hot_spot_zips:
@@ -142,7 +151,12 @@ class TestZipCodeDispatcher(unittest.TestCase):
 
                 self.assertEqual(
                     mock_ca_south_coast_burn_rules.call_count,
-                    ca_hot_spot_zip["expected_callback_function_call_count"]
+                    ca_hot_spot_zip["expected_callback_count"],
+                    
+                    msg="\n**Failing test info** \nCounty - {county} \nZip - {zip_code} ".format(
+                        county=ca_hot_spot_zip["county"],
+                        zip_code=ca_hot_spot_zip["zip_code"]
+                    )  
                 )
 
                 mock_ca_south_coast_burn_rules.reset_mock()
