@@ -19,120 +19,150 @@ def zip_code_parse(raw_zip_code_data):
 
 if __name__ == "__main__":
     '''kern county example'''
-    zip_code_parse(raw_zip_code_data="""ZIP Code 91701	General	Rancho Cucamonga	38,976	Pacific	909
-ZIP Code 91708	General	Chino	3,369	Pacific	909/840
-ZIP Code 91709	General	Chino Hills	74,796	Pacific	909/840
-ZIP Code 91710	General	Chino	80,358	Pacific	909/840
-ZIP Code 91729	P.O. Box	Rancho Cucamonga	0	Pacific	909/951/840
-ZIP Code 91730	General	Rancho Cucamonga	66,925	Pacific	909/951/840
-ZIP Code 91737	General	Rancho Cucamonga	24,740	Pacific	909
-ZIP Code 91739	General	Rancho Cucamonga	34,794	Pacific	909
-ZIP Code 91743	P.O. Box	Guasti	0	Pacific	909/951/840
-ZIP Code 91758	General	Ontario	0	Pacific	909/951/840
-ZIP Code 91759	P.O. Box	Mt Baldy	476	Pacific	760
-ZIP Code 91761	General	Ontario	56,913	Pacific	909/951/840
-ZIP Code 91762	General	Ontario	55,857	Pacific	909
-ZIP Code 91763	General	Montclair	36,375	Pacific	909/951/840
-ZIP Code 91764	General	Ontario	54,086	Pacific	909/951/840
-ZIP Code 91784	General	Upland	25,938	Pacific	909/840
-ZIP Code 91785	P.O. Box	Upland	0	Pacific	909
-ZIP Code 91786	General	Upland	51,165	Pacific	909/840
-ZIP Code 92242	General	Earp	1,539	Pacific	760/442
-ZIP Code 92252	General	Joshua Tree	9,647	Pacific	442/760
-ZIP Code 92256	General	Morongo Valley	3,588	Pacific	442/760
-ZIP Code 92267	P.O. Box	Parker Dam	126	Pacific	760
-ZIP Code 92268	P.O. Box	Pioneertown	574	Pacific	760/442
-ZIP Code 92277	General	Twentynine Palms	23,911	Pacific	760/442
-ZIP Code 92278	P.O. Box	Twentynine Palms	3,846	Pacific	760/442
-ZIP Code 92280	General	Vidal	14	Pacific	442
-ZIP Code 92284	General	Yucca Valley	25,095	Pacific	760/442
-ZIP Code 92285	General	Landers	2,632	Pacific	760/442
-ZIP Code 92286	P.O. Box	Yucca Valley	0	Pacific	760/442
-ZIP Code 92301	General	Adelanto	32,725	Pacific	760/442
-ZIP Code 92304	P.O. Box	Amboy	17	Pacific	760/442
-ZIP Code 92305	General	Angelus Oaks	535	Pacific	909
-ZIP Code 92307	General	Apple Valley	37,630	Pacific	760/442
-ZIP Code 92308	General	Apple Valley	39,837	Pacific	760/442
-ZIP Code 92309	General	Baker	763	Pacific	760/442
-ZIP Code 92310	General	Fort Irwin	8,845	Pacific	760/442
-ZIP Code 92311	General	Barstow	31,894	Pacific	760/442
-ZIP Code 92312	P.O. Box	Barstow	0	Pacific	760/442
-ZIP Code 92313	General	Grand Terrace	12,025	Pacific	909/951
-ZIP Code 92314	General	Big Bear City	10,162	Pacific	909/442
-ZIP Code 92315	General	Big Bear Lake	5,094	Pacific	909
-ZIP Code 92316	General	Bloomington	30,830	Pacific	909/840
-ZIP Code 92317	P.O. Box	Blue Jay	0	Pacific	909/442/760
-ZIP Code 92318	General	Bryn Mawr	0	Pacific	909/840/951
-ZIP Code 92321	P.O. Box	Cedar Glen	1,522	Pacific	909/840
-ZIP Code 92322	P.O. Box	Cedarpines Park	1,257	Pacific	909/442/760
-ZIP Code 92323	General	Cima	0	Pacific	760/442
-ZIP Code 92324	General	Colton	56,505	Pacific	909/840/951
-ZIP Code 92325	P.O. Box	Crestline	9,391	Pacific	909/442/760
-ZIP Code 92327	General	Daggett	632	Pacific	760/442
-ZIP Code 92329	P.O. Box	Phelan	0	Pacific	760/442
-ZIP Code 92331	P.O. Box	Fontana	0	Pacific	909/840
-ZIP Code 92332	General	Essex	65	Pacific	760/442
-ZIP Code 92333	P.O. Box	Fawnskin	472	Pacific	909
-ZIP Code 92334	P.O. Box	Fontana	0	Pacific	909/840
-ZIP Code 92335	General	Fontana	95,397	Pacific	909/840
-ZIP Code 92336	General	Fontana	88,419	Pacific	909/840
-ZIP Code 92337	General	Fontana	37,849	Pacific	909/840
-ZIP Code 92338	General	Ludlow	12	Pacific	442
-ZIP Code 92339	General	Forest Falls	885	Pacific	909
-ZIP Code 92340	P.O. Box	Hesperia	0	Pacific	760/442
-ZIP Code 92341	P.O. Box	Green Valley Lake	410	Pacific	909
-ZIP Code 92342	General	Helendale	6,379	Pacific	760
-ZIP Code 92344	General	Hesperia	20,769	Pacific	442/760
-ZIP Code 92345	General	Hesperia	78,715	Pacific	760/442
-ZIP Code 92346	General	Highland	54,923	Pacific	909/840
-ZIP Code 92347	General	Hinkley	1,692	Pacific	442/760
-ZIP Code 92350	Unique	Loma Linda	0	Pacific	909/840/951
-ZIP Code 92352	P.O. Box	Lake Arrowhead	8,004	Pacific	909/442/760
-ZIP Code 92354	General	Loma Linda	21,559	Pacific	909/840/951
-ZIP Code 92356	General	Lucerne Valley	6,455	Pacific	760/442
-ZIP Code 92357	Unique	Loma Linda	0	Pacific	909/840/951
-ZIP Code 92358	General	Lytle Creek	707	Pacific	760
-ZIP Code 92359	General	Mentone	8,103	Pacific	909
-ZIP Code 92363	General	Needles	5,321	Pacific	760/442
-ZIP Code 92364	General	Nipton	90	Pacific	760/442
-ZIP Code 92365	General	Newberry Springs	2,637	Pacific	760/442
-ZIP Code 92366	General	Mountain Pass	0	Pacific	442/760
-ZIP Code 92368	General	Oro Grande	1,113	Pacific	760/442
-ZIP Code 92369	P.O. Box	Patton	0	Pacific	909/840
-ZIP Code 92371	General	Phelan	16,763	Pacific	760/442
-ZIP Code 92372	General	Pinon Hills	6,220	Pacific	760/661/442
-ZIP Code 92373	General	Redlands	33,423	Pacific	909/840
-ZIP Code 92374	General	Redlands	40,267	Pacific	909/840
-ZIP Code 92375	P.O. Box	Redlands	0	Pacific	909/840
-ZIP Code 92376	General	Rialto	81,516	Pacific	909/840
-ZIP Code 92377	General	Rialto	19,989	Pacific	909/840
-ZIP Code 92378	P.O. Box	Rimforest	183	Pacific	909/442/760
-ZIP Code 92382	P.O. Box	Running Springs	5,268	Pacific	909/840
-ZIP Code 92385	P.O. Box	Skyforest	313	Pacific	909/840
-ZIP Code 92386	P.O. Box	Sugarloaf	2,270	Pacific	909/442
-ZIP Code 92391	P.O. Box	Twin Peaks	2,534	Pacific	909/442/760
-ZIP Code 92392	General	Victorville	54,858	Pacific	760/442
-ZIP Code 92393	P.O. Box	Victorville	0	Pacific	442/760/909
-ZIP Code 92394	General	Victorville	33,237	Pacific	760/442
-ZIP Code 92395	General	Victorville	42,400	Pacific	442/760/909
-ZIP Code 92397	General	Wrightwood	4,894	Pacific	760/442
-ZIP Code 92398	P.O. Box	Yermo	1,379	Pacific	760/442
-ZIP Code 92399	General	Yucaipa	52,606	Pacific	909
-ZIP Code 92401	General	San Bernardino	1,932	Pacific	909/951/840
-ZIP Code 92402	P.O. Box	San Bernardino	0	Pacific	909/951/840
-ZIP Code 92403	General	San Bernardino	0	Pacific	909/951/840
-ZIP Code 92404	General	San Bernardino	58,271	Pacific	909/840
-ZIP Code 92405	General	San Bernardino	28,873	Pacific	909/840
-ZIP Code 92406	P.O. Box	San Bernardino	0	Pacific	909/951/840
-ZIP Code 92407	General	San Bernardino	56,689	Pacific	909/442/760
-ZIP Code 92408	General	San Bernardino	15,271	Pacific	909
-ZIP Code 92410	General	San Bernardino	49,410	Pacific	909/951/840
-ZIP Code 92411	General	San Bernardino	26,214	Pacific	909
-ZIP Code 92413	P.O. Box	San Bernardino	0	Pacific	909/951/840
-ZIP Code 92415	Unique	San Bernardino	0	Pacific	909/951/840
-ZIP Code 92418	Unique	San Bernardino	0	Pacific	909/951/840
-ZIP Code 92423	P.O. Box	San Bernardino	0	Pacific	909/951/840
-ZIP Code 92427	P.O. Box	San Bernardino	0	Pacific	909/951/840
-ZIP Code 93562	General	Trona	1,818	Pacific	442/760
-ZIP Code 93592	P.O. Box	Trona	64	Pacific	442/760"""
+    zip_code_parse(raw_zip_code_data="""ZIP Code 90620	General	Buena Park	45,113	Pacific	714/657
+ZIP Code 90621	General	Buena Park	35,153	Pacific	714/657
+ZIP Code 90622	P.O. Box	Buena Park	0	Pacific	714/657
+ZIP Code 90623	General	La Palma	15,554	Pacific	714/657
+ZIP Code 90624	P.O. Box	Buena Park	0	Pacific	714/657
+ZIP Code 90630	General	Cypress	47,993	Pacific	714/657
+ZIP Code 90631	General	La Habra	67,619	Pacific	562
+ZIP Code 90632	P.O. Box	La Habra	0	Pacific	562
+ZIP Code 90633	P.O. Box	La Habra	0	Pacific	562
+ZIP Code 90680	General	Stanton	29,945	Pacific	657/714
+ZIP Code 90720	General	Los Alamitos	21,751	Pacific	562/657/714
+ZIP Code 90721	P.O. Box	Los Alamitos	0	Pacific	562/657/714
+ZIP Code 90740	General	Seal Beach	23,729	Pacific	562/714
+ZIP Code 90742	P.O. Box	Sunset Beach	831	Pacific	714/562
+ZIP Code 90743	P.O. Box	Surfside	456	Pacific	714/562
+ZIP Code 92602	General	Irvine	22,871	Pacific	949
+ZIP Code 92603	General	Irvine	20,184	Pacific	949/714/657
+ZIP Code 92604	General	Irvine	26,853	Pacific	949
+ZIP Code 92605	P.O. Box	Huntington Beach	0	Pacific	657/714/562
+ZIP Code 92606	General	Irvine	21,495	Pacific	949/714
+ZIP Code 92607	P.O. Box	Laguna Niguel	0	Pacific	949/714
+ZIP Code 92609	P.O. Box	El Toro	0	Pacific	949/714
+ZIP Code 92610	General	Foothill Ranch	11,248	Pacific	949
+ZIP Code 92612	General	Irvine	27,522	Pacific	949/714
+ZIP Code 92614	General	Irvine	24,748	Pacific	949/714
+ZIP Code 92615	P.O. Box	Huntington Beach	0	Pacific	657/714/562
+ZIP Code 92616	P.O. Box	Irvine	0	Pacific	949/714
+ZIP Code 92617	General	Irvine	14,044	Pacific	949/714
+ZIP Code 92618	General	Irvine	16,366	Pacific	949/657
+ZIP Code 92619	P.O. Box	Irvine	0	Pacific	949/714
+ZIP Code 92620	General	Irvine	38,486	Pacific	949/657
+ZIP Code 92623	P.O. Box	Irvine	0	Pacific	949/714
+ZIP Code 92624	General	Capistrano Beach	7,248	Pacific	949/714
+ZIP Code 92625	General	Corona Del Mar	12,478	Pacific	949
+ZIP Code 92626	General	Costa Mesa	49,341	Pacific	714/657/949/562
+ZIP Code 92627	General	Costa Mesa	61,510	Pacific	949
+ZIP Code 92628	P.O. Box	Costa Mesa	0	Pacific	949
+ZIP Code 92629	General	Dana Point	25,756	Pacific	949/714
+ZIP Code 92630	General	Lake Forest	59,182	Pacific	949/714
+ZIP Code 92637	General	Laguna Woods	16,012	Pacific	949/714
+ZIP Code 92646	General	Huntington Beach	55,224	Pacific	657/714
+ZIP Code 92647	General	Huntington Beach	57,245	Pacific	657/714/562
+ZIP Code 92648	General	Huntington Beach	45,317	Pacific	657/714/562
+ZIP Code 92649	General	Huntington Beach	32,463	Pacific	714/562
+ZIP Code 92650	P.O. Box	East Irvine	0	Pacific	949/657
+ZIP Code 92651	General	Laguna Beach	23,881	Pacific	949/714
+ZIP Code 92652	P.O. Box	Laguna Beach	0	Pacific	949/714
+ZIP Code 92653	General	Laguna Hills	29,291	Pacific	949/714
+ZIP Code 92654	P.O. Box	Laguna Hills	0	Pacific	949/714
+ZIP Code 92655	General	Midway City	8,337	Pacific	714
+ZIP Code 92656	General	Aliso Viejo	49,046	Pacific	949/714
+ZIP Code 92657	General	Newport Coast	9,741	Pacific	949
+ZIP Code 92658	P.O. Box	Newport Beach	0	Pacific	949
+ZIP Code 92659	P.O. Box	Newport Beach	0	Pacific	949
+ZIP Code 92660	General	Newport Beach	34,797	Pacific	949
+ZIP Code 92661	General	Newport Beach	3,744	Pacific	949
+ZIP Code 92662	General	Newport Beach	2,756	Pacific	949
+ZIP Code 92663	General	Newport Beach	21,649	Pacific	949
+ZIP Code 92672	General	San Clemente	34,464	Pacific	949
+ZIP Code 92673	General	San Clemente	29,309	Pacific	949
+ZIP Code 92674	P.O. Box	San Clemente	0	Pacific	949
+ZIP Code 92675	General	San Juan Capistrano	34,731	Pacific	949/714
+ZIP Code 92676	General	Silverado	1,945	Pacific	657/714
+ZIP Code 92677	General	Laguna Niguel	63,297	Pacific	949
+ZIP Code 92678	P.O. Box	Trabuco Canyon	494	Pacific	949
+ZIP Code 92679	General	Trabuco Canyon	32,611	Pacific	949
+ZIP Code 92683	General	Westminster	89,747	Pacific	714/657
+ZIP Code 92684	P.O. Box	Westminster	0	Pacific	714/657
+ZIP Code 92685	P.O. Box	Westminster	0	Pacific	714/657
+ZIP Code 92688	General	Rancho Santa Margarita	43,792	Pacific	949
+ZIP Code 92690	P.O. Box	Mission Viejo	0	Pacific	949/714
+ZIP Code 92691	General	Mission Viejo	47,582	Pacific	949/714
+ZIP Code 92692	General	Mission Viejo	47,222	Pacific	949
+ZIP Code 92693	P.O. Box	San Juan Capistrano	0	Pacific	949/714
+ZIP Code 92694	General	Ladera Ranch	21,944	Pacific	949
+ZIP Code 92697	Unique	Irvine	0	Pacific	949/714
+ZIP Code 92698	Unique	Aliso Viejo	0	Pacific	949/714
+ZIP Code 92701	General	Santa Ana	53,908	Pacific	714/949/657/562
+ZIP Code 92702	P.O. Box	Santa Ana	0	Pacific	714/657/949/562
+ZIP Code 92703	General	Santa Ana	65,445	Pacific	714/657
+ZIP Code 92704	General	Santa Ana	88,123	Pacific	714/657
+ZIP Code 92705	General	Santa Ana	44,706	Pacific	714/657
+ZIP Code 92706	General	Santa Ana	36,457	Pacific	714/657/949
+ZIP Code 92707	General	Santa Ana	59,492	Pacific	714/657/949/562
+ZIP Code 92708	General	Fountain Valley	56,004	Pacific	714
+ZIP Code 92711	P.O. Box	Santa Ana	0	Pacific	714/657/949/562
+ZIP Code 92712	P.O. Box	Santa Ana	0	Pacific	714/657/949/562
+ZIP Code 92728	P.O. Box	Fountain Valley	0	Pacific	714
+ZIP Code 92735	P.O. Box	Santa Ana	0	Pacific	714/949/657/562
+ZIP Code 92780	General	Tustin	57,741	Pacific	657
+ZIP Code 92781	P.O. Box	Tustin	0	Pacific	657
+ZIP Code 92782	General	Tustin	23,032	Pacific	657
+ZIP Code 92799	General	Santa Ana	0	Pacific	714/657/949/562
+ZIP Code 92801	General	Anaheim	62,068	Pacific	657/714/949
+ZIP Code 92802	General	Anaheim	42,709	Pacific	714/657/949/562/909
+ZIP Code 92803	P.O. Box	Anaheim	0	Pacific	714/562/949/626/909
+ZIP Code 92804	General	Anaheim	85,914	Pacific	657/714
+ZIP Code 92805	General	Anaheim	70,401	Pacific	714/657/949/562/909/626
+ZIP Code 92806	General	Anaheim	37,173	Pacific	714/657/562/909/949/626
+ZIP Code 92807	General	Anaheim	36,171	Pacific	714
+ZIP Code 92808	General	Anaheim	20,039	Pacific	714/657
+ZIP Code 92809	General	Anaheim	0	Pacific	657/714/949
+ZIP Code 92811	P.O. Box	Atwood	0	Pacific	714/657
+ZIP Code 92812	P.O. Box	Anaheim	0	Pacific	714/562/949/626/909
+ZIP Code 92814	P.O. Box	Anaheim	0	Pacific	714/562/949/626/909
+ZIP Code 92815	P.O. Box	Anaheim	0	Pacific	714/562/949/626/909
+ZIP Code 92816	P.O. Box	Anaheim	0	Pacific	714/562/949/626/909
+ZIP Code 92817	P.O. Box	Anaheim	0	Pacific	714/562/949/626/909
+ZIP Code 92821	General	Brea	35,533	Pacific	714/657
+ZIP Code 92822	P.O. Box	Brea	0	Pacific	714/657
+ZIP Code 92823	General	Brea	3,613	Pacific	714/657
+ZIP Code 92825	P.O. Box	Anaheim	0	Pacific	714/562/949/626/909
+ZIP Code 92831	General	Fullerton	34,204	Pacific	714/657
+ZIP Code 92832	General	Fullerton	24,752	Pacific	714/657
+ZIP Code 92833	General	Fullerton	51,767	Pacific	657/714
+ZIP Code 92834	P.O. Box	Fullerton	0	Pacific	714/657
+ZIP Code 92835	General	Fullerton	24,010	Pacific	714/657
+ZIP Code 92836	P.O. Box	Fullerton	0	Pacific	714/657
+ZIP Code 92837	P.O. Box	Fullerton	0	Pacific	714/657
+ZIP Code 92838	P.O. Box	Fullerton	0	Pacific	714/657
+ZIP Code 92840	General	Garden Grove	54,083	Pacific	714/657
+ZIP Code 92841	General	Garden Grove	32,845	Pacific	657/714
+ZIP Code 92842	P.O. Box	Garden Grove	0	Pacific	714/657
+ZIP Code 92843	General	Garden Grove	45,214	Pacific	714/657
+ZIP Code 92844	General	Garden Grove	24,307	Pacific	714/657
+ZIP Code 92845	General	Garden Grove	16,333	Pacific	657/714
+ZIP Code 92846	P.O. Box	Garden Grove	0	Pacific	714/657
+ZIP Code 92850	Unique	Anaheim	0	Pacific	714/562/949/626/909
+ZIP Code 92856	P.O. Box	Orange	0	Pacific	714/657
+ZIP Code 92857	P.O. Box	Orange	0	Pacific	714/657
+ZIP Code 92859	P.O. Box	Orange	0	Pacific	714/657
+ZIP Code 92861	General	Villa Park	5,781	Pacific	714
+ZIP Code 92862	General	Orange	0	Pacific	714
+ZIP Code 92863	P.O. Box	Orange	0	Pacific	714/657
+ZIP Code 92864	P.O. Box	Orange	0	Pacific	714/657
+ZIP Code 92865	General	Orange	19,704	Pacific	714
+ZIP Code 92866	General	Orange	14,885	Pacific	714/657
+ZIP Code 92867	General	Orange	44,515	Pacific	657/714
+ZIP Code 92868	General	Orange	25,404	Pacific	714/657/949
+ZIP Code 92869	General	Orange	37,184	Pacific	714
+ZIP Code 92870	General	Placentia	52,033	Pacific	714/657
+ZIP Code 92871	P.O. Box	Placentia	0	Pacific	714/657
+ZIP Code 92885	P.O. Box	Yorba Linda	0	Pacific	714/657
+ZIP Code 92886	General	Yorba Linda	46,564	Pacific	714/657
+ZIP Code 92887	General	Yorba Linda	20,006	Pacific	714/657
+ZIP Code 92899	General	Anaheim	0	Pacific	714/562/949/626/909"""
     )

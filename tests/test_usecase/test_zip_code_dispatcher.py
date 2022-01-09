@@ -136,6 +136,12 @@ class TestZipCodeDispatcher(unittest.TestCase):
             {"zip_code": 92334, "expected_callback_count": 1, "county": "san_bernardino"},
             {"zip_code": 93592, "expected_callback_count": 1, "county": "san_bernardino"},
 
+            {"zip_code": 90620, "expected_callback_count": 1, "county": "orange_county"},
+            {"zip_code": 90743, "expected_callback_count": 1, "county": "orange_county"},
+            {"zip_code": 92610, "expected_callback_count": 0, "county": "orange_county"},
+            {"zip_code": 92821, "expected_callback_count": 1, "county": "orange_county"},
+            {"zip_code": 92899, "expected_callback_count": 1, "county": "orange_county"},
+
             {"zip_code": 93601, "expected_callback_count": 0, "county": "out of scope zip code"}
             
         ]
@@ -153,7 +159,7 @@ class TestZipCodeDispatcher(unittest.TestCase):
                     mock_ca_south_coast_burn_rules.call_count,
                     ca_south_coast_zip["expected_callback_count"],
                     
-                    msg="\n**Failing test info** \nCounty - {county} \nZip - {zip_code} ".format(
+                    msg="\n**Failing location** \nCounty - {county} \nZip - {zip_code}".format(
                         county=ca_south_coast_zip["county"],
                         zip_code=ca_south_coast_zip["zip_code"]
                     )  
