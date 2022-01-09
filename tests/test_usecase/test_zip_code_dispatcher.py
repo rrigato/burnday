@@ -122,21 +122,21 @@ class TestZipCodeDispatcher(unittest.TestCase):
         from burnday.usecase.zip_code_dispatcher import factory_router
 
         ca_hot_spot_zips = [
-            {"zip_code": 89999, "expected_callback_count": 0, "county": "los_angeles"},
-            {"zip_code": 90001, "expected_callback_count": 0, "county": "los_angeles"},
-            {"zip_code": 90012, "expected_callback_count": 1, "county": "los_angeles"},
-            {"zip_code": 90028, "expected_callback_count": 1, "county": "los_angeles"},
-            {"zip_code": 90037, "expected_callback_count": 1, "county": "los_angeles"},
-            {"zip_code": 93599, "expected_callback_count": 1, "county": "los_angeles"},
-            {"zip_code": 93601, "expected_callback_count": 0, "county": "los_angeles"},
+            {"zip_code": 89999, "expected_callback_count": 0, "county": "out of scope zip code"},
 
-            {"zip_code": 89999, "expected_callback_count": 0, "county": "san_bernadino"},
             {"zip_code": 90001, "expected_callback_count": 1, "county": "los_angeles"},
             {"zip_code": 90012, "expected_callback_count": 1, "county": "los_angeles"},
             {"zip_code": 90028, "expected_callback_count": 1, "county": "los_angeles"},
             {"zip_code": 90037, "expected_callback_count": 1, "county": "los_angeles"},
             {"zip_code": 93599, "expected_callback_count": 1, "county": "los_angeles"},
-            {"zip_code": 93601, "expected_callback_count": 0, "county": "los_angeles"}
+
+            {"zip_code": 91701, "expected_callback_count": 1, "county": "san_bernardino"},
+            {"zip_code": 91785, "expected_callback_count": 1, "county": "san_bernardino"},
+            {"zip_code": 92286, "expected_callback_count": 1, "county": "san_bernardino"},
+            {"zip_code": 92334, "expected_callback_count": 1, "county": "san_bernardino"},
+            {"zip_code": 93592, "expected_callback_count": 1, "county": "san_bernardino"},
+
+            {"zip_code": 93601, "expected_callback_count": 0, "county": "out of scope zip code"}
             
         ]
 
