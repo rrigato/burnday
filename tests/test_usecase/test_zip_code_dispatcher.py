@@ -121,7 +121,7 @@ class TestZipCodeDispatcher(unittest.TestCase):
         from burnday.entities.entity_model import BurnStatus
         from burnday.usecase.zip_code_dispatcher import factory_router
 
-        ca_hot_spot_zips = [
+        ca_south_coast_zips = [
             {"zip_code": 89999, "expected_callback_count": 0, "county": "out of scope zip code"},
 
             {"zip_code": 90001, "expected_callback_count": 1, "county": "los_angeles"},
@@ -140,10 +140,10 @@ class TestZipCodeDispatcher(unittest.TestCase):
             
         ]
 
-        for ca_hot_spot_zip in ca_hot_spot_zips:
-            with self.subTest(ca_hot_spot_zip=ca_hot_spot_zip):
+        for ca_south_coast_zip in ca_south_coast_zips:
+            with self.subTest(ca_south_coast_zip=ca_south_coast_zip):
                 mock_burn_status = BurnStatus()
-                mock_burn_status.zip_code = ca_hot_spot_zip["zip_code"]
+                mock_burn_status.zip_code = ca_south_coast_zip["zip_code"]
                 mock_burn_status.air_quality_index = 123
 
                 factory_router(populated_burn_status=mock_burn_status)
@@ -151,11 +151,11 @@ class TestZipCodeDispatcher(unittest.TestCase):
 
                 self.assertEqual(
                     mock_ca_south_coast_burn_rules.call_count,
-                    ca_hot_spot_zip["expected_callback_count"],
+                    ca_south_coast_zip["expected_callback_count"],
                     
                     msg="\n**Failing test info** \nCounty - {county} \nZip - {zip_code} ".format(
-                        county=ca_hot_spot_zip["county"],
-                        zip_code=ca_hot_spot_zip["zip_code"]
+                        county=ca_south_coast_zip["county"],
+                        zip_code=ca_south_coast_zip["zip_code"]
                     )  
                 )
 

@@ -6,6 +6,7 @@ Use this skill to determine if a zip code has any fuel burning restrictions for 
 Which zip codes can return a burn status?
 - Washington (entire state)
 - Los Angeles County (California)
+- San Bernardino County (California)
 - Kern County (California)
 - Tulare County (California)
 
