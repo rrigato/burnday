@@ -138,7 +138,7 @@ class TestZipCodeDispatcher(unittest.TestCase):
 
             {"zip_code": 90620, "expected_callback_count": 1, "county": "orange_county"},
             {"zip_code": 90743, "expected_callback_count": 1, "county": "orange_county"},
-            {"zip_code": 92610, "expected_callback_count": 0, "county": "orange_county"},
+            {"zip_code": 92610, "expected_callback_count": 1, "county": "orange_county"},
             {"zip_code": 92821, "expected_callback_count": 1, "county": "orange_county"},
             {"zip_code": 92899, "expected_callback_count": 1, "county": "orange_county"},
 
@@ -165,4 +165,4 @@ class TestZipCodeDispatcher(unittest.TestCase):
                     )  
                 )
 
-                mock_ca_south_coast_burn_rules.reset_mock()
+            mock_ca_south_coast_burn_rules.reset_mock()
