@@ -142,6 +142,12 @@ class TestZipCodeDispatcher(unittest.TestCase):
             {"zip_code": 92821, "expected_callback_count": 1, "county": "orange_county"},
             {"zip_code": 92899, "expected_callback_count": 1, "county": "orange_county"},
 
+            {"zip_code": 91752, "expected_callback_count": 1, "county": "riverside_county"},
+            {"zip_code": 92240, "expected_callback_count": 1, "county": "riverside_county"},
+            {"zip_code": 92262, "expected_callback_count": 1, "county": "riverside_county"},
+            {"zip_code": 92595, "expected_callback_count": 1, "county": "riverside_county"},
+            {"zip_code": 92883, "expected_callback_count": 1, "county": "riverside_county"},
+
             {"zip_code": 93601, "expected_callback_count": 0, "county": "out of scope zip code"}
             
         ]

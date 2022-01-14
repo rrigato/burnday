@@ -70,6 +70,7 @@ def _apply_ca_south_coast_burn_rules(dispatch_functions):
     hot_spot_zip_codes = []
     hot_spot_zip_codes.extend(california.los_angeles_county)
     hot_spot_zip_codes.extend(california.orange_county)
+    hot_spot_zip_codes.extend(california.riverside_county)
     hot_spot_zip_codes.extend(california.san_bernardino_county)
 
 
