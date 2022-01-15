@@ -1,4 +1,8 @@
-# getting_started:
+# alexa_skill_link
+https://www.amazon.com/dp/B09PVD9VSC/
+
+
+# getting_started
 
 1) Create a virtual environment and install dependencies:
 
