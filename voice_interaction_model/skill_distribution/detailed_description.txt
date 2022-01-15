@@ -8,6 +8,7 @@ Which zip codes can return a burn status?
 - Los Angeles County (Los Angeles, California)
 - Orange County (Los Angeles, California)
 - San Bernardino County (Los Angeles, California)
+- Riverside County (Los Angeles, California) 
 - Kern County (California)
 - Tulare County (California)
 
