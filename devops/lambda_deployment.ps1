@@ -1,6 +1,8 @@
 $bundle_dir_name="deployment"
 $project_name="burnday"
 
+$env:PYTHONPYCACHEPREFIX="${HOME}\\Documents\\project_pycache"
+
 python -m unittest
 
 #prevent build from continuing
