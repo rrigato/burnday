@@ -48,3 +48,6 @@ detect-secrets scan
 ```powershell
 (detect-secrets scan | ConvertFrom-Json).results
 ```
+
+# ask-sdk-core-runtime-dependencies
+- [Moved to this repo](https://github.com/rrigato/tvratings)
