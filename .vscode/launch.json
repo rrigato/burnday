@@ -1,12 +1,12 @@
 {
-    "version": "0.2.0",
     "configurations": [
         {
+            "module": "unittest",
             "name": "avenv Windows unittest",
-            "python":"${workspaceFolder}/avenv/Scripts/python",
-            "type": "python",
+            "python": "${workspaceFolder}/avenv/Scripts/python",
             "request": "launch",
-            "module": "unittest"
+            "type": "debugpy"
         }
-    ]
+    ],
+    "version": "0.2.0"
 }
