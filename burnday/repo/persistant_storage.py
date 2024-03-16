@@ -28,10 +28,10 @@ def get_burnday_secrets():
         return(
             json.loads(
                 ssm_client.get_parameter(
-                    Name="/burnday/v1", 
+                    Name="/burnday/v1",
                     WithDecryption=True
                 )["Parameter"]["Value"]
-            ), 
+            ),
             None
         )
 
@@ -43,8 +43,8 @@ def get_burnday_secrets():
 
 if __name__ == "__main__":
     '''
-        manual component test 
+        manual component test
     '''
     os.environ["AWS_REGION"] = "us-east-1"
     burnday_project_config, repo_retrieval_error = get_burnday_secrets()
-    print(burnday_project_config)
+    

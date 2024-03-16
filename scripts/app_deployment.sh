@@ -3,6 +3,15 @@
 #exits program immediately if a command is not sucessful
 set -e
 
+if [ -z "$1" ]; then
+    echo "Missing commit message arguement 1"
+    exit 1
+fi
+
+
+git add -A
+
+git commit -m "$1"
 
 source avenv/bin/activate
 
