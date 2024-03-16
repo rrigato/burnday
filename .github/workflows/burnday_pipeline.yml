@@ -15,6 +15,7 @@ jobs:
       # confirms the value of ${{vars.PROJECT_NAME}} is 'burnday'
       - name: validate-project-name
         run: |
+          set -e
           if [ ${{vars.PROJECT_NAME}} != 'burnday' ]; then
               echo "Project name is not 'burnday'"
               exit 1
