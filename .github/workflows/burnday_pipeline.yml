@@ -22,3 +22,17 @@ jobs:
           fi
       - name: checkout-current-branch
         uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+
+      - name: test-and-build-deployment-archive
+        shell: bash
+        env:
+          AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
+          PROJECT_NAME: ${{vars.PROJECT_NAME}}
+          REGION_NAME: ${{vars.REGION_NAME}}
+        run: 'scripts/burnday_build_test.sh'
