@@ -1,3 +1,5 @@
+from typing import Optional
+from burnday.entities.entity_model import BurnStatus
 from burnday.repo.entity_serialization import create_burn_status
 from burnday.repo.persistant_storage import get_burnday_secrets
 from datetime import date
@@ -229,17 +231,20 @@ def _select_todays_air_quality(airnow_api_response, zip_code):
         return(None, "unexpected error when attempting to retrieve the air quality forecast")
 
 
-def load_burn_status(zip_code):
+def load_burn_status(zip_code: int) -> tuple[
+        Optional[BurnStatus],
+        Optional[str]
+    ]:
     """Retrieves a BurnStatus entity from persistant storage
 
         Parameters
         ----------
-        zip_code: int
+        zip_code
             numeric postal code
 
         Returns
         -------
-        burn_status_entity: BurnStatus
+        burn_status_entity
             None if no BurnStatus entites were found for the passed zip_code
             Populates the following attributes:
                 burn_status_entity.burn_day = datetime.date
@@ -247,7 +252,7 @@ def load_burn_status(zip_code):
                 burn_status_entity.zip_code = zip_code
 
 
-        repo_retrieval_error: None
+        repo_retrieval_error
             str if any unexpected error occurred when retrieving the BurnStatus entity
     """
     burnday_project_config, config_retrieval_error = get_burnday_secrets()
@@ -280,4 +285,4 @@ if __name__ == "__main__":
         print(burn_status_entity.air_quality_index)
         print(burn_status_entity.zip_code)
 
-    
+
