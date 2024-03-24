@@ -3,11 +3,11 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: Specifies the Alexa Skill ID that can invoke the burnday-alexa-skill lambda function
 
 Parameters:
- 
+
   alexaSkillId:
     Type: String
     Description: Amazon Alexa Skill ID that is allowed to invoke the lambda function
-  
+
   lambdaFunctionName:
     Type: String
     Default: burnday-alexa-skill
@@ -20,3 +20,28 @@ Resources:
       Action: lambda:InvokeFunction
       Principal: alexa-appkit.amazon.com
       EventSourceToken: !Ref alexaSkillId
+
+
+  projectRoleForGitHubActions:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Action: sts:AssumeRoleWithWebIdentity
+            Principal:
+              Federated:
+                Fn::ImportValue::githubOidcProviderArn
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: !Ref oidcAudience
+              StringLike:
+                token.actions.githubusercontent.com:sub: !Sub repo:${githubUser}/${projectName}:*
+      Description: !Sub '${projectName} GitHub Actions role to assume'
+      ManagedPolicyArns:
+        - !Sub arn:aws:iam::${AWS::AccountId}:policy/${projectName}_dynamodb
+        - !Sub arn:aws:iam::${AWS::AccountId}:policy/${projectName}_lambda
+        - !Sub arn:aws:iam::${AWS::AccountId}:policy/${projectName}_s3_policy
+        - !Sub arn:aws:iam::${AWS::AccountId}:policy/secrets_manager_get
+      RoleName: !Sub ${projectName}-github-actions-role
+
