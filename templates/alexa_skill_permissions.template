@@ -47,7 +47,8 @@ Resources:
             Action: sts:AssumeRoleWithWebIdentity
             Principal:
               Federated:
-                Fn::ImportValue::githubOidcProviderArn
+                Fn::ImportValue:
+                  githubOidcProviderArn
             Condition:
               StringEquals:
                 token.actions.githubusercontent.com:aud: !Ref oidcAudience
