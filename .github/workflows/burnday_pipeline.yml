@@ -28,6 +28,13 @@ jobs:
         with:
           python-version: 3.11
 
+      - name: assume-github-actions-role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          audience: sts.amazonaws.com
+          aws-region: ${{vars.REGION_NAME}}
+          role-to-assume: arn:aws:iam::${{secrets.AWS_ACCOUNT_ID}}:role/${{vars.PIPELINE_ROLE_NAME}}
+
 
       - name: test-and-build-deployment-archive
         shell: bash

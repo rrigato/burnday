@@ -8,9 +8,25 @@ Parameters:
     Type: String
     Description: Amazon Alexa Skill ID that is allowed to invoke the lambda function
 
+
+  githubUser:
+    Default: rrigato
+    Description: 'GitHub organization name'
+    Type: String
+
   lambdaFunctionName:
     Type: String
     Default: burnday-alexa-skill
+
+  oidcAudience:
+    Default: 'sts.amazonaws.com'
+    Description: 'The audience for the OIDC provider'
+    Type: String
+
+  projectName:
+    Type: String
+    Default: burnday
+
 
 Resources:
   alexaLambdaTrigger:
@@ -31,7 +47,8 @@ Resources:
             Action: sts:AssumeRoleWithWebIdentity
             Principal:
               Federated:
-                Fn::ImportValue::githubOidcProviderArn
+                Fn::ImportValue:
+                  githubOidcProviderArn
             Condition:
               StringEquals:
                 token.actions.githubusercontent.com:aud: !Ref oidcAudience
@@ -39,9 +56,6 @@ Resources:
                 token.actions.githubusercontent.com:sub: !Sub repo:${githubUser}/${projectName}:*
       Description: !Sub '${projectName} GitHub Actions role to assume'
       ManagedPolicyArns:
-        - !Sub arn:aws:iam::${AWS::AccountId}:policy/${projectName}_dynamodb
-        - !Sub arn:aws:iam::${AWS::AccountId}:policy/${projectName}_lambda
-        - !Sub arn:aws:iam::${AWS::AccountId}:policy/${projectName}_s3_policy
-        - !Sub arn:aws:iam::${AWS::AccountId}:policy/secrets_manager_get
+        - !Sub arn:aws:iam::${AWS::AccountId}:policy/${projectName}_pipeline_permissions
       RoleName: !Sub ${projectName}-github-actions-role
 
