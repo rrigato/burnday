@@ -4,7 +4,7 @@ set -e
 
 #TODO remove
 #only for valdiating assumed role
-aws s3 ls s3://${PROJECT_NAME}-app-artifacts
+aws sts get-caller-identity
 
 
 export BUCKET_NAME="${PROJECT_NAME}-app-artifacts"
