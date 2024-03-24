@@ -1,5 +1,5 @@
 from copy import deepcopy
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import json
 import unittest
@@ -43,7 +43,7 @@ class TestBurnStatusStorage(unittest.TestCase):
         burn_status_entity, load_burn_status_error = load_burn_status(zip_code=mock_zip_code)
 
 
-        
+
         args, kwargs = mock_urlopen.call_args
 
         self.assertEqual(len(args), 0)
@@ -56,22 +56,22 @@ class TestBurnStatusStorage(unittest.TestCase):
         self.assertEqual(outgoing_api_call.scheme, "https")
         self.assertEqual(outgoing_api_call.path, "/aq/forecast/zipCode")
         self.assertEqual(
-            outgoing_api_call.query, 
+            outgoing_api_call.query,
             "api_key=1234&distance=500&format=json&zipCode=20002"
         )
 
         self.assertEqual(
-            burn_status_entity.burn_day, 
+            burn_status_entity.burn_day,
             date.fromisoformat(self.one_airnow_api_forecast[0]["DateForecast"].strip())
         )
         self.assertEqual(
-            burn_status_entity.air_quality_index, 
+            burn_status_entity.air_quality_index,
             self.one_airnow_api_forecast[0]["AQI"]
         )
         self.assertEqual(burn_status_entity.zip_code, mock_zip_code)
         self.assertIsNone(load_burn_status_error)
 
- 
+
     @patch("burnday.repo.burn_status_storage.urlopen")
     @patch("burnday.repo.burn_status_storage.get_burnday_secrets")
     def test_load_burn_status_multiple_forecasts(self, mock_get_burnday_secrets, mock_urlopen):
@@ -84,7 +84,7 @@ class TestBurnStatusStorage(unittest.TestCase):
 
         mock_urlopen.return_value.__enter__.return_value.getcode.return_value = 200
         multiple_forecasts = deepcopy(self.multiple_airnow_api_forecasts)[1:]
-        
+
         multiple_forecasts.append(deepcopy(self.multiple_airnow_api_forecasts)[0])
         mock_urlopen.return_value.__enter__.return_value.read.return_value = json.dumps(
             multiple_forecasts
@@ -96,11 +96,11 @@ class TestBurnStatusStorage(unittest.TestCase):
 
 
         self.assertEqual(
-            burn_status_entity.burn_day, 
+            burn_status_entity.burn_day,
             date.fromisoformat(self.multiple_airnow_api_forecasts[0]["DateForecast"].strip())
         )
         self.assertEqual(
-            burn_status_entity.air_quality_index, 
+            burn_status_entity.air_quality_index,
             self.multiple_airnow_api_forecasts[0]["AQI"]
         )
         self.assertEqual(burn_status_entity.zip_code, mock_zip_code)
@@ -124,29 +124,29 @@ class TestBurnStatusStorage(unittest.TestCase):
         self.assertEqual(mock_urlopen.return_value.__enter__.return_value.read.call_count, 0)
 
 
-    @unittest.skip("TODO - body of test case")
-    @patch("burnday.repo.burn_status_storage.urlopen")
+    @patch("burnday.repo.burn_status_storage._handle_api_request")
     @patch("burnday.repo.burn_status_storage.get_burnday_secrets")
-    def test_load_burn_status_empty_list(self, mock_get_burnday_secrets, mock_urlopen):
+    def test_load_burn_status_empty_list(
+            self,
+            mock_get_burnday_secrets: MagicMock,
+            handle_api_request_mock: MagicMock
+        ):
         """Api returns [] in post body"""
         from burnday.repo.burn_status_storage import load_burn_status
         from datetime import date
 
         mock_zip_code = 20002
         mock_get_burnday_secrets.return_value = (deepcopy(self.mock_project_secrets), None)
-
-        mock_urlopen.return_value.__enter__.return_value.read.return_value = json.dumps(
-            []
-        ).encode("utf-8")
-
+        handle_api_request_mock.side_effect = [
+            ([], None)
+        ]
 
 
-        burn_status_entity, load_burn_status_error = load_burn_status(zip_code=mock_zip_code)
+        burn_status_entity, load_burn_status_error = load_burn_status(
+            zip_code=mock_zip_code
+        )
 
 
-        '''
-            TODO - what to say when unable to retrieve burn status for a location,
-            currently says
-            <speak>Something went wrong when attempting to retrieve the burn status for that location, please try again later</speak>
-            set in externals.alexa_intents.burn_status_intent
-        '''
+        self.assertIsNone(burn_status_entity)
+        self.assertIsInstance(load_burn_status_error, str)
+

@@ -16,6 +16,11 @@ Parameters:
     Type: String
     Default: burnday_skill.alexa_lambda_handler
 
+  githubUser:
+    Default: rrigato
+    Description: 'GitHub organization name'
+    Type: String
+
   lambdaExecutionRoleName:
     Type: String
     Default: burnday_lambda_role
@@ -31,6 +36,11 @@ Parameters:
     Default: 5
     MinValue: 1
     MaxValue: 900
+
+  oidcAudience:
+    Default: 'sts.amazonaws.com'
+    Description: 'The audience for the OIDC provider'
+    Type: String
 
   pythonRuntime:
     Default: python3.11
@@ -67,7 +77,8 @@ Resources:
       MemorySize: !Ref lambdaMemorySize
       PackageType: Zip
       Role: !Sub arn:aws:iam::${AWS::AccountId}:role/${lambdaExecutionRoleName}
-      Runtime: python3.11
+      Runtime: !Ref pythonRuntime
       Timeout: !Ref lambdaTimeout
       TracingConfig:
         Mode: Active
+
