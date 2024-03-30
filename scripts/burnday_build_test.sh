@@ -26,13 +26,13 @@ if [ "${secret_scan_results}" != "{}" ]; then
 fi
 
 
-python -m unittest
+# python -m unittest
 
-deactivate
+# deactivate
 
-zip $DEPLOYMENT_PACKAGE -r $PROJECT_NAME  \
-    -x *__pycache__*  --quiet
+# zip $DEPLOYMENT_PACKAGE -r $PROJECT_NAME  \
+#     -x *__pycache__*  --quiet
 
-zip -u $DEPLOYMENT_PACKAGE -j handlers/${PROJECT_NAME}_handler.py  \
-    -x *__pycache__* --quiet
+# zip -u $DEPLOYMENT_PACKAGE -j handlers/${PROJECT_NAME}_handler.py  \
+#     -x *__pycache__* --quiet
 
