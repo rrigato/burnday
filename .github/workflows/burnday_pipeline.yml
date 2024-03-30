@@ -23,10 +23,14 @@ jobs:
       - name: checkout-current-branch
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
+      - name: set-up-python-runtime
         uses: actions/setup-python@v2
         with:
           python-version: 3.11
+
+      - name: make-scripts-executable
+        run: |
+          chmod +x 'scripts/burnday_build_test.sh'
 
       - name: assume-github-actions-role
         uses: aws-actions/configure-aws-credentials@v4
