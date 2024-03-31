@@ -30,6 +30,7 @@ python -m unittest
 
 deactivate
 
+echo "--------beginning bundle--------"
 
 zip $DEPLOYMENT_PACKAGE -r $PROJECT_NAME  \
     -x *__pycache__*  --quiet
@@ -45,4 +46,14 @@ aws s3api put-object --bucket $BUCKET_NAME \
     --key $PROJECT_NAME/$DEPLOYMENT_PACKAGE \
     --body $DEPLOYMENT_PACKAGE \
     --tagging "cloudformation=no&project=${PROJECT_NAME}&keep=yes"
+
+
+
+
+aws lambda update-function-code \
+    --region $REGION_NAME \
+    --function-name  "${projectName}-alexa-skill" \
+    --s3-bucket $BUCKET_NAME \
+    --s3-key $PROJECT_NAME/$DEPLOYMENT_PACKAGE \
+    --no-cli-pager
 
