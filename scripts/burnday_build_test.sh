@@ -2,10 +2,6 @@
 
 set -e
 
-#TODO remove
-#only for valdiating assumed role
-aws sts get-caller-identity
-
 
 export BUCKET_NAME="${PROJECT_NAME}-app-artifacts"
 export DEPLOYMENT_PACKAGE="${PROJECT_NAME}_deployment_package.zip"
@@ -52,7 +48,7 @@ aws s3api put-object --bucket $BUCKET_NAME \
 
 aws lambda update-function-code \
     --region $REGION_NAME \
-    --function-name  "${projectName}-alexa-skill" \
+    --function-name  "${PROJECT_NAME}-alexa-skill" \
     --s3-bucket $BUCKET_NAME \
     --s3-key $PROJECT_NAME/$DEPLOYMENT_PACKAGE \
     --no-cli-pager
