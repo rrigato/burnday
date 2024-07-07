@@ -1,8 +1,8 @@
 #!/bin/bash
 
-set -e
+# set -e
 
-
+export PROJECT_NAME="burnday"
 export BUCKET_NAME="${PROJECT_NAME}-app-artifacts"
 export DEPLOYMENT_PACKAGE="${PROJECT_NAME}_deployment_package.zip"
 
@@ -32,6 +32,9 @@ zip $DEPLOYMENT_PACKAGE -r $PROJECT_NAME  \
     -x *__pycache__*  --quiet
 
 zip -u $DEPLOYMENT_PACKAGE -j handlers/${PROJECT_NAME}_skill.py  \
+    -x *__pycache__* --quiet
+
+zip -u $DEPLOYMENT_PACKAGE -r externals  \
     -x *__pycache__* --quiet
 
 echo "--------deployment package created--------"
