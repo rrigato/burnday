@@ -28,7 +28,14 @@ python -m unittest
 
 deactivate
 
-git push origin dev
+echo "pushed to remote"
+
+gh pr create --title "$1" \
+--body "Automated PR creation" \
+--head dev \
+--base master
+
+echo "created PR"
 
 echo "----------------------"
 echo "deployment successful"
