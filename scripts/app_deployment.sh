@@ -28,6 +28,8 @@ python -m unittest
 
 deactivate
 
+git push origin dev
+
 echo "pushed to remote"
 
 gh pr create --title "$1" \
