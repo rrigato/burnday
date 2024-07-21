@@ -34,7 +34,7 @@ zip $DEPLOYMENT_PACKAGE -r $PROJECT_NAME  \
 zip -u $DEPLOYMENT_PACKAGE -j handlers/${PROJECT_NAME}_skill.py  \
     -x *__pycache__* --quiet
 
-zip -u $DEPLOYMENT_PACKAGE externals  \
+zip -u $DEPLOYMENT_PACKAGE -r externals  \
     -x *__pycache__* --quiet
 
 echo "--------deployment package created--------"
