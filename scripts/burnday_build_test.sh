@@ -29,13 +29,13 @@ deactivate
 echo "--------beginning bundle--------"
 
 zip $DEPLOYMENT_PACKAGE -r $PROJECT_NAME  \
-    -x *__pycache__*  --quiet
+    -x "*__pycache__*"  --quiet
 
 zip -u $DEPLOYMENT_PACKAGE -j handlers/${PROJECT_NAME}_skill.py  \
-    -x *__pycache__* --quiet
+    -x "*__pycache__*" --quiet
 
 zip -u $DEPLOYMENT_PACKAGE -j externals  \
-    -x *__pycache__* --quiet
+    -x "*__pycache__*" --quiet
 
 echo "--------deployment package created--------"
 
