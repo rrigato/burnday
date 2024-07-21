@@ -43,7 +43,7 @@ echo "zip command 3"
 
 echo $DEPLOYMENT_PACKAGE
 
-ls -l
+ls -l externals
 
 zip -v external_test -j externals  \
     -x *__pycache__*
