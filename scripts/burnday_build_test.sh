@@ -45,7 +45,7 @@ echo $DEPLOYMENT_PACKAGE
 
 ls -l
 
-zip -u $DEPLOYMENT_PACKAGE -j externals  \
+zip -v -u $DEPLOYMENT_PACKAGE -j externals  \
     -x *__pycache__*
 
 echo "--------deployment package created--------"
