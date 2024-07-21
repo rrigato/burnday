@@ -41,12 +41,12 @@ zip -u $DEPLOYMENT_PACKAGE -j handlers/${PROJECT_NAME}_skill.py  \
 
 echo "zip command 3"
 
-echo $DEPLOYMENT_PACKAGE 
+echo $DEPLOYMENT_PACKAGE
 
 ls -l
 
 zip -u $DEPLOYMENT_PACKAGE -j externals  \
-    -x *__pycache__* --quiet
+    -x *__pycache__*
 
 echo "--------deployment package created--------"
 
