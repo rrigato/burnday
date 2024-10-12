@@ -15,6 +15,8 @@ git commit -m "$1"
 
 if [[ -z "$VIRTUAL_ENV" ]]; then
     source avenv/bin/activate
+else
+    pip install -r requirements/requirements-dev.txt
 fi
 
 secret_scan_results=$(detect-secrets scan | \
