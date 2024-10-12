@@ -10,20 +10,12 @@ on:
 jobs:
   analyze:
     name: Analyze
-    # Runner size impacts CodeQL analysis time. To learn more, please see:
-    #   - https://gh.io/recommended-hardware-resources-for-running-codeql
-    #   - https://gh.io/supported-runners-and-hardware-resources
-    #   - https://gh.io/using-larger-runners
-    # Consider using larger runners for possible analysis time improvements.
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
     permissions:
-
-      # only required for workflows in private repositories
       actions: read
       contents: read
       id-token: write
-      # required for all workflows
       security-events: write
 
 
@@ -72,3 +64,29 @@ jobs:
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:${{matrix.language}}"
+
+  prevent-script-disable:
+    permissions:
+      contents: write
+      id-token: write
+    needs: analyze
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: checkout-current-branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      ##################
+      #Unnecessary orchestration because public workflows are auto
+      #disabled after 60 days
+      #
+      #https://docs.github.com/en/actions/managing-workflow-runs/disabling-and-enabling-a-workflow
+      ##################
+      - name: script-execution-permissions-disable
+        run: chmod +x scripts/prevent_disable.sh
+
+      - name: prevent-disabled-workflow
+        shell: bash
+        run: scripts/prevent_disable.sh
