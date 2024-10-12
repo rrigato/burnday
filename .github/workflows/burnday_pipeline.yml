@@ -2,8 +2,8 @@ name: application pipeline
 on:
   push:
     branches:
-      - master
       - dev
+      - master
 jobs:
   run-build-test:
     runs-on: ubuntu-latest

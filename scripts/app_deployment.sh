@@ -13,7 +13,11 @@ git add -A
 
 git commit -m "$1"
 
-source avenv/bin/activate
+if [[ -z "$VIRTUAL_ENV" ]]; then
+    source avenv/bin/activate
+else
+    pip install -r requirements/requirements-dev.txt
+fi
 
 secret_scan_results=$(detect-secrets scan | \
 python3 -c "import sys, json; print(json.load(sys.stdin)['results'])" )
@@ -26,7 +30,6 @@ fi
 
 python -m unittest
 
-deactivate
 
 git push origin dev
 
