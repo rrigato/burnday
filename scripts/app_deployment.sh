@@ -28,7 +28,6 @@ fi
 
 python -m unittest
 
-deactivate
 
 git push origin dev
 
