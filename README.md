@@ -7,7 +7,7 @@ https://www.amazon.com/dp/B09PVD9VSC/
 1) Create a virtual environment and install dependencies:
 
 ```bash
-python -m venv avenv
+python3.11 -m venv avenv
 source avenv/bin/activate
 pip install -r requirements/requirements-dev.txt
 ```
@@ -51,4 +51,15 @@ python3 -c "import sys, json; print(json.load(sys.stdin)['results'])"
 ```
 
 # ask-sdk-core-runtime-dependencies
-- [Moved to this repo](https://github.com/rrigato/tvratings)
+
+The Lambda layer must contain the same packages as `requirements/requirements-prod.txt`.
+Build it with Python 3.11 on Amazon Linux 2 (matching the configured Lambda runtime):
+
+```bash
+bash devops/ask_deployment_package.sh
+```
+
+This creates `ask_layer.zip` locally. To apply a production dependency update,
+publish the archive as a new version of the Lambda layer and update the stack's
+`alexaSkillsKitLayerVersion` parameter. The application pipeline deploys application
+code only; updating the requirements does not update an existing layer.

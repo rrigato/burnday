@@ -1,35 +1,17 @@
-#############################################################################
-#Perform on an Amazon Linux 2 operating system (variant of Redhat)
-#future nice to have: build lambda layer using lambda runtime docker image
-#https://github.com/lambci/docker-lambda
-#############################################################################
+#!/usr/bin/env bash
+set -euo pipefail
 
-#prerequisites for python
-sudo yum install -y gcc openssl-devel bzip2-devel libffi-devel 
+# Run with Python 3.11 on Amazon Linux 2, matching the Lambda runtime.
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+build_dir="$(mktemp -d)"
+trap 'rm -rf "$build_dir"' EXIT
 
-#download and untar source code
-wget https://www.python.org/ftp/python/3.9.9/Python-3.9.9.tgz
+python3.11 -m venv "$build_dir/venv"
+"$build_dir/venv/bin/python" -m pip install \
+    -r "$repo_root/requirements/requirements-prod.txt" \
+    --target "$build_dir/layer/python"
 
-tar xzf Python-3.9.9.tgz 
-
-cd Python-3.9.9
-
-#builds source code
-sudo ./configure
-#makes sure not to overwrite existing python3
-sudo make altinstall
-
-##############################################
-#Create lambda layer for alexa skills kit sdk
-##############################################
-mkdir ask_layer
-cd ask_layer
-mkdir python
-cd python 
-pip3.9 install ask-sdk-core==1.16.1 -t .
-
-cd ..
-
-zip -r ask_layer.zip .
-
-aws s3 cp ask_layer.zip s3://burnday-app-artifacts
+cd "$build_dir/layer"
+zip -qr "$build_dir/ask_layer.zip" python
+cp "$build_dir/ask_layer.zip" "$repo_root/ask_layer.zip"
+echo "Created $repo_root/ask_layer.zip"
